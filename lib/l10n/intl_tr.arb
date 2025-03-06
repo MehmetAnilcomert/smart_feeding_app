@@ -7,5 +7,8 @@
     "set_feeding_frequency": "Besleme Sıklığını Ayarla (günde kaç kez):",
     "update_frequency": "Sıklığı Güncelle",
     "no_logs": "Kayıt bulunamadı.",
-    "current_temperature": "Güncel Sıcaklık"
+    "current_temperature": "Güncel Sıcaklık",
+    "connection_error": "Bağlantı Hatası",
+    "connection_error_message": "İnternet bağlantısı yok. Lütfen internet bağlantınızı kontrol edin ve tekrar deneyin.",
+    "ok": "Tamam"
 }

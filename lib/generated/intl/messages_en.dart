@@ -23,12 +23,19 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "app_title": MessageLookupByLibrary.simpleMessage("Smart Feeder"),
+    "connection_error": MessageLookupByLibrary.simpleMessage(
+      "Connection Error",
+    ),
+    "connection_error_message": MessageLookupByLibrary.simpleMessage(
+      "No internet connection. Please check your internet connection and try again.",
+    ),
     "current_temperature": MessageLookupByLibrary.simpleMessage(
       "Current Temperature",
     ),
     "feed": MessageLookupByLibrary.simpleMessage("Feed"),
     "logs": MessageLookupByLibrary.simpleMessage("Logs"),
     "no_logs": MessageLookupByLibrary.simpleMessage("No logs available."),
+    "ok": MessageLookupByLibrary.simpleMessage("OK"),
     "set_feeding_frequency": MessageLookupByLibrary.simpleMessage(
       "Set Feeding Frequency (times per day):",
     ),

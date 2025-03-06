@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_feeding_app/bloc/connectivity_bloc/connectivity_bloc.dart';
+import 'package:smart_feeding_app/bloc/connectivity_bloc/connectivity_event.dart';
 import 'package:smart_feeding_app/bloc/feeder_bloc/feeder_bloc.dart';
 import 'package:smart_feeding_app/bloc/feeder_bloc/feeder_event.dart';
 import 'package:smart_feeding_app/bloc/language_bloc.dart';
@@ -31,6 +33,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<LanguageCubit>(
           create: (_) => LanguageCubit(languageManager),
+        ),
+        BlocProvider<ConnectivityBloc>(
+          create: (context) => ConnectivityBloc()..add(ConnectivityObserve()),
         ),
       ],
       child: Builder(builder: (context) {

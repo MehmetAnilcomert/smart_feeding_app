@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_feeding_app/bloc/connectivity_bloc/connectivity_bloc.dart';
+import 'package:smart_feeding_app/bloc/connectivity_bloc/connectivity_state.dart';
 import 'package:smart_feeding_app/bloc/theme_bloc.dart';
 import 'package:smart_feeding_app/generated/l10n.dart';
 import 'package:smart_feeding_app/pages/feed_setting.dart';
 import 'package:smart_feeding_app/pages/log_view.dart';
 import 'package:smart_feeding_app/pages/temperature.dart';
+import 'package:smart_feeding_app/widgets/connectivity_dialog.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -24,29 +27,41 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final S s = S.of(context);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(s.app_title),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.brightness_6),
-            onPressed: () => context.read<ThemeBloc>().toggleTheme(),
-          ),
-        ],
-      ),
-      body: _pages[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.schedule),
-            label: s.feed,
-          ),
-          BottomNavigationBarItem(icon: Icon(Icons.list), label: s.logs),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.thermostat), label: s.temperature),
-        ],
-        onTap: _onItemTapped,
+
+    return BlocListener<ConnectivityBloc, ConnectivityState>(
+      listener: (context, state) {
+        if (state is ConnectivityDisconnected) {
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (dialogContext) => const ConnectivityDialog(),
+          );
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(s.app_title),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.brightness_6),
+              onPressed: () => context.read<ThemeBloc>().toggleTheme(),
+            ),
+          ],
+        ),
+        body: _pages[_selectedIndex],
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _selectedIndex,
+          items: [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.schedule),
+              label: s.feed,
+            ),
+            BottomNavigationBarItem(icon: Icon(Icons.list), label: s.logs),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.thermostat), label: s.temperature),
+          ],
+          onTap: _onItemTapped,
+        ),
       ),
     );
   }

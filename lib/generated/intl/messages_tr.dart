@@ -23,12 +23,17 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "app_title": MessageLookupByLibrary.simpleMessage("Akıllı Besleyici"),
+    "connection_error": MessageLookupByLibrary.simpleMessage("Bağlantı Hatası"),
+    "connection_error_message": MessageLookupByLibrary.simpleMessage(
+      "İnternet bağlantısı yok. Lütfen internet bağlantınızı kontrol edin ve tekrar deneyin.",
+    ),
     "current_temperature": MessageLookupByLibrary.simpleMessage(
       "Güncel Sıcaklık",
     ),
     "feed": MessageLookupByLibrary.simpleMessage("Besleme"),
     "logs": MessageLookupByLibrary.simpleMessage("Kayıtlar"),
     "no_logs": MessageLookupByLibrary.simpleMessage("Kayıt bulunamadı."),
+    "ok": MessageLookupByLibrary.simpleMessage("Tamam"),
     "set_feeding_frequency": MessageLookupByLibrary.simpleMessage(
       "Besleme Sıklığını Ayarla (günde kaç kez):",
     ),

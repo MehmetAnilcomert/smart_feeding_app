@@ -114,6 +114,31 @@ class S {
       args: [],
     );
   }
+
+  /// `Connection Error`
+  String get connection_error {
+    return Intl.message(
+      'Connection Error',
+      name: 'connection_error',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No internet connection. Please check your internet connection and try again.`
+  String get connection_error_message {
+    return Intl.message(
+      'No internet connection. Please check your internet connection and try again.',
+      name: 'connection_error_message',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `OK`
+  String get ok {
+    return Intl.message('OK', name: 'ok', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

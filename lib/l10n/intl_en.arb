@@ -7,5 +7,8 @@
     "set_feeding_frequency": "Set Feeding Frequency (times per day):",
     "update_frequency": "Update Frequency",
     "no_logs": "No logs available.",
-    "current_temperature": "Current Temperature"
+    "current_temperature": "Current Temperature",
+    "connection_error": "Connection Error",
+    "connection_error_message": "No internet connection. Please check your internet connection and try again.",
+    "ok": "OK"
 }
