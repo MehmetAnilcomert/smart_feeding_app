@@ -22,7 +22,6 @@ A Flutter-based application for controlling IoT smart chicken feeders via WebSoc
   - **Critical**: Push notifications when exceeding limits
 - Historical temperature graph (last 24 hours)
 
-- 
 ### 📦 Technologies Used
 
 - **Flutter**  
