@@ -55,9 +55,19 @@ class S {
     return Localizations.of<S>(context, S);
   }
 
-  /// `Smart Feeder`
+  /// `Smart Chicken Feeder`
   String get app_title {
-    return Intl.message('Smart Feeder', name: 'app_title', desc: '', args: []);
+    return Intl.message(
+      'Smart Chicken Feeder',
+      name: 'app_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Home`
+  String get home {
+    return Intl.message('Home', name: 'home', desc: '', args: []);
   }
 
   /// `Feed`
@@ -65,44 +75,9 @@ class S {
     return Intl.message('Feed', name: 'feed', desc: '', args: []);
   }
 
-  /// `Logs`
-  String get logs {
-    return Intl.message('Logs', name: 'logs', desc: '', args: []);
-  }
-
-  /// `Temperature`
-  String get temperature {
-    return Intl.message('Temperature', name: 'temperature', desc: '', args: []);
-  }
-
-  /// `Set Feeding Frequency (times per day):`
-  String get set_feeding_frequency {
-    return Intl.message(
-      'Set Feeding Frequency (times per day):',
-      name: 'set_feeding_frequency',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Update Frequency`
-  String get update_frequency {
-    return Intl.message(
-      'Update Frequency',
-      name: 'update_frequency',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `No logs available.`
-  String get no_logs {
-    return Intl.message(
-      'No logs available.',
-      name: 'no_logs',
-      desc: '',
-      args: [],
-    );
+  /// `Statistics`
+  String get stats {
+    return Intl.message('Statistics', name: 'stats', desc: '', args: []);
   }
 
   /// `Current Temperature`
@@ -115,29 +90,164 @@ class S {
     );
   }
 
-  /// `Connection Error`
-  String get connection_error {
+  /// `High temperature! Consider cooling the coop.`
+  String get temperature_high {
     return Intl.message(
-      'Connection Error',
-      name: 'connection_error',
+      'High temperature! Consider cooling the coop.',
+      name: 'temperature_high',
       desc: '',
       args: [],
     );
   }
 
-  /// `No internet connection. Please check your internet connection and try again.`
-  String get connection_error_message {
+  /// `Low temperature! Consider heating the coop.`
+  String get temperature_low {
     return Intl.message(
-      'No internet connection. Please check your internet connection and try again.',
-      name: 'connection_error_message',
+      'Low temperature! Consider heating the coop.',
+      name: 'temperature_low',
       desc: '',
       args: [],
     );
   }
 
-  /// `OK`
-  String get ok {
-    return Intl.message('OK', name: 'ok', desc: '', args: []);
+  /// `Optimal temperature for your chickens.`
+  String get temperature_optimal {
+    return Intl.message(
+      'Optimal temperature for your chickens.',
+      name: 'temperature_optimal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Feed Settings`
+  String get feed_settings {
+    return Intl.message(
+      'Feed Settings',
+      name: 'feed_settings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Feeding Frequency`
+  String get set_feeding_frequency {
+    return Intl.message(
+      'Feeding Frequency',
+      name: 'set_feeding_frequency',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Feed Amount`
+  String get set_feed_amount {
+    return Intl.message(
+      'Feed Amount',
+      name: 'set_feed_amount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `First Feed Time`
+  String get first_feed_time {
+    return Intl.message(
+      'First Feed Time',
+      name: 'first_feed_time',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update Settings`
+  String get update_settings {
+    return Intl.message(
+      'Update Settings',
+      name: 'update_settings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Feed Now`
+  String get feed_now {
+    return Intl.message('Feed Now', name: 'feed_now', desc: '', args: []);
+  }
+
+  /// `Feeding Logs`
+  String get feeding_logs {
+    return Intl.message(
+      'Feeding Logs',
+      name: 'feeding_logs',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No logs available`
+  String get no_logs_available {
+    return Intl.message(
+      'No logs available',
+      name: 'no_logs_available',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connection Lost`
+  String get connection_lost {
+    return Intl.message(
+      'Connection Lost',
+      name: 'connection_lost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Connection to the feeder device has been lost. Trying to reconnect...`
+  String get connection_lost_message {
+    return Intl.message(
+      'Connection to the feeder device has been lost. Trying to reconnect...',
+      name: 'connection_lost_message',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Retry`
+  String get retry {
+    return Intl.message('Retry', name: 'retry', desc: '', args: []);
+  }
+
+  /// `times/day`
+  String get times_per_day {
+    return Intl.message('times/day', name: 'times_per_day', desc: '', args: []);
+  }
+
+  /// `grams`
+  String get grams {
+    return Intl.message('grams', name: 'grams', desc: '', args: []);
+  }
+
+  /// `Feed settings updated successfully!`
+  String get settings_updated {
+    return Intl.message(
+      'Feed settings updated successfully!',
+      name: 'settings_updated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Manual feeding initiated!`
+  String get manual_feeding_initiated {
+    return Intl.message(
+      'Manual feeding initiated!',
+      name: 'manual_feeding_initiated',
+      desc: '',
+      args: [],
+    );
   }
 }
 

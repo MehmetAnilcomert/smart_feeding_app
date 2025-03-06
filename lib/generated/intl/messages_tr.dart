@@ -22,24 +22,50 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-    "app_title": MessageLookupByLibrary.simpleMessage("Akıllı Besleyici"),
-    "connection_error": MessageLookupByLibrary.simpleMessage("Bağlantı Hatası"),
-    "connection_error_message": MessageLookupByLibrary.simpleMessage(
-      "İnternet bağlantısı yok. Lütfen internet bağlantınızı kontrol edin ve tekrar deneyin.",
+    "app_title": MessageLookupByLibrary.simpleMessage("Akıllı Tavuk Besleyici"),
+    "connection_lost": MessageLookupByLibrary.simpleMessage("Bağlantı Kesildi"),
+    "connection_lost_message": MessageLookupByLibrary.simpleMessage(
+      "Besleyici cihazla bağlantı kesildi. Yeniden bağlanmaya çalışılıyor...",
     ),
     "current_temperature": MessageLookupByLibrary.simpleMessage(
-      "Güncel Sıcaklık",
+      "Mevcut Sıcaklık",
     ),
     "feed": MessageLookupByLibrary.simpleMessage("Besleme"),
-    "logs": MessageLookupByLibrary.simpleMessage("Kayıtlar"),
-    "no_logs": MessageLookupByLibrary.simpleMessage("Kayıt bulunamadı."),
-    "ok": MessageLookupByLibrary.simpleMessage("Tamam"),
-    "set_feeding_frequency": MessageLookupByLibrary.simpleMessage(
-      "Besleme Sıklığını Ayarla (günde kaç kez):",
+    "feed_now": MessageLookupByLibrary.simpleMessage("Şimdi Besle"),
+    "feed_settings": MessageLookupByLibrary.simpleMessage("Besleme Ayarları"),
+    "feeding_logs": MessageLookupByLibrary.simpleMessage("Besleme Kayıtları"),
+    "first_feed_time": MessageLookupByLibrary.simpleMessage(
+      "İlk Besleme Zamanı",
     ),
-    "temperature": MessageLookupByLibrary.simpleMessage("Sıcaklık"),
-    "update_frequency": MessageLookupByLibrary.simpleMessage(
-      "Sıklığı Güncelle",
+    "grams": MessageLookupByLibrary.simpleMessage("gram"),
+    "home": MessageLookupByLibrary.simpleMessage("Ana Sayfa"),
+    "manual_feeding_initiated": MessageLookupByLibrary.simpleMessage(
+      "Manuel besleme başlatıldı!",
+    ),
+    "no_logs_available": MessageLookupByLibrary.simpleMessage(
+      "Kayıt bulunamadı",
+    ),
+    "retry": MessageLookupByLibrary.simpleMessage("Tekrar Dene"),
+    "set_feed_amount": MessageLookupByLibrary.simpleMessage("Yem Miktarı"),
+    "set_feeding_frequency": MessageLookupByLibrary.simpleMessage(
+      "Besleme Sıklığı",
+    ),
+    "settings_updated": MessageLookupByLibrary.simpleMessage(
+      "Besleme ayarları başarıyla güncellendi!",
+    ),
+    "stats": MessageLookupByLibrary.simpleMessage("İstatistikler"),
+    "temperature_high": MessageLookupByLibrary.simpleMessage(
+      "Yüksek sıcaklık! Kümesi soğutmayı düşünün.",
+    ),
+    "temperature_low": MessageLookupByLibrary.simpleMessage(
+      "Düşük sıcaklık! Kümesi ısıtmayı düşünün.",
+    ),
+    "temperature_optimal": MessageLookupByLibrary.simpleMessage(
+      "Tavuklarınız için optimal sıcaklık.",
+    ),
+    "times_per_day": MessageLookupByLibrary.simpleMessage("kez/gün"),
+    "update_settings": MessageLookupByLibrary.simpleMessage(
+      "Ayarları Güncelle",
     ),
   };
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_feeding_app/app_theme.dart';
 import 'package:smart_feeding_app/bloc/connectivity_bloc/connectivity_bloc.dart';
 import 'package:smart_feeding_app/bloc/connectivity_bloc/connectivity_state.dart';
 import 'package:smart_feeding_app/bloc/theme_bloc.dart';
@@ -16,17 +17,19 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
-  final List<Widget> _pages = [
-    FeedSettingsPage(),
-    LogViewPage(),
-    TemperaturePage(),
-  ];
+  final ScrollController _scrollController = ScrollController();
 
-  void _onItemTapped(int index) => setState(() => _selectedIndex = index);
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final S s = S.of(context);
+    final theme = Theme.of(context);
+    final isDarkMode = theme.brightness == Brightness.dark;
 
     return BlocListener<ConnectivityBloc, ConnectivityState>(
       listener: (context, state) {
@@ -40,29 +43,99 @@ class _HomeScreenState extends State<HomeScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text(s.app_title),
+          title: Row(
+            children: [
+              Icon(Icons.pets, size: 28),
+              SizedBox(width: AppTheme.spacingSmall),
+              Text(s.app_title),
+            ],
+          ),
           actions: [
             IconButton(
-              icon: Icon(Icons.brightness_6),
+              icon: Icon(isDarkMode ? Icons.light_mode : Icons.dark_mode),
               onPressed: () => context.read<ThemeBloc>().toggleTheme(),
+              tooltip:
+                  isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode',
             ),
           ],
         ),
-        body: _pages[_selectedIndex],
+        body: SafeArea(
+          child: SingleChildScrollView(
+            controller: _scrollController,
+            physics: BouncingScrollPhysics(),
+            padding: EdgeInsets.all(AppTheme.spacing),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                // Temperature widget at the top
+                TemperatureWidget(),
+                SizedBox(height: AppTheme.spacingLarge),
+
+                // Feed settings in the middle
+                FeedSettingsWidget(),
+                SizedBox(height: AppTheme.spacingLarge),
+
+                // Expandable log view at the bottom
+                LogViewWidget(),
+              ],
+            ),
+          ),
+        ),
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _selectedIndex,
           items: [
             BottomNavigationBarItem(
+              icon: Icon(Icons.home_filled),
+              label: s.home,
+            ),
+            BottomNavigationBarItem(
               icon: Icon(Icons.schedule),
               label: s.feed,
             ),
-            BottomNavigationBarItem(icon: Icon(Icons.list), label: s.logs),
             BottomNavigationBarItem(
-                icon: Icon(Icons.thermostat), label: s.temperature),
+              icon: Icon(Icons.analytics_outlined),
+              label: s.stats,
+            ),
           ],
-          onTap: _onItemTapped,
+          onTap: (index) {
+            setState(() => _selectedIndex = index);
+            // In a real app, you might navigate to different pages
+            // For now, we'll just scroll to different sections
+            if (index == 1) {
+              // Scroll to feed settings
+              _scrollToPosition(1);
+            } else if (index == 2) {
+              // Scroll to logs
+              _scrollToPosition(2);
+            } else {
+              // Scroll to top
+              _scrollToPosition(0);
+            }
+          },
         ),
       ),
+    );
+  }
+
+  void _scrollToPosition(int section) {
+    double position = 0;
+
+    switch (section) {
+      case 0: // Top
+        position = 0;
+        break;
+      case 1: // Feed settings
+        position = 300;
+        break;
+      case 2: // Logs
+        position = 600;
+        break;
+    }
+
+    _scrollController.animateTo(
+      position,
+      duration: AppTheme.animationDuration,
+      curve: Curves.easeInOut,
     );
   }
 }

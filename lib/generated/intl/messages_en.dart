@@ -22,26 +22,46 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-    "app_title": MessageLookupByLibrary.simpleMessage("Smart Feeder"),
-    "connection_error": MessageLookupByLibrary.simpleMessage(
-      "Connection Error",
-    ),
-    "connection_error_message": MessageLookupByLibrary.simpleMessage(
-      "No internet connection. Please check your internet connection and try again.",
+    "app_title": MessageLookupByLibrary.simpleMessage("Smart Chicken Feeder"),
+    "connection_lost": MessageLookupByLibrary.simpleMessage("Connection Lost"),
+    "connection_lost_message": MessageLookupByLibrary.simpleMessage(
+      "Connection to the feeder device has been lost. Trying to reconnect...",
     ),
     "current_temperature": MessageLookupByLibrary.simpleMessage(
       "Current Temperature",
     ),
     "feed": MessageLookupByLibrary.simpleMessage("Feed"),
-    "logs": MessageLookupByLibrary.simpleMessage("Logs"),
-    "no_logs": MessageLookupByLibrary.simpleMessage("No logs available."),
-    "ok": MessageLookupByLibrary.simpleMessage("OK"),
+    "feed_now": MessageLookupByLibrary.simpleMessage("Feed Now"),
+    "feed_settings": MessageLookupByLibrary.simpleMessage("Feed Settings"),
+    "feeding_logs": MessageLookupByLibrary.simpleMessage("Feeding Logs"),
+    "first_feed_time": MessageLookupByLibrary.simpleMessage("First Feed Time"),
+    "grams": MessageLookupByLibrary.simpleMessage("grams"),
+    "home": MessageLookupByLibrary.simpleMessage("Home"),
+    "manual_feeding_initiated": MessageLookupByLibrary.simpleMessage(
+      "Manual feeding initiated!",
+    ),
+    "no_logs_available": MessageLookupByLibrary.simpleMessage(
+      "No logs available",
+    ),
+    "retry": MessageLookupByLibrary.simpleMessage("Retry"),
+    "set_feed_amount": MessageLookupByLibrary.simpleMessage("Feed Amount"),
     "set_feeding_frequency": MessageLookupByLibrary.simpleMessage(
-      "Set Feeding Frequency (times per day):",
+      "Feeding Frequency",
     ),
-    "temperature": MessageLookupByLibrary.simpleMessage("Temperature"),
-    "update_frequency": MessageLookupByLibrary.simpleMessage(
-      "Update Frequency",
+    "settings_updated": MessageLookupByLibrary.simpleMessage(
+      "Feed settings updated successfully!",
     ),
+    "stats": MessageLookupByLibrary.simpleMessage("Statistics"),
+    "temperature_high": MessageLookupByLibrary.simpleMessage(
+      "High temperature! Consider cooling the coop.",
+    ),
+    "temperature_low": MessageLookupByLibrary.simpleMessage(
+      "Low temperature! Consider heating the coop.",
+    ),
+    "temperature_optimal": MessageLookupByLibrary.simpleMessage(
+      "Optimal temperature for your chickens.",
+    ),
+    "times_per_day": MessageLookupByLibrary.simpleMessage("times/day"),
+    "update_settings": MessageLookupByLibrary.simpleMessage("Update Settings"),
   };
 }

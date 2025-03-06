@@ -1,14 +1,28 @@
 {
     "@@locale": "en",
-    "app_title": "Smart Feeder",
+    "app_title": "Smart Chicken Feeder",
+    "home": "Home",
     "feed": "Feed",
-    "logs": "Logs",
-    "temperature": "Temperature",
-    "set_feeding_frequency": "Set Feeding Frequency (times per day):",
-    "update_frequency": "Update Frequency",
-    "no_logs": "No logs available.",
+    "stats": "Statistics",
     "current_temperature": "Current Temperature",
-    "connection_error": "Connection Error",
-    "connection_error_message": "No internet connection. Please check your internet connection and try again.",
-    "ok": "OK"
-}
+    "temperature_high": "High temperature! Consider cooling the coop.",
+    "temperature_low": "Low temperature! Consider heating the coop.",
+    "temperature_optimal": "Optimal temperature for your chickens.",
+    "feed_settings": "Feed Settings",
+    "set_feeding_frequency": "Feeding Frequency",
+    "set_feed_amount": "Feed Amount",
+    "first_feed_time": "First Feed Time",
+    "update_settings": "Update Settings",
+    "feed_now": "Feed Now",
+    "feeding_logs": "Feeding Logs",
+    "no_logs_available": "No logs available",
+    "connection_lost": "Connection Lost",
+    "connection_lost_message": "Connection to the feeder device has been lost. Trying to reconnect...",
+    "retry": "Retry",
+    "times_per_day": "times/day",
+    "grams": "grams",
+    "settings_updated": "Feed settings updated successfully!",
+    "manual_feeding_initiated": "Manual feeding initiated!"
+  }
+  
+  

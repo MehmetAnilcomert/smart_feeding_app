@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_feeding_app/app_theme.dart';
 import 'package:smart_feeding_app/bloc/connectivity_bloc/connectivity_bloc.dart';
 import 'package:smart_feeding_app/bloc/connectivity_bloc/connectivity_event.dart';
 import 'package:smart_feeding_app/bloc/feeder_bloc/feeder_bloc.dart';
@@ -39,14 +40,17 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: Builder(builder: (context) {
-        final theme = context.watch<ThemeBloc>().state;
+        final themeBloc = context.watch<ThemeBloc>();
         final languageCubit = context.watch<LanguageCubit>();
         final locale = languageCubit.languageManager.locale;
 
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'Smart Feeding App',
-          theme: theme,
+          title: 'Smart Chicken Feeder',
+          theme: AppTheme.lightTheme,
+          darkTheme: AppTheme.darkTheme,
+          themeMode:
+              themeBloc.state.isDarkMode ? ThemeMode.dark : ThemeMode.light,
           locale: locale,
           localizationsDelegates: const [
             S.delegate,
