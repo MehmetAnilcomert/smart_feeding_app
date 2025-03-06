@@ -1,0 +1,11 @@
+{
+    "@@locale": "en",
+    "app_title": "Smart Feeder",
+    "feed": "Feed",
+    "logs": "Logs",
+    "temperature": "Temperature",
+    "set_feeding_frequency": "Set Feeding Frequency (times per day):",
+    "update_frequency": "Update Frequency",
+    "no_logs": "No logs available.",
+    "current_temperature": "Current Temperature"
+}

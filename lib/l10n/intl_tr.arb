@@ -1,0 +1,11 @@
+{
+    "@@locale": "tr",
+    "app_title": "Akıllı Besleyici",
+    "feed": "Besleme",
+    "logs": "Kayıtlar",
+    "temperature": "Sıcaklık",
+    "set_feeding_frequency": "Besleme Sıklığını Ayarla (günde kaç kez):",
+    "update_frequency": "Sıklığı Güncelle",
+    "no_logs": "Kayıt bulunamadı.",
+    "current_temperature": "Güncel Sıcaklık"
+}
