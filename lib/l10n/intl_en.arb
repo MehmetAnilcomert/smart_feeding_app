@@ -22,7 +22,15 @@
     "times_per_day": "times/day",
     "grams": "grams",
     "settings_updated": "Feed settings updated successfully!",
-    "manual_feeding_initiated": "Manual feeding initiated!"
-  }
+    "manual_feeding_initiated": "Manual feeding initiated!",
+    "user": "User",
+    "user_email": "user@example.com",
+    "settings": "Settings",
+    "help": "Help",
+    "logout": "Logout",
+    "dark_mode": "Dark Mode",
+    "light_mode": "Light Mode",
+    "language": "Language"
+}
   
   

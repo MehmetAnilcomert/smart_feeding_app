@@ -30,6 +30,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "current_temperature": MessageLookupByLibrary.simpleMessage(
       "Mevcut Sıcaklık",
     ),
+    "dark_mode": MessageLookupByLibrary.simpleMessage("Karanlık Mod"),
     "feed": MessageLookupByLibrary.simpleMessage("Besleme"),
     "feed_now": MessageLookupByLibrary.simpleMessage("Şimdi Besle"),
     "feed_settings": MessageLookupByLibrary.simpleMessage("Besleme Ayarları"),
@@ -38,7 +39,10 @@ class MessageLookup extends MessageLookupByLibrary {
       "İlk Besleme Zamanı",
     ),
     "grams": MessageLookupByLibrary.simpleMessage("gram"),
+    "help": MessageLookupByLibrary.simpleMessage("Yardım"),
     "home": MessageLookupByLibrary.simpleMessage("Ana Sayfa"),
+    "light_mode": MessageLookupByLibrary.simpleMessage("Aydınlık Mod"),
+    "logout": MessageLookupByLibrary.simpleMessage("Çıkış Yap"),
     "manual_feeding_initiated": MessageLookupByLibrary.simpleMessage(
       "Manuel besleme başlatıldı!",
     ),
@@ -50,6 +54,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "set_feeding_frequency": MessageLookupByLibrary.simpleMessage(
       "Besleme Sıklığı",
     ),
+    "settings": MessageLookupByLibrary.simpleMessage("Ayarlar"),
     "settings_updated": MessageLookupByLibrary.simpleMessage(
       "Besleme ayarları başarıyla güncellendi!",
     ),
@@ -67,5 +72,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "update_settings": MessageLookupByLibrary.simpleMessage(
       "Ayarları Güncelle",
     ),
+    "user": MessageLookupByLibrary.simpleMessage("Kullanıcı"),
+    "user_email": MessageLookupByLibrary.simpleMessage("kullanici@ornek.com"),
   };
 }

@@ -30,13 +30,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "current_temperature": MessageLookupByLibrary.simpleMessage(
       "Current Temperature",
     ),
+    "dark_mode": MessageLookupByLibrary.simpleMessage("Dark Mode"),
     "feed": MessageLookupByLibrary.simpleMessage("Feed"),
     "feed_now": MessageLookupByLibrary.simpleMessage("Feed Now"),
     "feed_settings": MessageLookupByLibrary.simpleMessage("Feed Settings"),
     "feeding_logs": MessageLookupByLibrary.simpleMessage("Feeding Logs"),
     "first_feed_time": MessageLookupByLibrary.simpleMessage("First Feed Time"),
     "grams": MessageLookupByLibrary.simpleMessage("grams"),
+    "help": MessageLookupByLibrary.simpleMessage("Help"),
     "home": MessageLookupByLibrary.simpleMessage("Home"),
+    "language": MessageLookupByLibrary.simpleMessage("Language"),
+    "light_mode": MessageLookupByLibrary.simpleMessage("Light Mode"),
+    "logout": MessageLookupByLibrary.simpleMessage("Logout"),
     "manual_feeding_initiated": MessageLookupByLibrary.simpleMessage(
       "Manual feeding initiated!",
     ),
@@ -48,6 +53,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "set_feeding_frequency": MessageLookupByLibrary.simpleMessage(
       "Feeding Frequency",
     ),
+    "settings": MessageLookupByLibrary.simpleMessage("Settings"),
     "settings_updated": MessageLookupByLibrary.simpleMessage(
       "Feed settings updated successfully!",
     ),
@@ -63,5 +69,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "times_per_day": MessageLookupByLibrary.simpleMessage("times/day"),
     "update_settings": MessageLookupByLibrary.simpleMessage("Update Settings"),
+    "user": MessageLookupByLibrary.simpleMessage("User"),
+    "user_email": MessageLookupByLibrary.simpleMessage("user@example.com"),
   };
 }

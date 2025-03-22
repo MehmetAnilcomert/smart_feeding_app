@@ -22,5 +22,13 @@
     "times_per_day": "kez/gün",
     "grams": "gram",
     "settings_updated": "Besleme ayarları başarıyla güncellendi!",
-    "manual_feeding_initiated": "Manuel besleme başlatıldı!"
+    "manual_feeding_initiated": "Manuel besleme başlatıldı!",
+    "user": "Kullanıcı",
+    "user_email": "kullanici@ornek.com",
+    "settings": "Ayarlar",
+    "help": "Yardım",
+    "logout": "Çıkış Yap",
+    "dark_mode": "Karanlık Mod",
+    "light_mode": "Aydınlık Mod",
+    "language": "Dil"
 }

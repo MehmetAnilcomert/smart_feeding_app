@@ -3,12 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_feeding_app/app_theme.dart';
 import 'package:smart_feeding_app/bloc/connectivity_bloc/connectivity_bloc.dart';
 import 'package:smart_feeding_app/bloc/connectivity_bloc/connectivity_state.dart';
-import 'package:smart_feeding_app/bloc/theme_bloc.dart';
 import 'package:smart_feeding_app/generated/l10n.dart';
 import 'package:smart_feeding_app/pages/feed_setting.dart';
 import 'package:smart_feeding_app/pages/log_view.dart';
 import 'package:smart_feeding_app/pages/temperature.dart';
 import 'package:smart_feeding_app/widgets/connectivity_dialog.dart';
+import 'package:smart_feeding_app/widgets/drawer.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -18,6 +18,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _selectedIndex = 0;
   final ScrollController _scrollController = ScrollController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void dispose() {
@@ -28,8 +29,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final S s = S.of(context);
-    final theme = Theme.of(context);
-    final isDarkMode = theme.brightness == Brightness.dark;
 
     return BlocListener<ConnectivityBloc, ConnectivityState>(
       listener: (context, state) {
@@ -42,22 +41,27 @@ class _HomeScreenState extends State<HomeScreen> {
         }
       },
       child: Scaffold(
+        key: _scaffoldKey,
+        endDrawer: AppDrawer(),
         appBar: AppBar(
           title: Row(
             children: [
-              Icon(Icons.pets, size: 28),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(16), // Hafif yuvarlatma
+                child: Container(
+                  width: MediaQuery.of(context).size.shortestSide * 0.12,
+                  height: MediaQuery.of(context).size.shortestSide * 0.12,
+                  color: Colors.transparent,
+                  child: Image.asset(
+                    "assets/chicken.png",
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
               SizedBox(width: AppTheme.spacingSmall),
               Text(s.app_title),
             ],
           ),
-          actions: [
-            IconButton(
-              icon: Icon(isDarkMode ? Icons.light_mode : Icons.dark_mode),
-              onPressed: () => context.read<ThemeBloc>().toggleTheme(),
-              tooltip:
-                  isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode',
-            ),
-          ],
         ),
         body: SafeArea(
           child: SingleChildScrollView(
