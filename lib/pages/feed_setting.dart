@@ -17,6 +17,7 @@ class _FeedSettingsWidgetState extends State<FeedSettingsWidget> {
   double _feedAmount = 100.0; // Default value in grams
   int _feedFrequency = 3; // Default value in times per day
   TimeOfDay _firstFeedTime = TimeOfDay(hour: 7, minute: 0);
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -29,6 +30,7 @@ class _FeedSettingsWidgetState extends State<FeedSettingsWidget> {
   void dispose() {
     _frequencyController.dispose();
     _amountController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -48,224 +50,193 @@ class _FeedSettingsWidgetState extends State<FeedSettingsWidget> {
           elevation: AppTheme.cardElevation,
           child: Padding(
             padding: EdgeInsets.all(AppTheme.spacing),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Icon(
-                      Icons.schedule,
-                      color: theme.colorScheme.primary,
-                    ),
-                    SizedBox(width: AppTheme.spacingSmall),
-                    Text(
-                      s.feed_settings,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+            // Use SingleChildScrollView to make content scrollable
+            child: SingleChildScrollView(
+              controller: _scrollController,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.schedule,
+                        color: theme.colorScheme.primary,
                       ),
-                    ),
-                  ],
-                ),
-                Divider(height: AppTheme.spacingLarge),
-
-                // Feed frequency
-                Text(
-                  s.set_feeding_frequency,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: AppTheme.spacingSmall),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: _frequencyController,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          hintText: '3',
-                          suffixText: 'times/day',
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: AppTheme.spacing,
-                            vertical: AppTheme.spacingSmall,
+                      SizedBox(width: AppTheme.spacingSmall),
+                      Expanded(
+                        child: Text(
+                          s.feed_settings,
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
                           ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                    ),
-                    SizedBox(width: AppTheme.spacing),
-                    _buildIncrementButton(
-                      onPressed: () {
-                        setState(() {
-                          _feedFrequency = (_feedFrequency + 1).clamp(1, 10);
-                          _frequencyController.text = _feedFrequency.toString();
-                        });
-                      },
-                      icon: Icons.add,
-                    ),
-                    SizedBox(width: AppTheme.spacingSmall),
-                    _buildIncrementButton(
-                      onPressed: () {
-                        setState(() {
-                          _feedFrequency = (_feedFrequency - 1).clamp(1, 10);
-                          _frequencyController.text = _feedFrequency.toString();
-                        });
-                      },
-                      icon: Icons.remove,
-                    ),
-                  ],
-                ),
-                SizedBox(height: AppTheme.spacing),
-
-                // Feed amount
-                Text(
-                  s.set_feed_amount,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
+                    ],
                   ),
-                ),
-                SizedBox(height: AppTheme.spacingSmall),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        controller: _amountController,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          hintText: '100',
-                          suffixText: 'grams',
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: AppTheme.spacing,
-                            vertical: AppTheme.spacingSmall,
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: AppTheme.spacing),
-                    _buildIncrementButton(
-                      onPressed: () {
-                        setState(() {
-                          _feedAmount = (_feedAmount + 10).clamp(10, 500);
-                          _amountController.text = _feedAmount.toString();
-                        });
-                      },
-                      icon: Icons.add,
-                    ),
-                    SizedBox(width: AppTheme.spacingSmall),
-                    _buildIncrementButton(
-                      onPressed: () {
-                        setState(() {
-                          _feedAmount = (_feedAmount - 10).clamp(10, 500);
-                          _amountController.text = _feedAmount.toString();
-                        });
-                      },
-                      icon: Icons.remove,
-                    ),
-                  ],
-                ),
-                SizedBox(height: AppTheme.spacing),
+                  Divider(height: AppTheme.spacingLarge),
 
-                // First feed time
-                Text(
-                  s.first_feed_time,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
+                  // Feed frequency - more compact layout
+                  Text(
+                    s.set_feeding_frequency,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                SizedBox(height: AppTheme.spacingSmall),
-                InkWell(
-                  onTap: () async {
-                    final TimeOfDay? picked = await showTimePicker(
-                      context: context,
-                      initialTime: _firstFeedTime,
-                    );
-                    if (picked != null && picked != _firstFeedTime) {
+                  SizedBox(height: AppTheme.spacingSmall),
+                  _buildCompactInputRow(
+                    controller: _frequencyController,
+                    suffix: 'times/day',
+                    onIncrease: () {
                       setState(() {
-                        _firstFeedTime = picked;
+                        _feedFrequency = (_feedFrequency + 1).clamp(1, 10);
+                        _frequencyController.text = _feedFrequency.toString();
                       });
-                    }
-                  },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: AppTheme.spacing,
-                      vertical: AppTheme.spacingSmall * 1.5,
-                    ),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: theme.dividerColor),
-                      borderRadius:
-                          BorderRadius.circular(AppTheme.borderRadius),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          '${_firstFeedTime.format(context)}',
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        Icon(Icons.access_time),
-                      ],
+                    },
+                    onDecrease: () {
+                      setState(() {
+                        _feedFrequency = (_feedFrequency - 1).clamp(1, 10);
+                        _frequencyController.text = _feedFrequency.toString();
+                      });
+                    },
+                  ),
+                  SizedBox(height: AppTheme.spacing),
+
+                  // Feed amount - more compact layout
+                  Text(
+                    s.set_feed_amount,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                ),
-                SizedBox(height: AppTheme.spacingLarge),
+                  SizedBox(height: AppTheme.spacingSmall),
+                  _buildCompactInputRow(
+                    controller: _amountController,
+                    suffix: 'grams',
+                    onIncrease: () {
+                      setState(() {
+                        _feedAmount = (_feedAmount + 10).clamp(10, 500);
+                        _amountController.text = _feedAmount.toString();
+                      });
+                    },
+                    onDecrease: () {
+                      setState(() {
+                        _feedAmount = (_feedAmount - 10).clamp(10, 500);
+                        _amountController.text = _feedAmount.toString();
+                      });
+                    },
+                  ),
+                  SizedBox(height: AppTheme.spacing),
 
-                // Update button
-                Center(
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      final frequency = int.tryParse(_frequencyController.text);
-                      final amount = double.tryParse(_amountController.text);
-
-                      if (frequency != null && amount != null) {
-                        context.read<FeederBloc>().add(
-                              FeedingFrequencyChangedEvent(frequency),
-                            );
-                        // In a real app, you would also update the amount and time
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content:
-                                Text('Feed settings updated successfully!'),
-                            backgroundColor: AppTheme.accentGreen,
-                          ),
-                        );
+                  // First feed time - more compact
+                  Text(
+                    s.first_feed_time,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: AppTheme.spacingSmall),
+                  InkWell(
+                    onTap: () async {
+                      final TimeOfDay? picked = await showTimePicker(
+                        context: context,
+                        initialTime: _firstFeedTime,
+                      );
+                      if (picked != null && picked != _firstFeedTime) {
+                        setState(() {
+                          _firstFeedTime = picked;
+                        });
                       }
                     },
-                    icon: Icon(Icons.save, color: theme.colorScheme.onPrimary),
-                    label: Text(s.update_settings),
-                    style: ElevatedButton.styleFrom(
+                    child: Container(
                       padding: EdgeInsets.symmetric(
-                        horizontal: AppTheme.spacing * 2,
-                        vertical: AppTheme.spacing,
+                        horizontal: AppTheme.spacing,
+                        vertical: AppTheme.spacingSmall,
+                      ),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: theme.dividerColor),
+                        borderRadius:
+                            BorderRadius.circular(AppTheme.borderRadius),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            '${_firstFeedTime.format(context)}',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                          Icon(Icons.access_time),
+                        ],
                       ),
                     ),
                   ),
-                ),
+                  SizedBox(height: AppTheme.spacingMedium),
 
-                // Manual feed button
-                SizedBox(height: AppTheme.spacing),
-                Center(
-                  child: OutlinedButton.icon(
-                    onPressed: () {
-                      // Trigger manual feeding
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text('Manual feeding initiated!'),
-                          backgroundColor: AppTheme.accentAmber,
+                  // Action buttons in a row to save space
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: ElevatedButton.icon(
+                          onPressed: () {
+                            final frequency =
+                                int.tryParse(_frequencyController.text);
+                            final amount =
+                                double.tryParse(_amountController.text);
+
+                            if (frequency != null && amount != null) {
+                              context.read<FeederBloc>().add(
+                                    FeedingFrequencyChangedEvent(frequency),
+                                  );
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                      'Feed settings updated successfully!'),
+                                  backgroundColor: AppTheme.accentGreen,
+                                ),
+                              );
+                            }
+                          },
+                          icon: Icon(Icons.save,
+                              color: theme.colorScheme.onPrimary, size: 18),
+                          label: Text(s.update_settings,
+                              style: TextStyle(fontSize: 14)),
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: AppTheme.spacingSmall,
+                              vertical: AppTheme.spacingSmall,
+                            ),
+                          ),
                         ),
-                      );
-                    },
-                    icon: Icon(Icons.pets),
-                    label: Text(s.feed_now),
-                    style: OutlinedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: AppTheme.spacing * 2,
-                        vertical: AppTheme.spacing,
                       ),
-                      side: BorderSide(color: theme.colorScheme.primary),
-                    ),
+                      SizedBox(width: AppTheme.spacingSmall),
+                      Expanded(
+                        child: OutlinedButton.icon(
+                          onPressed: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Manual feeding initiated!'),
+                                backgroundColor: AppTheme.accentAmber,
+                              ),
+                            );
+                          },
+                          icon: Icon(Icons.pets, size: 18),
+                          label:
+                              Text(s.feed_now, style: TextStyle(fontSize: 14)),
+                          style: OutlinedButton.styleFrom(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: AppTheme.spacingSmall,
+                              vertical: AppTheme.spacingSmall,
+                            ),
+                            side: BorderSide(color: theme.colorScheme.primary),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );
@@ -273,7 +244,46 @@ class _FeedSettingsWidgetState extends State<FeedSettingsWidget> {
     );
   }
 
-  Widget _buildIncrementButton({
+  // Helper method for more compact input rows
+  Widget _buildCompactInputRow({
+    required TextEditingController controller,
+    required String suffix,
+    required VoidCallback onIncrease,
+    required VoidCallback onDecrease,
+  }) {
+    return Row(
+      children: [
+        Expanded(
+          child: TextField(
+            controller: controller,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+              suffixText: suffix,
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: AppTheme.spacing,
+                vertical: AppTheme.spacingSmall / 2,
+              ),
+              isDense: true,
+            ),
+            style: TextStyle(fontSize: 14),
+          ),
+        ),
+        SizedBox(width: AppTheme.spacingSmall),
+        _buildCompactButton(
+          onPressed: onIncrease,
+          icon: Icons.add,
+        ),
+        SizedBox(width: AppTheme.spacingSmall / 2),
+        _buildCompactButton(
+          onPressed: onDecrease,
+          icon: Icons.remove,
+        ),
+      ],
+    );
+  }
+
+  // Smaller, more compact buttons
+  Widget _buildCompactButton({
     required VoidCallback onPressed,
     required IconData icon,
   }) {
@@ -284,9 +294,10 @@ class _FeedSettingsWidgetState extends State<FeedSettingsWidget> {
       ),
       child: IconButton(
         onPressed: onPressed,
-        icon: Icon(icon, color: Colors.white, size: 20),
-        padding: EdgeInsets.all(8),
-        constraints: BoxConstraints(minWidth: 36, minHeight: 36),
+        icon: Icon(icon, color: Colors.white, size: 16),
+        padding: EdgeInsets.all(4),
+        constraints: BoxConstraints(minWidth: 28, minHeight: 28),
+        visualDensity: VisualDensity.compact,
       ),
     );
   }

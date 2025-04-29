@@ -43,6 +43,7 @@ class AppTheme {
   // Spacing
   static const double spacing = 16.0;
   static const double spacingSmall = 8.0;
+  static const double spacingMedium = 16.0;
   static const double spacingLarge = 24.0;
 
   // Elevation
