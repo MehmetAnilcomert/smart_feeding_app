@@ -87,7 +87,7 @@ class _FeedSettingsWidgetState extends State<FeedSettingsWidget> {
                   SizedBox(height: AppTheme.spacingSmall),
                   _buildCompactInputRow(
                     controller: _frequencyController,
-                    suffix: 'times/day',
+                    suffix: s.times_per_day,
                     onIncrease: () {
                       setState(() {
                         _feedFrequency = (_feedFrequency + 1).clamp(1, 10);
@@ -113,7 +113,7 @@ class _FeedSettingsWidgetState extends State<FeedSettingsWidget> {
                   SizedBox(height: AppTheme.spacingSmall),
                   _buildCompactInputRow(
                     controller: _amountController,
-                    suffix: 'grams',
+                    suffix: s.grams_message,
                     onIncrease: () {
                       setState(() {
                         _feedAmount = (_feedAmount + 10).clamp(10, 500);

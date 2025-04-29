@@ -38,6 +38,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "feeding_logs": MessageLookupByLibrary.simpleMessage("Feeding Logs"),
     "first_feed_time": MessageLookupByLibrary.simpleMessage("First Feed Time"),
     "grams": MessageLookupByLibrary.simpleMessage("grams"),
+    "grams_message": MessageLookupByLibrary.simpleMessage("grams"),
     "help": MessageLookupByLibrary.simpleMessage("Help"),
     "high_temperature_warning": MessageLookupByLibrary.simpleMessage(
       "High temperature! Consider cooling the coop.",
@@ -78,6 +79,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Optimal temperature for your chickens.",
     ),
     "times_per_day": MessageLookupByLibrary.simpleMessage("times/day"),
+    "times_per_day_message": MessageLookupByLibrary.simpleMessage("times/day"),
     "tr": MessageLookupByLibrary.simpleMessage("TR"),
     "update_settings": MessageLookupByLibrary.simpleMessage("Update Settings"),
     "user": MessageLookupByLibrary.simpleMessage("User"),

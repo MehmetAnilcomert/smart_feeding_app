@@ -334,6 +334,21 @@ class S {
       args: [],
     );
   }
+
+  /// `times/day`
+  String get times_per_day_message {
+    return Intl.message(
+      'times/day',
+      name: 'times_per_day_message',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `grams`
+  String get grams_message {
+    return Intl.message('grams', name: 'grams_message', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

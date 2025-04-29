@@ -40,6 +40,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "İlk Besleme Zamanı",
     ),
     "grams": MessageLookupByLibrary.simpleMessage("gram"),
+    "grams_message": MessageLookupByLibrary.simpleMessage("gram"),
     "help": MessageLookupByLibrary.simpleMessage("Yardım"),
     "high_temperature_warning": MessageLookupByLibrary.simpleMessage(
       "Yüksek Sıcaklık! Kümesi soğutmalısın.",
@@ -80,6 +81,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Tavuklarınız için optimal sıcaklık.",
     ),
     "times_per_day": MessageLookupByLibrary.simpleMessage("kez/gün"),
+    "times_per_day_message": MessageLookupByLibrary.simpleMessage("defa/gün"),
     "tr": MessageLookupByLibrary.simpleMessage("TR"),
     "update_settings": MessageLookupByLibrary.simpleMessage(
       "Ayarları Güncelle",
