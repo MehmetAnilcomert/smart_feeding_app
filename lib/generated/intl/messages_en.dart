@@ -31,6 +31,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Current Temperature",
     ),
     "dark_mode": MessageLookupByLibrary.simpleMessage("Dark Mode"),
+    "en": MessageLookupByLibrary.simpleMessage("EN"),
     "feed": MessageLookupByLibrary.simpleMessage("Feed"),
     "feed_now": MessageLookupByLibrary.simpleMessage("Feed Now"),
     "feed_settings": MessageLookupByLibrary.simpleMessage("Feed Settings"),
@@ -38,15 +39,24 @@ class MessageLookup extends MessageLookupByLibrary {
     "first_feed_time": MessageLookupByLibrary.simpleMessage("First Feed Time"),
     "grams": MessageLookupByLibrary.simpleMessage("grams"),
     "help": MessageLookupByLibrary.simpleMessage("Help"),
+    "high_temperature_warning": MessageLookupByLibrary.simpleMessage(
+      "High temperature! Consider cooling the coop.",
+    ),
     "home": MessageLookupByLibrary.simpleMessage("Home"),
     "language": MessageLookupByLibrary.simpleMessage("Language"),
     "light_mode": MessageLookupByLibrary.simpleMessage("Light Mode"),
     "logout": MessageLookupByLibrary.simpleMessage("Logout"),
+    "low_temperature_warning": MessageLookupByLibrary.simpleMessage(
+      "Low temperature! Consider heating the coop.",
+    ),
     "manual_feeding_initiated": MessageLookupByLibrary.simpleMessage(
       "Manual feeding initiated!",
     ),
     "no_logs_available": MessageLookupByLibrary.simpleMessage(
       "No logs available",
+    ),
+    "optimal_temperature_message": MessageLookupByLibrary.simpleMessage(
+      "Optimal temperature for your chickens.",
     ),
     "retry": MessageLookupByLibrary.simpleMessage("Retry"),
     "set_feed_amount": MessageLookupByLibrary.simpleMessage("Feed Amount"),
@@ -68,6 +78,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Optimal temperature for your chickens.",
     ),
     "times_per_day": MessageLookupByLibrary.simpleMessage("times/day"),
+    "tr": MessageLookupByLibrary.simpleMessage("TR"),
     "update_settings": MessageLookupByLibrary.simpleMessage("Update Settings"),
     "user": MessageLookupByLibrary.simpleMessage("User"),
     "user_email": MessageLookupByLibrary.simpleMessage("user@example.com"),

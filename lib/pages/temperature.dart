@@ -90,7 +90,7 @@ class TemperatureWidget extends StatelessWidget {
                   ),
                   SizedBox(height: AppTheme.spacing),
                   Text(
-                    _getTemperatureMessage(temp),
+                    _getTemperatureMessage(temp, s),
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.white,
@@ -106,13 +106,13 @@ class TemperatureWidget extends StatelessWidget {
     );
   }
 
-  String _getTemperatureMessage(double temp) {
+  String _getTemperatureMessage(double temp, dynamic s) {
     if (temp >= 30.0) {
-      return 'High temperature! Consider cooling the coop.';
+      return s.high_temperature_warning;
     } else if (temp <= 15.0) {
-      return 'Low temperature! Consider heating the coop.';
+      return s.low_temprature_warning;
     } else {
-      return 'Optimal temperature for your chickens.';
+      return s.optimal_temperature_message;
     }
   }
 }

@@ -30,5 +30,10 @@
     "logout": "Çıkış Yap",
     "dark_mode": "Karanlık Mod",
     "light_mode": "Aydınlık Mod",
-    "language": "Dil"
+    "language": "Dil",
+    "en": "EN",
+    "tr": "TR",
+    "high_temperature_warning":"Yüksek Sıcaklık! Kümesi soğutmalısın.",
+    "low_temperature_warning":"Düşük sıcaklık! Kümesi ısıtmalısın.",
+    "optimal_temperature_message":"Tavuklarınız için ideal sıcaklık."
 }

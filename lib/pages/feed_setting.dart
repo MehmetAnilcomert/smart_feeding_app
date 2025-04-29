@@ -230,7 +230,7 @@ class _FeedSettingsWidgetState extends State<FeedSettingsWidget> {
                         );
                       }
                     },
-                    icon: Icon(Icons.save),
+                    icon: Icon(Icons.save, color: theme.colorScheme.onPrimary),
                     label: Text(s.update_settings),
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.symmetric(

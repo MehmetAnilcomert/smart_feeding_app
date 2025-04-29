@@ -294,6 +294,46 @@ class S {
   String get language {
     return Intl.message('Language', name: 'language', desc: '', args: []);
   }
+
+  /// `EN`
+  String get en {
+    return Intl.message('EN', name: 'en', desc: '', args: []);
+  }
+
+  /// `TR`
+  String get tr {
+    return Intl.message('TR', name: 'tr', desc: '', args: []);
+  }
+
+  /// `High temperature! Consider cooling the coop.`
+  String get high_temperature_warning {
+    return Intl.message(
+      'High temperature! Consider cooling the coop.',
+      name: 'high_temperature_warning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Low temperature! Consider heating the coop.`
+  String get low_temperature_warning {
+    return Intl.message(
+      'Low temperature! Consider heating the coop.',
+      name: 'low_temperature_warning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Optimal temperature for your chickens.`
+  String get optimal_temperature_message {
+    return Intl.message(
+      'Optimal temperature for your chickens.',
+      name: 'optimal_temperature_message',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

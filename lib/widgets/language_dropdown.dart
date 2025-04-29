@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:smart_feeding_app/app_theme.dart';
 import 'package:smart_feeding_app/bloc/language_bloc.dart';
+import 'package:smart_feeding_app/generated/l10n.dart';
 
 class LanguageDropdown extends StatelessWidget {
   const LanguageDropdown({
@@ -16,6 +17,8 @@ class LanguageDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final S s = S.of(context);
+
     return DropdownButton<AppLanguage>(
       value: currentLanguage,
       icon: Icon(
@@ -28,7 +31,7 @@ class LanguageDropdown extends StatelessWidget {
         return DropdownMenuItem<AppLanguage>(
           value: lang,
           child: Text(
-            lang == AppLanguage.en ? 'EN' : 'TR',
+            lang == AppLanguage.en ? s.en : s.tr,
             style: TextStyle(
               color: isDarkMode ? Colors.white : Colors.black87,
               fontWeight: FontWeight.w500,

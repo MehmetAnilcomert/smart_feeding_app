@@ -10,25 +10,20 @@ import 'package:smart_feeding_app/pages/temperature.dart';
 import 'package:smart_feeding_app/widgets/connectivity_dialog.dart';
 import 'package:smart_feeding_app/widgets/drawer.dart';
 
-class HomeScreen extends StatefulWidget {
+class WebHomeScreen extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _WebHomeScreenState createState() => _WebHomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _WebHomeScreenState extends State<WebHomeScreen> {
   int _selectedIndex = 0;
-  final ScrollController _scrollController = ScrollController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     final S s = S.of(context);
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double contentPadding = screenWidth * 0.02; // 2% of screen width
 
     return BlocListener<ConnectivityBloc, ConnectivityState>(
       listener: (context, state) {
@@ -47,10 +42,11 @@ class _HomeScreenState extends State<HomeScreen> {
           title: Row(
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(16), // Hafif yuvarlatma
+                borderRadius: BorderRadius.circular(16),
                 child: Container(
-                  width: MediaQuery.of(context).size.shortestSide * 0.12,
-                  height: MediaQuery.of(context).size.shortestSide * 0.12,
+                  width: MediaQuery.of(context).size.shortestSide *
+                      0.06, // Smaller for web
+                  height: MediaQuery.of(context).size.shortestSide * 0.06,
                   color: Colors.transparent,
                   child: Image.asset(
                     "assets/chicken.png",
@@ -64,23 +60,39 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         body: SafeArea(
-          child: SingleChildScrollView(
-            controller: _scrollController,
-            physics: BouncingScrollPhysics(),
-            padding: EdgeInsets.all(AppTheme.spacing),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+          child: Padding(
+            padding: EdgeInsets.all(contentPadding),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Temperature widget at the top
-                TemperatureWidget(),
-                SizedBox(height: AppTheme.spacingLarge),
+                // Left panel: Temperature and Feed Settings
+                Expanded(
+                  flex: 3,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      // Temperature widget
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.25,
+                        child: TemperatureWidget(),
+                      ),
+                      SizedBox(height: AppTheme.spacingLarge),
 
-                // Feed settings in the middle
-                FeedSettingsWidget(),
-                SizedBox(height: AppTheme.spacingLarge),
+                      // Feed settings
+                      Expanded(
+                        child: FeedSettingsWidget(),
+                      ),
+                    ],
+                  ),
+                ),
 
-                // Expandable log view at the bottom
-                LogViewWidget(),
+                SizedBox(width: AppTheme.spacingLarge),
+
+                // Right panel: Log View
+                Expanded(
+                  flex: 4,
+                  child: LogViewWidget(),
+                ),
               ],
             ),
           ),
@@ -103,43 +115,11 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
           onTap: (index) {
             setState(() => _selectedIndex = index);
-            // In a real app, you might navigate to different pages
-            // For now, we'll just scroll to different sections
-            if (index == 1) {
-              // Scroll to feed settings
-              _scrollToPosition(1);
-            } else if (index == 2) {
-              // Scroll to logs
-              _scrollToPosition(2);
-            } else {
-              // Scroll to top
-              _scrollToPosition(0);
-            }
+            // For web layout, we could implement different tab views
+            // but for now we're keeping the same navigation structure
           },
         ),
       ),
-    );
-  }
-
-  void _scrollToPosition(int section) {
-    double position = 0;
-
-    switch (section) {
-      case 0: // Top
-        position = 0;
-        break;
-      case 1: // Feed settings
-        position = 300;
-        break;
-      case 2: // Logs
-        position = 600;
-        break;
-    }
-
-    _scrollController.animateTo(
-      position,
-      duration: AppTheme.animationDuration,
-      curve: Curves.easeInOut,
     );
   }
 }

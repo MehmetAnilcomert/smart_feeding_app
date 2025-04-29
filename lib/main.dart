@@ -10,7 +10,9 @@ import 'package:smart_feeding_app/bloc/language_bloc.dart';
 import 'package:smart_feeding_app/bloc/theme_bloc.dart';
 import 'package:smart_feeding_app/generated/l10n.dart';
 import 'package:smart_feeding_app/modals/language.dart';
-import 'package:smart_feeding_app/pages/home.dart';
+import 'package:smart_feeding_app/pages/mobile_screen.dart';
+import 'package:smart_feeding_app/pages/web_screen.dart';
+import 'package:smart_feeding_app/widgets/responsive_layout.dart';
 
 void main() {
   final languageManager = LanguageManager();
@@ -59,7 +61,10 @@ class MyApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
           ],
           supportedLocales: S.delegate.supportedLocales,
-          home: HomeScreen(),
+          home: ResponsiveLayout(
+            mobileScreenLayout: MobileHomeScreen(),
+            webScreenLayout: WebHomeScreen(),
+          ),
         );
       }),
     );

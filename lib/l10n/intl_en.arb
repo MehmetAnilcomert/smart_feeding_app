@@ -30,7 +30,12 @@
     "logout": "Logout",
     "dark_mode": "Dark Mode",
     "light_mode": "Light Mode",
-    "language": "Language"
+    "language": "Language",
+    "en": "EN",
+    "tr": "TR",
+    "high_temperature_warning":"High temperature! Consider cooling the coop.",
+    "low_temperature_warning":"Low temperature! Consider heating the coop.",
+    "optimal_temperature_message":"Optimal temperature for your chickens."
 }
   
   

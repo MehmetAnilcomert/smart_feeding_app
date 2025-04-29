@@ -31,6 +31,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Mevcut Sıcaklık",
     ),
     "dark_mode": MessageLookupByLibrary.simpleMessage("Karanlık Mod"),
+    "en": MessageLookupByLibrary.simpleMessage("EN"),
     "feed": MessageLookupByLibrary.simpleMessage("Besleme"),
     "feed_now": MessageLookupByLibrary.simpleMessage("Şimdi Besle"),
     "feed_settings": MessageLookupByLibrary.simpleMessage("Besleme Ayarları"),
@@ -40,14 +41,24 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "grams": MessageLookupByLibrary.simpleMessage("gram"),
     "help": MessageLookupByLibrary.simpleMessage("Yardım"),
+    "high_temperature_warning": MessageLookupByLibrary.simpleMessage(
+      "Yüksek Sıcaklık! Kümesi soğutmalısın.",
+    ),
     "home": MessageLookupByLibrary.simpleMessage("Ana Sayfa"),
+    "language": MessageLookupByLibrary.simpleMessage("Dil"),
     "light_mode": MessageLookupByLibrary.simpleMessage("Aydınlık Mod"),
     "logout": MessageLookupByLibrary.simpleMessage("Çıkış Yap"),
+    "low_temperature_warning": MessageLookupByLibrary.simpleMessage(
+      "Düşük sıcaklık! Kümesi ısıtmalısın.",
+    ),
     "manual_feeding_initiated": MessageLookupByLibrary.simpleMessage(
       "Manuel besleme başlatıldı!",
     ),
     "no_logs_available": MessageLookupByLibrary.simpleMessage(
       "Kayıt bulunamadı",
+    ),
+    "optimal_temperature_message": MessageLookupByLibrary.simpleMessage(
+      "Tavuklarınız için ideal sıcaklık.",
     ),
     "retry": MessageLookupByLibrary.simpleMessage("Tekrar Dene"),
     "set_feed_amount": MessageLookupByLibrary.simpleMessage("Yem Miktarı"),
@@ -69,6 +80,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Tavuklarınız için optimal sıcaklık.",
     ),
     "times_per_day": MessageLookupByLibrary.simpleMessage("kez/gün"),
+    "tr": MessageLookupByLibrary.simpleMessage("TR"),
     "update_settings": MessageLookupByLibrary.simpleMessage(
       "Ayarları Güncelle",
     ),
