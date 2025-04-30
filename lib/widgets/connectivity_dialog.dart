@@ -37,7 +37,6 @@ class ConnectivityDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () {
-            // In a real app, you would try to reconnect here
             Navigator.of(context).pop();
           },
           child: Text(s.retry),

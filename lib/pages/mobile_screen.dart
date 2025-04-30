@@ -10,25 +10,10 @@ import 'package:smart_feeding_app/widgets/mobil_widgets/temperature.dart';
 import 'package:smart_feeding_app/widgets/connectivity_dialog.dart';
 import 'package:smart_feeding_app/widgets/drawer/drawer.dart';
 
-class MobileHomeScreen extends StatefulWidget {
-  @override
-  _MobileHomeScreenState createState() => _MobileHomeScreenState();
-}
-
-class _MobileHomeScreenState extends State<MobileHomeScreen> {
-  int _selectedIndex = 0;
-  final ScrollController _scrollController = ScrollController();
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
+class MobileHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final S s = S.of(context);
+    final s = S.of(context);
 
     return BlocListener<ConnectivityBloc, ConnectivityState>(
       listener: (context, state) {
@@ -41,7 +26,6 @@ class _MobileHomeScreenState extends State<MobileHomeScreen> {
         }
       },
       child: Scaffold(
-        key: _scaffoldKey,
         endDrawer: AppDrawer(),
         appBar: AppBar(
           title: Row(
@@ -65,81 +49,21 @@ class _MobileHomeScreenState extends State<MobileHomeScreen> {
         ),
         body: SafeArea(
           child: SingleChildScrollView(
-            controller: _scrollController,
             physics: BouncingScrollPhysics(),
             padding: EdgeInsets.all(AppTheme.spacing),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // Temperature widget at the top
                 TemperatureWidget(),
                 SizedBox(height: AppTheme.spacingLarge),
-
-                // Feed settings in the middle
                 FeedSettingsWidget(),
                 SizedBox(height: AppTheme.spacingLarge),
-
-                // Expandable log view at the bottom
                 LogViewWidget(),
               ],
             ),
           ),
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _selectedIndex,
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home_filled),
-              label: s.home,
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.schedule),
-              label: s.feed,
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.analytics_outlined),
-              label: s.stats,
-            ),
-          ],
-          onTap: (index) {
-            setState(() => _selectedIndex = index);
-            // In a real app, you might navigate to different pages
-            // For now, we'll just scroll to different sections
-            if (index == 1) {
-              // Scroll to feed settings
-              _scrollToPosition(1);
-            } else if (index == 2) {
-              // Scroll to logs
-              _scrollToPosition(2);
-            } else {
-              // Scroll to top
-              _scrollToPosition(0);
-            }
-          },
-        ),
       ),
-    );
-  }
-
-  void _scrollToPosition(int section) {
-    double position = 0;
-
-    switch (section) {
-      case 0: // Top
-        position = 0;
-        break;
-      case 1: // Feed settings
-        position = 300;
-        break;
-      case 2: // Logs
-        position = 600;
-        break;
-    }
-
-    _scrollController.animateTo(
-      position,
-      duration: AppTheme.animationDuration,
-      curve: Curves.easeInOut,
     );
   }
 }

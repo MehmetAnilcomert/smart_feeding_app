@@ -17,22 +17,13 @@ class WebHomeScreen extends StatefulWidget {
 }
 
 class _WebHomeScreenState extends State<WebHomeScreen> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final ScrollController _mainScrollController = ScrollController();
   bool _isLogExpanded = false;
-
-  @override
-  void dispose() {
-    _mainScrollController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     final S s = S.of(context);
     final Size screenSize = MediaQuery.of(context).size;
     final double contentPadding = screenSize.width * 0.02; // 2% of screen width
-    // Calculate a larger icon size - 8% of shortest side instead of 6%
     final double iconSize = MediaQuery.of(context).size.shortestSide * 0.08;
     final isDarkMode = Theme.of(context).brightness == Brightness.dark;
 
@@ -47,7 +38,6 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
         }
       },
       child: Scaffold(
-        key: _scaffoldKey,
         endDrawer: AppDrawer(),
         appBar: AppBar(
           backgroundColor: isDarkMode
@@ -74,7 +64,6 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
         ),
         body: SafeArea(
           child: Container(
-            // Dark gray background for the main content area in dark mode
             color: isDarkMode ? Color(0xFF303030) : null,
             child: Padding(
               padding: EdgeInsets.all(contentPadding),
@@ -91,14 +80,11 @@ class _WebHomeScreenState extends State<WebHomeScreen> {
   }
 
   Widget _buildLayout(BoxConstraints constraints) {
-    // Calculate available height (minus padding)
     final double availableHeight = constraints.maxHeight;
     final bool isWideScreen = constraints.maxWidth > 600;
 
     return CustomScrollView(
-      controller: _mainScrollController,
-      physics:
-          AlwaysScrollableScrollPhysics(), // Ensure scrolling works everywhere
+      physics: AlwaysScrollableScrollPhysics(),
       slivers: [
         // First row: Temperature and Feed Settings side by side
         SliverToBoxAdapter(
