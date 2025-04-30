@@ -5,6 +5,7 @@ import 'package:smart_feeding_app/app_theme.dart';
 import 'package:smart_feeding_app/bloc/language_bloc.dart';
 import 'package:smart_feeding_app/bloc/theme_bloc.dart';
 import 'package:smart_feeding_app/generated/l10n.dart';
+import 'package:smart_feeding_app/widgets/info_note.dart';
 import 'package:smart_feeding_app/widgets/language_dropdown.dart';
 
 class AppDrawer extends StatelessWidget {
@@ -16,19 +17,18 @@ class AppDrawer extends StatelessWidget {
     final theme = Theme.of(context);
     final isDarkMode = theme.brightness == Brightness.dark;
     final topHeight = MediaQuery.of(context).padding.top + kToolbarHeight;
+    final GlobalKey _helpIconKey = GlobalKey();
 
-    // Header gradient colors (fully opaque)
+    // Header gradient colors
     final Color headerStartColor =
         isDarkMode ? AppTheme.primaryDarkBrown : AppTheme.primaryBrown;
-    final Color headerEndColor = isDarkMode
-        ? AppTheme.primaryBrown // make fully opaque
-        : AppTheme.primaryLightBrown;
+    final Color headerEndColor =
+        isDarkMode ? AppTheme.primaryBrown : AppTheme.primaryLightBrown;
 
     return Drawer(
-      backgroundColor: headerEndColor, // extend brown behind rounded body
+      backgroundColor: headerEndColor,
       child: Column(
         children: [
-          // Brown gradient header (AppBar height)
           Container(
             height: topHeight,
             width: double.infinity,
@@ -40,8 +40,6 @@ class AppDrawer extends StatelessWidget {
               ),
             ),
           ),
-
-          // Drawer body
           Expanded(
             child: Container(
               decoration: BoxDecoration(
@@ -67,9 +65,7 @@ class AppDrawer extends StatelessWidget {
                     ),
                     child: SwitchListTile(
                       value: isDarkMode,
-                      onChanged: (value) {
-                        context.read<ThemeBloc>().toggleTheme();
-                      },
+                      onChanged: (_) => context.read<ThemeBloc>().toggleTheme(),
                       title: Text(
                         isDarkMode ? s.light_mode : s.dark_mode,
                         style: TextStyle(
@@ -77,20 +73,11 @@ class AppDrawer extends StatelessWidget {
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      secondary: Container(
-                        padding: EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: isDarkMode
-                              ? AppTheme.primaryLightBrown.withOpacity(0.2)
-                              : AppTheme.primaryBrown.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Icon(
-                          isDarkMode ? Icons.light_mode : Icons.dark_mode,
-                          color: isDarkMode
-                              ? AppTheme.primaryLightBrown
-                              : AppTheme.primaryBrown,
-                        ),
+                      secondary: Icon(
+                        isDarkMode ? Icons.light_mode : Icons.dark_mode,
+                        color: isDarkMode
+                            ? AppTheme.primaryLightBrown
+                            : AppTheme.primaryBrown,
                       ),
                     ),
                   ),
@@ -107,22 +94,12 @@ class AppDrawer extends StatelessWidget {
                     child: Builder(builder: (context) {
                       final languageCubit = context.watch<LanguageCubit>();
                       final currentLanguage = languageCubit.state;
-
                       return ListTile(
-                        leading: Container(
-                          padding: EdgeInsets.all(8),
-                          decoration: BoxDecoration(
-                            color: isDarkMode
-                                ? AppTheme.primaryLightBrown.withOpacity(0.2)
-                                : AppTheme.primaryBrown.withOpacity(0.1),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Icon(
-                            Icons.language,
-                            color: isDarkMode
-                                ? AppTheme.primaryLightBrown
-                                : AppTheme.primaryBrown,
-                          ),
+                        leading: Icon(
+                          Icons.language,
+                          color: isDarkMode
+                              ? AppTheme.primaryLightBrown
+                              : AppTheme.primaryBrown,
                         ),
                         title: Text(
                           s.language,
@@ -131,21 +108,10 @@ class AppDrawer extends StatelessWidget {
                             fontWeight: FontWeight.w500,
                           ),
                         ),
-                        trailing: Container(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                          decoration: BoxDecoration(
-                            color: isDarkMode
-                                ? AppTheme.primaryLightBrown.withOpacity(0.2)
-                                : AppTheme.primaryBrown.withOpacity(0.1),
-                            borderRadius:
-                                BorderRadius.circular(AppTheme.borderRadius),
-                          ),
-                          child: LanguageDropdown(
-                            currentLanguage: currentLanguage,
-                            isDarkMode: isDarkMode,
-                            languageCubit: languageCubit,
-                          ),
+                        trailing: LanguageDropdown(
+                          currentLanguage: currentLanguage,
+                          isDarkMode: isDarkMode,
+                          languageCubit: languageCubit,
                         ),
                       );
                     }),
@@ -160,8 +126,9 @@ class AppDrawer extends StatelessWidget {
                     ),
                   ),
 
-                  // Help item with info popup
+                  // Help item with info note
                   Container(
+                    key: ValueKey('help_tile'),
                     margin: EdgeInsets.only(bottom: 8),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
@@ -170,21 +137,13 @@ class AppDrawer extends StatelessWidget {
                           : Colors.grey.withOpacity(0.1),
                     ),
                     child: ListTile(
-                      onTap: () => _showInfoDialog(context, s),
-                      leading: Container(
-                        padding: EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: isDarkMode
-                              ? AppTheme.primaryLightBrown.withOpacity(0.2)
-                              : AppTheme.primaryBrown.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Icon(
-                          Icons.help_outline,
-                          color: isDarkMode
-                              ? AppTheme.primaryLightBrown
-                              : AppTheme.primaryBrown,
-                        ),
+                      onTap: () => InfoNoteWidget.show(context, s.help_note,
+                          anchorKey: _helpIconKey),
+                      leading: Icon(
+                        Icons.help_outline,
+                        color: isDarkMode
+                            ? AppTheme.primaryLightBrown
+                            : AppTheme.primaryBrown,
                       ),
                       title: Text(
                         s.help,
@@ -194,6 +153,8 @@ class AppDrawer extends StatelessWidget {
                         ),
                       ),
                       trailing: CircleAvatar(
+                        key:
+                            _helpIconKey, // Add the key to the exclamation mark icon
                         radius: 12,
                         backgroundColor: isDarkMode
                             ? AppTheme.primaryLightBrown
@@ -237,22 +198,6 @@ class AppDrawer extends StatelessWidget {
     );
   }
 
-  void _showInfoDialog(BuildContext context, S s) {
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        title: Text(s.help),
-        content: Text(s.help_note),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(s.ok),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget _buildMenuItem(
     BuildContext context, {
     required IconData icon,
@@ -263,7 +208,6 @@ class AppDrawer extends StatelessWidget {
   }) {
     final Color primaryColor =
         isDarkMode ? AppTheme.primaryLightBrown : AppTheme.primaryBrown;
-
     return Container(
       margin: EdgeInsets.only(bottom: 8),
       decoration: BoxDecoration(
@@ -274,19 +218,7 @@ class AppDrawer extends StatelessWidget {
       ),
       child: ListTile(
         onTap: onTap,
-        leading: Container(
-          padding: EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: isDestructive
-                ? Colors.red.withOpacity(0.1)
-                : primaryColor.withOpacity(0.1),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Icon(
-            icon,
-            color: isDestructive ? Colors.red : primaryColor,
-          ),
-        ),
+        leading: Icon(icon, color: isDestructive ? Colors.red : primaryColor),
         title: Text(
           title,
           style: TextStyle(
