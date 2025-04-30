@@ -15,104 +15,101 @@ class AppDrawer extends StatelessWidget {
     final S s = S.of(context);
     final theme = Theme.of(context);
     final isDarkMode = theme.brightness == Brightness.dark;
+    final topHeight = MediaQuery.of(context).padding.top + kToolbarHeight;
+
+    // Header gradient colors (fully opaque)
+    final Color headerStartColor =
+        isDarkMode ? AppTheme.primaryDarkBrown : AppTheme.primaryBrown;
+    final Color headerEndColor = isDarkMode
+        ? AppTheme.primaryBrown // make fully opaque
+        : AppTheme.primaryLightBrown;
 
     return Drawer(
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              isDarkMode ? AppTheme.primaryDarkBrown : AppTheme.primaryBrown,
-              isDarkMode
-                  ? AppTheme.primaryBrown.withOpacity(0.7)
-                  : AppTheme.primaryLightBrown,
-            ],
-          ),
-        ),
-        child: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).padding.top + 20, bottom: 20),
-              child: Column(
-                children: [
-                  Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color:
-                          isDarkMode ? AppTheme.cardDark : AppTheme.cardLight,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.2),
-                          blurRadius: 10,
-                          offset: Offset(0, 5),
-                        ),
-                      ],
-                    ),
-                    child: Icon(Icons.person,
-                        size: 50,
-                        color: isDarkMode
-                            ? AppTheme.primaryLightBrown
-                            : AppTheme.primaryBrown),
-                  ),
-                  SizedBox(height: 12),
-                  Text(
-                    s.user,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    s.user_email,
-                    style: TextStyle(
-                      color: Colors.white.withOpacity(0.8),
-                      fontSize: 14,
-                    ),
-                  ),
-                ],
+      backgroundColor: headerEndColor, // extend brown behind rounded body
+      child: Column(
+        children: [
+          // Brown gradient header (AppBar height)
+          Container(
+            height: topHeight,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [headerStartColor, headerEndColor],
               ),
             ),
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: isDarkMode
-                      ? AppTheme.backgroundDark
-                      : AppTheme.backgroundLight,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
-                  ),
+          ),
+
+          // Drawer body
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                color: isDarkMode
+                    ? AppTheme.backgroundDark
+                    : AppTheme.backgroundLight,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(30),
+                  topRight: Radius.circular(30),
                 ),
-                child: ListView(
-                  padding: EdgeInsets.all(15),
-                  children: [
-                    // Dark mode toggle
-                    Container(
-                      margin: EdgeInsets.only(bottom: 8),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: isDarkMode
-                            ? AppTheme.cardDark.withOpacity(0.5)
-                            : Colors.grey.withOpacity(0.1),
-                      ),
-                      child: SwitchListTile(
-                        value: isDarkMode,
-                        onChanged: (value) {
-                          context.read<ThemeBloc>().toggleTheme();
-                        },
-                        title: Text(
-                          isDarkMode ? s.light_mode : s.dark_mode,
-                          style: TextStyle(
-                            color: isDarkMode ? Colors.white : Colors.black87,
-                            fontWeight: FontWeight.w500,
-                          ),
+              ),
+              child: ListView(
+                padding: EdgeInsets.all(15),
+                children: [
+                  // Dark mode toggle
+                  Container(
+                    margin: EdgeInsets.only(bottom: 8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: isDarkMode
+                          ? AppTheme.cardDark.withOpacity(0.5)
+                          : Colors.grey.withOpacity(0.1),
+                    ),
+                    child: SwitchListTile(
+                      value: isDarkMode,
+                      onChanged: (value) {
+                        context.read<ThemeBloc>().toggleTheme();
+                      },
+                      title: Text(
+                        isDarkMode ? s.light_mode : s.dark_mode,
+                        style: TextStyle(
+                          color: isDarkMode ? Colors.white : Colors.black87,
+                          fontWeight: FontWeight.w500,
                         ),
-                        secondary: Container(
+                      ),
+                      secondary: Container(
+                        padding: EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: isDarkMode
+                              ? AppTheme.primaryLightBrown.withOpacity(0.2)
+                              : AppTheme.primaryBrown.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Icon(
+                          isDarkMode ? Icons.light_mode : Icons.dark_mode,
+                          color: isDarkMode
+                              ? AppTheme.primaryLightBrown
+                              : AppTheme.primaryBrown,
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  // Language selector
+                  Container(
+                    margin: EdgeInsets.only(bottom: 8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: isDarkMode
+                          ? AppTheme.cardDark.withOpacity(0.5)
+                          : Colors.grey.withOpacity(0.1),
+                    ),
+                    child: Builder(builder: (context) {
+                      final languageCubit = context.watch<LanguageCubit>();
+                      final currentLanguage = languageCubit.state;
+
+                      return ListTile(
+                        leading: Container(
                           padding: EdgeInsets.all(8),
                           decoration: BoxDecoration(
                             color: isDarkMode
@@ -121,120 +118,137 @@ class AppDrawer extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Icon(
-                            isDarkMode ? Icons.light_mode : Icons.dark_mode,
+                            Icons.language,
                             color: isDarkMode
                                 ? AppTheme.primaryLightBrown
                                 : AppTheme.primaryBrown,
                           ),
                         ),
+                        title: Text(
+                          s.language,
+                          style: TextStyle(
+                            color: isDarkMode ? Colors.white : Colors.black87,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        trailing: Container(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                          decoration: BoxDecoration(
+                            color: isDarkMode
+                                ? AppTheme.primaryLightBrown.withOpacity(0.2)
+                                : AppTheme.primaryBrown.withOpacity(0.1),
+                            borderRadius:
+                                BorderRadius.circular(AppTheme.borderRadius),
+                          ),
+                          child: LanguageDropdown(
+                            currentLanguage: currentLanguage,
+                            isDarkMode: isDarkMode,
+                            languageCubit: languageCubit,
+                          ),
+                        ),
+                      );
+                    }),
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Divider(
+                      color: isDarkMode
+                          ? Colors.white.withOpacity(0.1)
+                          : Colors.grey.withOpacity(0.3),
+                    ),
+                  ),
+
+                  // Help item with info popup
+                  Container(
+                    margin: EdgeInsets.only(bottom: 8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: isDarkMode
+                          ? AppTheme.cardDark.withOpacity(0.5)
+                          : Colors.grey.withOpacity(0.1),
+                    ),
+                    child: ListTile(
+                      onTap: () => _showInfoDialog(context, s),
+                      leading: Container(
+                        padding: EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: isDarkMode
+                              ? AppTheme.primaryLightBrown.withOpacity(0.2)
+                              : AppTheme.primaryBrown.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Icon(
+                          Icons.help_outline,
+                          color: isDarkMode
+                              ? AppTheme.primaryLightBrown
+                              : AppTheme.primaryBrown,
+                        ),
+                      ),
+                      title: Text(
+                        s.help,
+                        style: TextStyle(
+                          color: isDarkMode ? Colors.white : Colors.black87,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      trailing: CircleAvatar(
+                        radius: 12,
+                        backgroundColor: isDarkMode
+                            ? AppTheme.primaryLightBrown
+                            : AppTheme.primaryBrown,
+                        child: Text(
+                          '!',
+                          style: TextStyle(
+                            color: isDarkMode ? Colors.black : Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
+                  ),
 
-                    // Language selector
-                    Container(
-                      margin: EdgeInsets.only(bottom: 8),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: isDarkMode
-                            ? AppTheme.cardDark.withOpacity(0.5)
-                            : Colors.grey.withOpacity(0.1),
-                      ),
-                      child: Builder(builder: (context) {
-                        final languageCubit = context.watch<LanguageCubit>();
-                        final currentLanguage = languageCubit.state;
-
-                        return ListTile(
-                          leading: Container(
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                              color: isDarkMode
-                                  ? AppTheme.primaryLightBrown.withOpacity(0.2)
-                                  : AppTheme.primaryBrown.withOpacity(0.1),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Icon(
-                              Icons.language,
-                              color: isDarkMode
-                                  ? AppTheme.primaryLightBrown
-                                  : AppTheme.primaryBrown,
-                            ),
-                          ),
-                          title: Text(
-                            s.language,
-                            style: TextStyle(
-                              color: isDarkMode ? Colors.white : Colors.black87,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          trailing: Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 6),
-                            decoration: BoxDecoration(
-                              color: isDarkMode
-                                  ? AppTheme.primaryLightBrown.withOpacity(0.2)
-                                  : AppTheme.primaryBrown.withOpacity(0.1),
-                              borderRadius:
-                                  BorderRadius.circular(AppTheme.borderRadius),
-                            ),
-                            child: LanguageDropdown(
-                                currentLanguage: currentLanguage,
-                                isDarkMode: isDarkMode,
-                                languageCubit: languageCubit),
-                          ),
-                        );
-                      }),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: Divider(
+                      color: isDarkMode
+                          ? Colors.white.withOpacity(0.1)
+                          : Colors.grey.withOpacity(0.3),
                     ),
+                  ),
 
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Divider(
-                          color: isDarkMode
-                              ? Colors.white.withOpacity(0.1)
-                              : Colors.grey.withOpacity(0.3)),
-                    ),
-
-                    _buildMenuItem(
-                      context,
-                      icon: Icons.settings_outlined,
-                      title: s.settings,
-                      onTap: () {
-                        // Navigate to settings
-                      },
-                      isDarkMode: isDarkMode,
-                    ),
-
-                    _buildMenuItem(
-                      context,
-                      icon: Icons.help_outline,
-                      title: s.help,
-                      onTap: () {
-                        // Navigate to help
-                      },
-                      isDarkMode: isDarkMode,
-                    ),
-
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: Divider(
-                          color: isDarkMode
-                              ? Colors.white.withOpacity(0.1)
-                              : Colors.grey.withOpacity(0.3)),
-                    ),
-
-                    _buildMenuItem(
-                      context,
-                      icon: Icons.logout,
-                      title: s.logout,
-                      isDestructive: true,
-                      onTap: () => SystemNavigator.pop(),
-                      isDarkMode: isDarkMode,
-                    ),
-                  ],
-                ),
+                  // Logout item
+                  _buildMenuItem(
+                    context,
+                    icon: Icons.logout,
+                    title: s.logout,
+                    isDestructive: true,
+                    onTap: () => SystemNavigator.pop(),
+                    isDarkMode: isDarkMode,
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showInfoDialog(BuildContext context, S s) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text(s.help),
+        content: Text(s.help_note),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text(s.ok),
+          ),
+        ],
       ),
     );
   }

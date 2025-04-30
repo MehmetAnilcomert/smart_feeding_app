@@ -42,6 +42,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "grams": MessageLookupByLibrary.simpleMessage("gram"),
     "grams_message": MessageLookupByLibrary.simpleMessage("gram"),
     "help": MessageLookupByLibrary.simpleMessage("Yardım"),
+    "help_note": MessageLookupByLibrary.simpleMessage("Yardım Notu: ..."),
     "high_temperature_warning": MessageLookupByLibrary.simpleMessage(
       "Yüksek Sıcaklık! Kümesi soğutmalısın.",
     ),
@@ -58,6 +59,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "no_logs_available": MessageLookupByLibrary.simpleMessage(
       "Kayıt bulunamadı",
     ),
+    "ok": MessageLookupByLibrary.simpleMessage("Tamam"),
     "optimal_temperature_message": MessageLookupByLibrary.simpleMessage(
       "Tavuklarınız için ideal sıcaklık.",
     ),

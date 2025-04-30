@@ -37,7 +37,9 @@
     "low_temperature_warning":"Low temperature! Consider heating the coop.",
     "optimal_temperature_message":"Optimal temperature for your chickens.",
     "times_per_day_message":"times/day",
-    "grams_message":"grams"
+    "grams_message":"grams",
+    "help_note":"Help Note: ...",
+    "ok":"OK"
 }
   
   

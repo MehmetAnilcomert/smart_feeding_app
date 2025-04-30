@@ -349,6 +349,21 @@ class S {
   String get grams_message {
     return Intl.message('grams', name: 'grams_message', desc: '', args: []);
   }
+
+  /// `Help Note: ...`
+  String get help_note {
+    return Intl.message(
+      'Help Note: ...',
+      name: 'help_note',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `OK`
+  String get ok {
+    return Intl.message('OK', name: 'ok', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

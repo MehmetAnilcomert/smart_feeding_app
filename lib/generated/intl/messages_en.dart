@@ -40,6 +40,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "grams": MessageLookupByLibrary.simpleMessage("grams"),
     "grams_message": MessageLookupByLibrary.simpleMessage("grams"),
     "help": MessageLookupByLibrary.simpleMessage("Help"),
+    "help_note": MessageLookupByLibrary.simpleMessage("Help Note: ..."),
     "high_temperature_warning": MessageLookupByLibrary.simpleMessage(
       "High temperature! Consider cooling the coop.",
     ),
@@ -56,6 +57,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "no_logs_available": MessageLookupByLibrary.simpleMessage(
       "No logs available",
     ),
+    "ok": MessageLookupByLibrary.simpleMessage("OK"),
     "optimal_temperature_message": MessageLookupByLibrary.simpleMessage(
       "Optimal temperature for your chickens.",
     ),

@@ -37,5 +37,7 @@
     "low_temperature_warning":"Düşük sıcaklık! Kümesi ısıtmalısın.",
     "optimal_temperature_message":"Tavuklarınız için ideal sıcaklık.",
     "times_per_day_message":"defa/gün",
-    "grams_message":"gram"
+    "grams_message":"gram",
+    "help_note":"Yardım Notu: ...",
+    "ok":"Tamam"
 }
