@@ -8,7 +8,7 @@ import 'package:smart_feeding_app/widgets/feed_setting.dart';
 import 'package:smart_feeding_app/widgets/mobil_widgets/log_view.dart';
 import 'package:smart_feeding_app/widgets/mobil_widgets/temperature.dart';
 import 'package:smart_feeding_app/widgets/connectivity_dialog.dart';
-import 'package:smart_feeding_app/widgets/drawer.dart';
+import 'package:smart_feeding_app/widgets/drawer/drawer.dart';
 
 class MobileHomeScreen extends StatefulWidget {
   @override
