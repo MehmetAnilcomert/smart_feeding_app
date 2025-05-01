@@ -316,10 +316,10 @@ class S {
   }
 
   /// `Low temperature! Consider heating the coop.`
-  String get low_temperature_warning {
+  String get low_temprature_warning {
     return Intl.message(
       'Low temperature! Consider heating the coop.',
-      name: 'low_temperature_warning',
+      name: 'low_temprature_warning',
       desc: '',
       args: [],
     );

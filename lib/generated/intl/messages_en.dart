@@ -48,7 +48,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "language": MessageLookupByLibrary.simpleMessage("Language"),
     "light_mode": MessageLookupByLibrary.simpleMessage("Light Mode"),
     "logout": MessageLookupByLibrary.simpleMessage("Logout"),
-    "low_temperature_warning": MessageLookupByLibrary.simpleMessage(
+    "low_temprature_warning": MessageLookupByLibrary.simpleMessage(
       "Low temperature! Consider heating the coop.",
     ),
     "manual_feeding_initiated": MessageLookupByLibrary.simpleMessage(

@@ -14,23 +14,16 @@ class TemperatureWidget extends StatelessWidget {
       builder: (context, state) {
         final temp = (state is FeederDataState) ? state.temperature : 22.5;
 
-        // Determine temperature level for UI styling
         final bool isHot = temp >= 30.0;
         final bool isCold = temp <= 15.0;
 
-        // Select gradient based on temperature
-        final List<Color> gradient = isHot
+        final gradient = isHot
             ? AppTheme.temperatureGradientHot
             : isCold
                 ? AppTheme.temperatureGradientCold
                 : AppTheme.temperatureGradientWarm;
 
-        // Select icon based on temperature
-        final IconData tempIcon = isHot
-            ? Icons.thermostat
-            : isCold
-                ? Icons.ac_unit
-                : Icons.thermostat;
+        final tempIcon = isCold ? Icons.ac_unit : Icons.thermostat;
 
         return Card(
           elevation: AppTheme.cardElevation,
@@ -38,9 +31,9 @@ class TemperatureWidget extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(AppTheme.borderRadius),
               gradient: LinearGradient(
+                colors: gradient,
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: gradient,
               ),
             ),
             child: Padding(
@@ -58,11 +51,7 @@ class TemperatureWidget extends StatelessWidget {
                           color: Colors.white,
                         ),
                       ),
-                      Icon(
-                        tempIcon,
-                        color: Colors.white,
-                        size: 28,
-                      ),
+                      Icon(tempIcon, color: Colors.white, size: 28),
                     ],
                   ),
                   SizedBox(height: AppTheme.spacingLarge),
@@ -91,10 +80,7 @@ class TemperatureWidget extends StatelessWidget {
                   SizedBox(height: AppTheme.spacing),
                   Text(
                     _getTemperatureMessage(temp, s),
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                    ),
+                    style: TextStyle(fontSize: 16, color: Colors.white),
                     textAlign: TextAlign.center,
                   ),
                 ],
@@ -106,10 +92,11 @@ class TemperatureWidget extends StatelessWidget {
     );
   }
 
-  String _getTemperatureMessage(double temp, dynamic s) {
+  String _getTemperatureMessage(double temp, S s) {
     if (temp >= 30.0) {
       return s.high_temperature_warning;
     } else if (temp <= 15.0) {
+      // Düzgün getter adı:
       return s.low_temprature_warning;
     } else {
       return s.optimal_temperature_message;

@@ -34,7 +34,7 @@
     "en": "EN",
     "tr": "TR",
     "high_temperature_warning":"High temperature! Consider cooling the coop.",
-    "low_temperature_warning":"Low temperature! Consider heating the coop.",
+    "low_temprature_warning":"Low temperature! Consider heating the coop.",
     "optimal_temperature_message":"Optimal temperature for your chickens.",
     "times_per_day_message":"times/day",
     "grams_message":"grams",

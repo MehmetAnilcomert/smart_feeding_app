@@ -50,9 +50,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "language": MessageLookupByLibrary.simpleMessage("Dil"),
     "light_mode": MessageLookupByLibrary.simpleMessage("Aydınlık Mod"),
     "logout": MessageLookupByLibrary.simpleMessage("Çıkış Yap"),
-    "low_temperature_warning": MessageLookupByLibrary.simpleMessage(
-      "Düşük sıcaklık! Kümesi ısıtmalısın.",
-    ),
     "manual_feeding_initiated": MessageLookupByLibrary.simpleMessage(
       "Manuel besleme başlatıldı!",
     ),
@@ -60,9 +57,6 @@ class MessageLookup extends MessageLookupByLibrary {
       "Kayıt bulunamadı",
     ),
     "ok": MessageLookupByLibrary.simpleMessage("Tamam"),
-    "optimal_temperature_message": MessageLookupByLibrary.simpleMessage(
-      "Tavuklarınız için ideal sıcaklık.",
-    ),
     "retry": MessageLookupByLibrary.simpleMessage("Tekrar Dene"),
     "set_feed_amount": MessageLookupByLibrary.simpleMessage("Yem Miktarı"),
     "set_feeding_frequency": MessageLookupByLibrary.simpleMessage(

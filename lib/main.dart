@@ -30,8 +30,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<FeederBloc>(
-          create: (context) => FeederBloc()..add(FeederConnectEvent()),
-        ),
+            create: (context) => FeederBloc(baseUrl: "http://10.0.2.2:3000")),
         BlocProvider<ThemeBloc>(
           create: (_) => ThemeBloc(),
         ),
