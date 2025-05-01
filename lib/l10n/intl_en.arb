@@ -36,10 +36,12 @@
     "high_temperature_warning":"High temperature! Consider cooling the coop.",
     "low_temprature_warning":"Low temperature! Consider heating the coop.",
     "optimal_temperature_message":"Optimal temperature for your chickens.",
-    "times_per_day_message":"times/day",
+    "times_per_day_message":"hours",
     "grams_message":"grams",
     "help_note":"Help Note: ...",
-    "ok":"OK"
+    "ok":"OK",
+    "feeding_interval_minutes":"minutes",
+    "last_feed_time":"Last Feed Hour"
 }
   
   

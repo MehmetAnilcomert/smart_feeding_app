@@ -19,7 +19,7 @@
     "connection_lost": "Bağlantı Kesildi",
     "connection_lost_message": "Besleyici cihazla bağlantı kesildi. Yeniden bağlanmaya çalışılıyor...",
     "retry": "Tekrar Dene",
-    "times_per_day": "kez/gün",
+    "times_per_day": "saat",
     "grams": "gram",
     "settings_updated": "Besleme ayarları başarıyla güncellendi!",
     "manual_feeding_initiated": "Manuel besleme başlatıldı!",
@@ -39,5 +39,7 @@
     "times_per_day_message":"defa/gün",
     "grams_message":"gram",
     "help_note":"Yardım Notu: ...",
-    "ok":"Tamam"
+    "ok":"Tamam",
+    "feeding_interval_minutes":"dakika",
+    "last_feed_time":"Son Besleme Saati"
 }

@@ -40,10 +40,19 @@ class FeedSettingsWidget extends StatelessWidget {
                 ),
                 Divider(height: AppTheme.spacingLarge),
                 FrequencyInput(
-                  frequency: s.feedingFrequency,
+                  suffix: S.of(context).times_per_day,
+                  frequency: s.feedingFrequencyHour,
                   onChanged: (f) => context
                       .read<FeederBloc>()
                       .add(FeedingFrequencyChangedEvent(f)),
+                ),
+                SizedBox(height: AppTheme.spacing),
+                FrequencyInput(
+                  suffix: S.of(context).feeding_interval_minutes,
+                  frequency: s.feedingFrequencyMinute,
+                  onChanged: (f) => context
+                      .read<FeederBloc>()
+                      .add(FeedingFrequencyMinuteChangedEvent(f)),
                 ),
                 SizedBox(height: AppTheme.spacing),
                 AmountInput(
@@ -53,10 +62,19 @@ class FeedSettingsWidget extends StatelessWidget {
                 ),
                 SizedBox(height: AppTheme.spacing),
                 TimePickerInput(
-                  time: s.firstFeedTime,
+                  label: S.of(context).first_feed_time,
+                  time: s.firstFeedHour,
                   onTimeSelected: (t) => context
                       .read<FeederBloc>()
                       .add(FirstFeedTimeChangedEvent(t)),
+                ),
+                SizedBox(height: AppTheme.spacing),
+                TimePickerInput(
+                  label: S.of(context).last_feed_time,
+                  time: s.lastFeedHour ?? TimeOfDay.now(),
+                  onTimeSelected: (t) => context
+                      .read<FeederBloc>()
+                      .add(LastFeedTimeChangedEvent(t)),
                 ),
                 SizedBox(height: AppTheme.spacingLarge),
                 ActionButtons(isSaving: s.isSaving),

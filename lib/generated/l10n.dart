@@ -335,10 +335,10 @@ class S {
     );
   }
 
-  /// `times/day`
+  /// `hours`
   String get times_per_day_message {
     return Intl.message(
-      'times/day',
+      'hours',
       name: 'times_per_day_message',
       desc: '',
       args: [],
@@ -363,6 +363,26 @@ class S {
   /// `OK`
   String get ok {
     return Intl.message('OK', name: 'ok', desc: '', args: []);
+  }
+
+  /// `minutes`
+  String get feeding_interval_minutes {
+    return Intl.message(
+      'minutes',
+      name: 'feeding_interval_minutes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last Feed Hour`
+  String get last_feed_time {
+    return Intl.message(
+      'Last Feed Hour',
+      name: 'last_feed_time',
+      desc: '',
+      args: [],
+    );
   }
 }
 

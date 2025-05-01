@@ -11,6 +11,11 @@ class FeedingFrequencyChangedEvent extends FeederEvent {
   FeedingFrequencyChangedEvent(this.frequency);
 }
 
+class FeedingFrequencyMinuteChangedEvent extends FeederEvent {
+  final int minute;
+  FeedingFrequencyMinuteChangedEvent(this.minute);
+}
+
 class FeedAmountChangedEvent extends FeederEvent {
   final double amount;
   FeedAmountChangedEvent(this.amount);
@@ -19,6 +24,11 @@ class FeedAmountChangedEvent extends FeederEvent {
 class FirstFeedTimeChangedEvent extends FeederEvent {
   final TimeOfDay time;
   FirstFeedTimeChangedEvent(this.time);
+}
+
+class LastFeedTimeChangedEvent extends FeederEvent {
+  final TimeOfDay lastFeedTime;
+  LastFeedTimeChangedEvent(this.lastFeedTime);
 }
 
 class SaveSettingsEvent extends FeederEvent {}

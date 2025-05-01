@@ -35,6 +35,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "feed": MessageLookupByLibrary.simpleMessage("Besleme"),
     "feed_now": MessageLookupByLibrary.simpleMessage("Şimdi Besle"),
     "feed_settings": MessageLookupByLibrary.simpleMessage("Besleme Ayarları"),
+    "feeding_interval_minutes": MessageLookupByLibrary.simpleMessage("dakika"),
     "feeding_logs": MessageLookupByLibrary.simpleMessage("Besleme Kayıtları"),
     "first_feed_time": MessageLookupByLibrary.simpleMessage(
       "İlk Besleme Zamanı",
@@ -48,6 +49,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "home": MessageLookupByLibrary.simpleMessage("Ana Sayfa"),
     "language": MessageLookupByLibrary.simpleMessage("Dil"),
+    "last_feed_time": MessageLookupByLibrary.simpleMessage("Son Besleme Saati"),
     "light_mode": MessageLookupByLibrary.simpleMessage("Aydınlık Mod"),
     "logout": MessageLookupByLibrary.simpleMessage("Çıkış Yap"),
     "manual_feeding_initiated": MessageLookupByLibrary.simpleMessage(
@@ -76,7 +78,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "temperature_optimal": MessageLookupByLibrary.simpleMessage(
       "Tavuklarınız için optimal sıcaklık.",
     ),
-    "times_per_day": MessageLookupByLibrary.simpleMessage("kez/gün"),
+    "times_per_day": MessageLookupByLibrary.simpleMessage("saat"),
     "times_per_day_message": MessageLookupByLibrary.simpleMessage("defa/gün"),
     "tr": MessageLookupByLibrary.simpleMessage("TR"),
     "update_settings": MessageLookupByLibrary.simpleMessage(

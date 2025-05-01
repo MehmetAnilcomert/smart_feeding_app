@@ -10,8 +10,10 @@ import 'feeder_state.dart';
 
 class FeederBloc extends Bloc<FeederEvent, FeederState> {
   static const _kFreqKey = 'feedingFrequency';
+  static const _kFreqMinKey = 'feedingFrequencyMinute';
   static const _kAmtKey = 'feedAmount';
   static const _kTimeKey = 'firstFeedTime';
+  static const _kLastTimeKey = 'lastFeedTime';
 
   final FlutterLocalNotificationsPlugin _notif =
       FlutterLocalNotificationsPlugin();
@@ -25,12 +27,32 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
     on<ManualFeedEvent>(_onManualFeed);
     on<FeederStatusFetchEvent>(_onFetchStatus);
 
-    _init();
-  }
+    // Eksik event handler'lar burada tanımlanıyor:
+    on<FeedingFrequencyChangedEvent>((event, emit) {
+      final s = state as FeederDataState;
+      emit(s.copyWith(feedingFrequencyHour: event.frequency));
+    });
 
-  Future<void> _init() async {
-    add(LoadSettingsEvent());
-    add(FeederStatusFetchEvent());
+    on<FeedAmountChangedEvent>((event, emit) {
+      final s = state as FeederDataState;
+      emit(s.copyWith(feedAmount: event.amount));
+    });
+
+    on<FirstFeedTimeChangedEvent>((event, emit) {
+      final s = state as FeederDataState;
+      emit(s.copyWith(firstFeedHour: event.time));
+    });
+
+    on<LastFeedTimeChangedEvent>((event, emit) {
+      final s = state as FeederDataState;
+      emit(s.copyWith(lastFeedHour: event.lastFeedTime));
+    });
+
+    // Eğer minute field'ı da değiştirilecekse (eklenmişse):
+    on<FeedingFrequencyMinuteChangedEvent>((event, emit) {
+      final s = state as FeederDataState;
+      emit(s.copyWith(feedingFrequencyMinute: event.minute));
+    });
   }
 
   Future<void> _onLoadSettings(
@@ -38,20 +60,32 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
     final prefs = await SharedPreferences.getInstance();
     final s = state as FeederDataState;
 
-    final freq = prefs.getInt(_kFreqKey) ?? s.feedingFrequency;
+    final freq = prefs.getInt(_kFreqKey) ?? s.feedingFrequencyHour;
+    final freqMin = prefs.getInt(_kFreqMinKey) ?? s.feedingFrequencyMinute;
     final amt = prefs.getDouble(_kAmtKey) ?? s.feedAmount;
-    final tstr = prefs.getString(_kTimeKey);
-    final time = tstr != null
+
+    final firstStr = prefs.getString(_kTimeKey);
+    final firstTime = firstStr != null
         ? TimeOfDay(
-            hour: int.parse(tstr.split(':')[0]),
-            minute: int.parse(tstr.split(':')[1]),
+            hour: int.parse(firstStr.split(':')[0]),
+            minute: int.parse(firstStr.split(':')[1]),
           )
-        : s.firstFeedTime;
+        : s.firstFeedHour;
+
+    final lastStr = prefs.getString(_kLastTimeKey);
+    final lastTime = lastStr != null
+        ? TimeOfDay(
+            hour: int.parse(lastStr.split(':')[0]),
+            minute: int.parse(lastStr.split(':')[1]),
+          )
+        : s.lastFeedHour;
 
     emit(s.copyWith(
-      feedingFrequency: freq,
+      feedingFrequencyHour: freq,
+      feedingFrequencyMinute: freqMin,
       feedAmount: amt,
-      firstFeedTime: time,
+      firstFeedHour: firstTime,
+      lastFeedHour: lastTime,
     ));
   }
 
@@ -61,16 +95,14 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
     emit(s.copyWith(isSaving: true));
 
     try {
-      // 1) /set-interval endpoint
       final resp = await _api.setInterval(
-        hourValue: s.feedingFrequency, // örneğin frekansı kullanıyoruz
-        minuteValue: 0, // Burayı ihtiyacınıza göre ayarlayın
-        startHour: s.firstFeedTime.hour,
-        endHour: (s.firstFeedTime.hour + 12) % 24, // örnek
+        hourValue: s.feedingFrequencyHour,
+        minuteValue: s.feedingFrequencyMinute,
+        startHour: s.firstFeedHour.hour,
+        endHour: s.lastFeedHour?.hour ?? ((s.firstFeedHour.hour + 12) % 24),
         amount: s.feedAmount,
       );
 
-      // Başarılı değilse Snackbar veya bildirim gönderebilirsiniz
       if (!resp.success) {
         _notif.show(
             1,
@@ -81,14 +113,20 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
                     importance: Importance.high)));
       }
 
-      // 2) Local kaydetme
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setInt(_kFreqKey, s.feedingFrequency);
+      await prefs.setInt(_kFreqKey, s.feedingFrequencyHour);
+      await prefs.setInt(_kFreqMinKey, s.feedingFrequencyMinute);
       await prefs.setDouble(_kAmtKey, s.feedAmount);
-      final ts = s.firstFeedTime.hour.toString().padLeft(2, '0') +
-          ':' +
-          s.firstFeedTime.minute.toString().padLeft(2, '0');
-      await prefs.setString(_kTimeKey, ts);
+
+      final firstStr =
+          '${s.firstFeedHour.hour.toString().padLeft(2, '0')}:${s.firstFeedHour.minute.toString().padLeft(2, '0')}';
+      await prefs.setString(_kTimeKey, firstStr);
+
+      if (s.lastFeedHour != null) {
+        final lastStr =
+            '${s.lastFeedHour!.hour.toString().padLeft(2, '0')}:${s.lastFeedHour!.minute.toString().padLeft(2, '0')}';
+        await prefs.setString(_kLastTimeKey, lastStr);
+      }
     } catch (err) {
       _notif.show(
           2,
@@ -108,7 +146,6 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
     final s = state as FeederDataState;
     try {
       final resp = await _api.triggerManualFeed(amount: s.feedAmount);
-      // Bildirimle geri bildirim verebilirsiniz:
       _notif.show(
           3,
           resp.success ? 'Feeding' : 'Error',
@@ -137,7 +174,9 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
 
       emit(s.copyWith(
         temperature: status.temperature ?? s.temperature,
-        // istersen humidity, esp32Connected vs. ekle
+        humidity: status.humidity ?? s.humidity,
+        esp32Connected: status.esp32Connected,
+        serverTime: status.serverTime,
       ));
     } catch (_) {/* ignore */}
   }
