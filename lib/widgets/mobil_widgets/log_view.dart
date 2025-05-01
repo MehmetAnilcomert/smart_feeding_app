@@ -13,82 +13,95 @@ class LogViewWidget extends StatelessWidget {
     final s = S.of(context);
     final theme = Theme.of(context);
 
-    return BlocProvider<LogExpandCubit>(
-      create: (_) => LogExpandCubit(),
-      child: BlocBuilder<FeederBloc, FeederState>(
-        builder: (context, feederState) {
-          // Örnek log listesi
-          final logs = <Map<String, dynamic>>[
-            {
-              'timestamp': DateTime.now().subtract(Duration(minutes: 30)),
-              'event': 'Feeding completed',
-              'details': 'Dispensed 100g of feed',
-              'type': 'success',
-            },
-            // ... diğer loglar
-          ];
+    return BlocBuilder<FeederBloc, FeederState>(
+      builder: (context, feederState) {
+        // Örnek log listesi
+        final logs = <Map<String, dynamic>>[
+          {
+            'timestamp': DateTime.now().subtract(Duration(minutes: 30)),
+            'event': 'Feeding completed',
+            'details': 'Dispensed 100g of feed',
+            'type': 'success',
+          },
+          {
+            'timestamp': DateTime.now().subtract(Duration(hours: 2)),
+            'event': 'Temperature alert',
+            'details': 'Temperature reached 32°C',
+            'type': 'warning',
+          },
+          {
+            'timestamp': DateTime.now().subtract(Duration(hours: 5)),
+            'event': 'Feeding completed',
+            'details': 'Dispensed 100g of feed',
+            'type': 'success',
+          },
+          {
+            'timestamp': DateTime.now().subtract(Duration(hours: 8)),
+            'event': 'System check',
+            'details': 'All systems operational',
+            'type': 'info',
+          },
+          {
+            'timestamp': DateTime.now().subtract(Duration(hours: 12)),
+            'event': 'Feeding completed',
+            'details': 'Dispensed 100g of feed',
+            'type': 'success',
+          },
+        ];
 
-          return Card(
-            elevation: AppTheme.cardElevation,
-            child: Column(
-              children: [
-                InkWell(
-                  onTap: () => context.read<LogExpandCubit>().toggle(),
-                  child: Padding(
-                    padding: EdgeInsets.all(AppTheme.spacing),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.list_alt,
-                              color: theme.colorScheme.primary,
+        return Card(
+          elevation: AppTheme.cardElevation,
+          child: Column(
+            children: [
+              InkWell(
+                onTap: () => context.read<LogExpandCubit>().toggle(),
+                child: Padding(
+                  padding: EdgeInsets.all(AppTheme.spacing),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Icon(Icons.list_alt,
+                              color: theme.colorScheme.primary),
+                          SizedBox(width: AppTheme.spacingSmall),
+                          Text(
+                            s.feeding_logs,
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
                             ),
-                            SizedBox(width: AppTheme.spacingSmall),
-                            Text(
-                              s.feeding_logs,
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
-                        // Cubit’in state’ine bağlı ikon
-                        BlocBuilder<LogExpandCubit, bool>(
-                          builder: (context, isExpanded) {
-                            return Icon(
-                              isExpanded
-                                  ? Icons.expand_less
-                                  : Icons.expand_more,
-                              color: theme.colorScheme.primary,
-                            );
-                          },
-                        ),
-                      ],
-                    ),
+                          ),
+                        ],
+                      ),
+                      BlocBuilder<LogExpandCubit, bool>(
+                        builder: (context, isExpanded) {
+                          return Icon(
+                            isExpanded ? Icons.expand_less : Icons.expand_more,
+                            color: theme.colorScheme.primary,
+                          );
+                        },
+                      ),
+                    ],
                   ),
                 ),
-
-                // İçeriği Cubit’e göre göster/gizle
-                BlocBuilder<LogExpandCubit, bool>(
-                  builder: (context, isExpanded) {
-                    return AnimatedCrossFade(
-                      firstChild: SizedBox.shrink(),
-                      secondChild: _buildLogsList(logs),
-                      crossFadeState: isExpanded
-                          ? CrossFadeState.showSecond
-                          : CrossFadeState.showFirst,
-                      duration: AppTheme.animationDuration,
-                    );
-                  },
-                ),
-              ],
-            ),
-          );
-        },
-      ),
+              ),
+              BlocBuilder<LogExpandCubit, bool>(
+                builder: (context, isExpanded) {
+                  return AnimatedCrossFade(
+                    firstChild: SizedBox.shrink(),
+                    secondChild: _buildLogsList(logs),
+                    crossFadeState: isExpanded
+                        ? CrossFadeState.showSecond
+                        : CrossFadeState.showFirst,
+                    duration: AppTheme.animationDuration,
+                  );
+                },
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -101,8 +114,8 @@ class LogViewWidget extends StatelessWidget {
               child: Center(child: Text('No logs available')),
             )
           : ListView.separated(
-              shrinkWrap: true,
               physics: BouncingScrollPhysics(),
+              shrinkWrap: true,
               itemCount: logs.length,
               separatorBuilder: (_, __) => Divider(height: 1),
               itemBuilder: (context, idx) {
