@@ -32,6 +32,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "dark_mode": MessageLookupByLibrary.simpleMessage("Dark Mode"),
     "en": MessageLookupByLibrary.simpleMessage("EN"),
+    "error": MessageLookupByLibrary.simpleMessage("Error"),
     "feed": MessageLookupByLibrary.simpleMessage("Feed"),
     "feed_now": MessageLookupByLibrary.simpleMessage("Feed Now"),
     "feed_settings": MessageLookupByLibrary.simpleMessage("Feed Settings"),
@@ -58,6 +59,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "no_logs_available": MessageLookupByLibrary.simpleMessage(
       "No logs available",
+    ),
+    "notConnected": MessageLookupByLibrary.simpleMessage(
+      "Could not connect to the device. Please check your device.",
     ),
     "ok": MessageLookupByLibrary.simpleMessage("OK"),
     "optimal_temperature_message": MessageLookupByLibrary.simpleMessage(

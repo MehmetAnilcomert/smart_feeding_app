@@ -27,7 +27,6 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
     on<ManualFeedEvent>(_onManualFeed);
     on<FeederStatusFetchEvent>(_onFetchStatus);
 
-    // Eksik event handler'lar burada tanımlanıyor:
     on<FeedingFrequencyChangedEvent>((event, emit) {
       final s = state as FeederDataState;
       emit(s.copyWith(feedingFrequencyHour: event.frequency));
@@ -48,10 +47,19 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
       emit(s.copyWith(lastFeedHour: event.lastFeedTime));
     });
 
-    // Eğer minute field'ı da değiştirilecekse (eklenmişse):
     on<FeedingFrequencyMinuteChangedEvent>((event, emit) {
       final s = state as FeederDataState;
       emit(s.copyWith(feedingFrequencyMinute: event.minute));
+    });
+
+    on<FeedErrorEvent>((event, emit) async {
+      final currentState = state;
+      emit(FeedErrorState(event.messageCode));
+
+      await Future.delayed(Duration(seconds: 3));
+      if (currentState is FeederDataState) {
+        emit(currentState);
+      }
     });
   }
 
@@ -146,6 +154,7 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
     final s = state as FeederDataState;
     try {
       final resp = await _api.triggerManualFeed(amount: s.feedAmount);
+      print("${resp} response");
       _notif.show(
           3,
           resp.success ? 'Feeding' : 'Error',
@@ -154,13 +163,7 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
               android: AndroidNotificationDetails('channel', 'manual_feed',
                   importance: Importance.high)));
     } catch (err) {
-      _notif.show(
-          4,
-          'Feed Error',
-          err.toString(),
-          NotificationDetails(
-              android: AndroidNotificationDetails('channel', 'error',
-                  importance: Importance.high)));
+      add(FeedErrorEvent(1));
     }
   }
 

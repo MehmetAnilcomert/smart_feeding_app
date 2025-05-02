@@ -41,7 +41,9 @@
     "help_note":"Help Note: ...",
     "ok":"OK",
     "feeding_interval_minutes":"minutes",
-    "last_feed_time":"Last Feed Hour"
+    "last_feed_time":"Last Feed Hour",
+    "notConnected": "Could not connect to the device. Please check your device.",
+    "error" : "Error"
 }
   
   

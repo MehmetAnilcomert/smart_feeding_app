@@ -41,5 +41,7 @@
     "help_note":"Yardım Notu: ...",
     "ok":"Tamam",
     "feeding_interval_minutes":"dakika",
-    "last_feed_time":"Son Besleme Saati"
+    "last_feed_time":"Son Besleme Saati",
+    "notConnected": "Cihaza bağlanılamadı. Lütfen cihazınızı kontrol edin.",
+    "error": "Hata"
 }

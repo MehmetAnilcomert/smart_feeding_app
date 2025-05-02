@@ -5,7 +5,6 @@ import 'package:smart_feeding_app/app_theme.dart';
 import 'package:smart_feeding_app/bloc/connectivity_bloc/connectivity_bloc.dart';
 import 'package:smart_feeding_app/bloc/connectivity_bloc/connectivity_event.dart';
 import 'package:smart_feeding_app/bloc/feeder_bloc/feeder_bloc.dart';
-import 'package:smart_feeding_app/bloc/feeder_bloc/feeder_event.dart';
 import 'package:smart_feeding_app/bloc/language_bloc.dart';
 import 'package:smart_feeding_app/bloc/log_expand.dart';
 import 'package:smart_feeding_app/bloc/theme_bloc.dart';

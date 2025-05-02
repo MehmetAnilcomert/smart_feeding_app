@@ -384,6 +384,21 @@ class S {
       args: [],
     );
   }
+
+  /// `Could not connect to the device. Please check your device.`
+  String get notConnected {
+    return Intl.message(
+      'Could not connect to the device. Please check your device.',
+      name: 'notConnected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error`
+  String get error {
+    return Intl.message('Error', name: 'error', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

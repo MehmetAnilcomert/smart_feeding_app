@@ -74,3 +74,8 @@ class FeederDataState extends FeederState {
     );
   }
 }
+
+class FeedErrorState extends FeederState {
+  final int messageCode;
+  const FeedErrorState(this.messageCode);
+}

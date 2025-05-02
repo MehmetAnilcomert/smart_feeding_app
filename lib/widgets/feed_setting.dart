@@ -7,13 +7,19 @@ import 'package:smart_feeding_app/bloc/feeder_bloc/feeder_state.dart';
 import 'package:smart_feeding_app/generated/l10n.dart';
 import 'package:smart_feeding_app/widgets/feed_settings/action_buttons.dart';
 import 'package:smart_feeding_app/widgets/feed_settings/amount_input.dart';
+import 'package:smart_feeding_app/widgets/feed_settings/feed_error_dialog.dart';
 import 'package:smart_feeding_app/widgets/feed_settings/frequency_input.dart';
 import 'package:smart_feeding_app/widgets/feed_settings/time_picker.dart';
 
 class FeedSettingsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FeederBloc, FeederState>(
+    return BlocConsumer<FeederBloc, FeederState>(
+      listener: (context, state) {
+        if (state is FeedErrorState) {
+          FeedErrorDialog.show(context, state.messageCode);
+        }
+      },
       builder: (context, state) {
         final s = state is FeederDataState ? state : FeederDataState.initial();
 

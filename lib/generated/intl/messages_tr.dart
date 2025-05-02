@@ -32,6 +32,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "dark_mode": MessageLookupByLibrary.simpleMessage("Karanlık Mod"),
     "en": MessageLookupByLibrary.simpleMessage("EN"),
+    "error": MessageLookupByLibrary.simpleMessage("Hata"),
     "feed": MessageLookupByLibrary.simpleMessage("Besleme"),
     "feed_now": MessageLookupByLibrary.simpleMessage("Şimdi Besle"),
     "feed_settings": MessageLookupByLibrary.simpleMessage("Besleme Ayarları"),
@@ -57,6 +58,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "no_logs_available": MessageLookupByLibrary.simpleMessage(
       "Kayıt bulunamadı",
+    ),
+    "notConnected": MessageLookupByLibrary.simpleMessage(
+      "Cihaza bağlanılamadı. Lütfen cihazınızı kontrol edin.",
     ),
     "ok": MessageLookupByLibrary.simpleMessage("Tamam"),
     "retry": MessageLookupByLibrary.simpleMessage("Tekrar Dene"),

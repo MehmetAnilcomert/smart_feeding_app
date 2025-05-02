@@ -39,10 +39,7 @@ class FeederApiService {
     final uri = Uri.parse('$baseUrl/feed').replace(queryParameters: {
       'amount': amount.toString(),
     });
-    print('triggerManualFeed uri: $uri');
-    print('triggerManualFeed amount: $amount');
     final res = await _http.get(uri);
-    print('triggerManualFeed response: ${res.body}');
     if (res.statusCode != 200) {
       throw Exception('triggerManualFeed failed: ${res.statusCode}');
     }

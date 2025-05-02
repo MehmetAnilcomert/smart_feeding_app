@@ -43,3 +43,8 @@ class FeederDataReceivedEvent extends FeederEvent {
 class FeederDisconnectEvent extends FeederEvent {}
 
 class FeederStatusFetchEvent extends FeederEvent {}
+
+class FeedErrorEvent extends FeederEvent {
+  final int messageCode;
+  FeedErrorEvent(this.messageCode);
+}
