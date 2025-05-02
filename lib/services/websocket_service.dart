@@ -1,32 +1,29 @@
-import 'dart:io';
+import 'dart:convert';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 class WebSocketService {
-  final Function(dynamic) onData;
-  final Function onError;
-  WebSocket? _socket;
-  final String url =
-      'ws://example.com'; // Replace with your ESP32 WebSocket URL
+  final String url;
+  late WebSocketChannel _channel;
 
-  WebSocketService({required this.onData, required this.onError});
+  WebSocketService({required this.url});
 
-  Future<void> connect() async {
-    try {
-      _socket = await WebSocket.connect(url);
-      _socket!.listen(
-        onData,
-        onError: (_) => onError(),
-        onDone: () => onError(),
-      );
-    } catch (e) {
-      onError();
-    }
-  }
-
-  void send(String data) {
-    _socket?.add(data);
+  void connect(void Function(Map<String, dynamic>) onData) {
+    _channel = WebSocketChannel.connect(Uri.parse(url));
+    _channel.stream.listen((message) {
+      final data = jsonDecode(message);
+      onData(data);
+    }, onError: (error) {
+      print('WebSocket error: $error');
+    }, onDone: () {
+      print('WebSocket connection closed');
+    });
   }
 
   void disconnect() {
-    _socket?.close();
+    _channel.sink.close();
+  }
+
+  void send(Map<String, dynamic> data) {
+    _channel.sink.add(jsonEncode(data));
   }
 }

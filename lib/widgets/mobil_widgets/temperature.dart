@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_feeding_app/app_theme.dart';
-import 'package:smart_feeding_app/bloc/feeder_bloc/feeder_bloc.dart';
-import 'package:smart_feeding_app/bloc/feeder_bloc/feeder_state.dart';
+import 'package:smart_feeding_app/bloc/sensor_bloc/sensor_state.dart';
 import 'package:smart_feeding_app/generated/l10n.dart';
+import 'package:smart_feeding_app/bloc/sensor_bloc/sensor_bloc.dart';
 
 class TemperatureWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final S s = S.of(context);
+    final s = S.of(context);
 
-    return BlocBuilder<FeederBloc, FeederState>(
+    return BlocBuilder<SensorBloc, SensorState>(
       builder: (context, state) {
-        final temp = (state is FeederDataState) ? state.temperature : 22.5;
+        final temp = state.temperature ?? 0.0;
 
         final bool isHot = temp >= 30.0;
         final bool isCold = temp <= 15.0;
@@ -96,7 +96,6 @@ class TemperatureWidget extends StatelessWidget {
     if (temp >= 30.0) {
       return s.high_temperature_warning;
     } else if (temp <= 15.0) {
-      // Düzgün getter adı:
       return s.low_temprature_warning;
     } else {
       return s.optimal_temperature_message;

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:smart_feeding_app/modals/general_response.dart';
 import 'package:smart_feeding_app/modals/status_response.dart';
@@ -16,16 +17,16 @@ class FeederApiService {
   Future<ApiResponse> setInterval({
     required int hourValue,
     required int minuteValue,
-    required int startHour,
-    required int endHour,
+    required TimeOfDay startHour,
+    required TimeOfDay endHour,
     required double amount,
   }) async {
     final uri = Uri.parse('$baseUrl/set-interval').replace(queryParameters: {
       'hourValue': hourValue.toString(),
       'minuteValue': minuteValue.toString(),
-      'startHour': startHour.toString(),
-      'endHour': endHour.toString(),
-      'amount': amount.toString(),
+      'startHour': _formatTimeOfDay(startHour),
+      'endHour': _formatTimeOfDay(endHour),
+      'amount': amount.toInt().toString(),
     });
     final res = await _http.get(uri);
     if (res.statusCode != 200) {
@@ -60,5 +61,11 @@ class FeederApiService {
 
   void dispose() {
     _http.close();
+  }
+
+  String _formatTimeOfDay(TimeOfDay time) {
+    final hour = time.hour.toString().padLeft(2, '0');
+    final minute = time.minute.toString().padLeft(2, '0');
+    return '$hour:$minute';
   }
 }

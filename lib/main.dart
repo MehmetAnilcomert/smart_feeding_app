@@ -7,11 +7,14 @@ import 'package:smart_feeding_app/bloc/connectivity_bloc/connectivity_event.dart
 import 'package:smart_feeding_app/bloc/feeder_bloc/feeder_bloc.dart';
 import 'package:smart_feeding_app/bloc/language_bloc.dart';
 import 'package:smart_feeding_app/bloc/log_expand.dart';
+import 'package:smart_feeding_app/bloc/sensor_bloc/sensor_bloc.dart';
+import 'package:smart_feeding_app/bloc/sensor_bloc/sensor_event.dart';
 import 'package:smart_feeding_app/bloc/theme_bloc.dart';
 import 'package:smart_feeding_app/generated/l10n.dart';
 import 'package:smart_feeding_app/modals/language.dart';
 import 'package:smart_feeding_app/pages/mobile_screen.dart';
 import 'package:smart_feeding_app/pages/web_screen.dart';
+import 'package:smart_feeding_app/services/websocket_service.dart';
 import 'package:smart_feeding_app/widgets/responsive_layout.dart';
 
 void main() {
@@ -38,6 +41,11 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<ConnectivityBloc>(
           create: (context) => ConnectivityBloc()..add(ConnectivityObserve()),
+        ),
+        BlocProvider<SensorBloc>(
+          create: (_) => SensorBloc(
+            WebSocketService(url: 'ws://10.0.2.2:3000'),
+          )..add(ConnectWebSocket()),
         ),
         BlocProvider<LogExpandCubit>(create: (_) => LogExpandCubit()),
       ],

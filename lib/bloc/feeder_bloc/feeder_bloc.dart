@@ -106,21 +106,11 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
       final resp = await _api.setInterval(
         hourValue: s.feedingFrequencyHour,
         minuteValue: s.feedingFrequencyMinute,
-        startHour: s.firstFeedHour.hour,
-        endHour: s.lastFeedHour?.hour ?? ((s.firstFeedHour.hour + 12) % 24),
+        startHour: s.firstFeedHour,
+        endHour: s.lastFeedHour,
         amount: s.feedAmount,
       );
-
-      if (!resp.success) {
-        _notif.show(
-            1,
-            'Error',
-            resp.message,
-            NotificationDetails(
-                android: AndroidNotificationDetails('channel', 'error',
-                    importance: Importance.high)));
-      }
-
+      print(resp);
       final prefs = await SharedPreferences.getInstance();
       await prefs.setInt(_kFreqKey, s.feedingFrequencyHour);
       await prefs.setInt(_kFreqMinKey, s.feedingFrequencyMinute);
@@ -136,15 +126,8 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
         await prefs.setString(_kLastTimeKey, lastStr);
       }
     } catch (err) {
-      _notif.show(
-          2,
-          'Save Error',
-          err.toString(),
-          NotificationDetails(
-              android: AndroidNotificationDetails('channel', 'error',
-                  importance: Importance.high)));
+      add(FeedErrorEvent(2));
     } finally {
-      s = state as FeederDataState;
       emit(s.copyWith(isSaving: false));
     }
   }
@@ -154,14 +137,6 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
     final s = state as FeederDataState;
     try {
       final resp = await _api.triggerManualFeed(amount: s.feedAmount);
-      print("${resp} response");
-      _notif.show(
-          3,
-          resp.success ? 'Feeding' : 'Error',
-          resp.message,
-          NotificationDetails(
-              android: AndroidNotificationDetails('channel', 'manual_feed',
-                  importance: Importance.high)));
     } catch (err) {
       add(FeedErrorEvent(1));
     }
@@ -174,13 +149,13 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
     final s = state as FeederDataState;
     try {
       final status = await _api.getStatus();
-
+      print(status.toString());
       emit(s.copyWith(
         temperature: status.temperature ?? s.temperature,
         humidity: status.humidity ?? s.humidity,
         esp32Connected: status.esp32Connected,
         serverTime: status.serverTime,
       ));
-    } catch (_) {/* ignore */}
+    } catch (_) {}
   }
 }

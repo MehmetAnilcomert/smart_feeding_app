@@ -11,9 +11,9 @@ class FeederDataState extends FeederState {
   final int feedingFrequencyMinute;
   final double feedAmount;
   final TimeOfDay firstFeedHour;
-  final TimeOfDay? lastFeedHour;
+  final TimeOfDay lastFeedHour;
   final bool isSaving;
-  final double? humidity;
+  final double humidity;
   final bool esp32Connected;
   final DateTime? serverTime;
 
@@ -24,9 +24,9 @@ class FeederDataState extends FeederState {
     required this.feedingFrequencyMinute,
     required this.feedAmount,
     required this.firstFeedHour,
-    this.lastFeedHour,
+    required this.lastFeedHour,
     this.isSaving = false,
-    this.humidity,
+    required this.humidity,
     this.esp32Connected = false,
     this.serverTime,
   });
@@ -40,7 +40,7 @@ class FeederDataState extends FeederState {
         firstFeedHour: TimeOfDay(hour: 7, minute: 0),
         lastFeedHour: TimeOfDay(hour: 7, minute: 0),
         isSaving: false,
-        humidity: null,
+        humidity: 0.0,
         esp32Connected: false,
         serverTime: null,
       );
