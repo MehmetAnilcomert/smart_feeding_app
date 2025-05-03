@@ -10,23 +10,28 @@ class TemperatureWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final s = S.of(context);
 
-    return BlocConsumer<SensorBloc, SensorState>(
-      listener: (context, state) {
-        // Şu an için dinleyiciye gerek yok.
-      },
+    return BlocBuilder<SensorBloc, SensorState>(
       builder: (context, state) {
-        final temp = state.temperature ?? 0.0;
+        final connected = state.connected;
+        final tempValue = state.temperature ?? 0.0;
+        final displayText = connected ? tempValue.toStringAsFixed(1) : '-';
 
-        final bool isHot = temp >= 30.0;
-        final bool isCold = temp <= 15.0;
+        final bool isHot = connected && tempValue >= 30.0;
+        final bool isCold = connected && tempValue <= 15.0;
 
-        final gradient = isHot
-            ? AppTheme.temperatureGradientHot
+        final gradient = !connected
+            ? [Colors.grey.shade800, Colors.grey.shade600]
+            : isHot
+                ? AppTheme.temperatureGradientHot
+                : isCold
+                    ? AppTheme.temperatureGradientCold
+                    : AppTheme.temperatureGradientWarm;
+
+        final icon = !connected
+            ? Icons.cloud_off
             : isCold
-                ? AppTheme.temperatureGradientCold
-                : AppTheme.temperatureGradientWarm;
-
-        final tempIcon = isCold ? Icons.ac_unit : Icons.thermostat;
+                ? Icons.ac_unit
+                : Icons.thermostat;
 
         return Card(
           elevation: AppTheme.cardElevation,
@@ -40,7 +45,7 @@ class TemperatureWidget extends StatelessWidget {
               ),
             ),
             child: Padding(
-              padding: EdgeInsets.all(AppTheme.spacing),
+              padding: const EdgeInsets.all(AppTheme.spacing),
               child: Column(
                 children: [
                   Row(
@@ -48,42 +53,30 @@ class TemperatureWidget extends StatelessWidget {
                     children: [
                       Text(
                         s.current_temperature,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
                       ),
-                      Icon(tempIcon, color: Colors.white, size: 28),
+                      Icon(icon, color: Colors.white, size: 28),
                     ],
                   ),
-                  SizedBox(height: AppTheme.spacingLarge),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        temp.toStringAsFixed(1),
-                        style: TextStyle(
-                          fontSize: 64,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                      Text(
-                        '°C',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: AppTheme.spacing),
+                  const SizedBox(height: AppTheme.spacingLarge),
                   Text(
-                    _getTemperatureMessage(temp, s),
-                    style: TextStyle(fontSize: 16, color: Colors.white),
+                    displayText + (connected ? '°C' : ''),
+                    style: TextStyle(
+                      fontSize: connected ? 64 : 48,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
+                  ),
+                  const SizedBox(height: AppTheme.spacing),
+                  Text(
+                    connected
+                        ? _getTemperatureMessage(tempValue, s)
+                        : s.connection_lost_message,
+                    style: const TextStyle(fontSize: 16, color: Colors.white),
                     textAlign: TextAlign.center,
                   ),
                 ],
@@ -96,12 +89,8 @@ class TemperatureWidget extends StatelessWidget {
   }
 
   String _getTemperatureMessage(double temp, S s) {
-    if (temp >= 30.0) {
-      return s.high_temperature_warning;
-    } else if (temp <= 15.0) {
-      return s.low_temperature_warning;
-    } else {
-      return s.optimal_temperature_message;
-    }
+    if (temp >= 30.0) return s.high_temperature_warning;
+    if (temp <= 15.0) return s.low_temperature_warning;
+    return s.optimal_temperature_message;
   }
 }
