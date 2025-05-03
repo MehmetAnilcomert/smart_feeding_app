@@ -1,9 +1,15 @@
-class SensorState {
+import 'package:equatable/equatable.dart';
+
+class SensorState extends Equatable {
   final double? temperature;
   final double? humidity;
   final bool connected;
 
-  SensorState({this.temperature, this.humidity, this.connected = false});
+  const SensorState({
+    this.temperature,
+    this.humidity,
+    this.connected = false,
+  });
 
   SensorState copyWith({
     double? temperature,
@@ -16,4 +22,7 @@ class SensorState {
       connected: connected ?? this.connected,
     );
   }
+
+  @override
+  List<Object?> get props => [temperature, humidity, connected];
 }

@@ -12,18 +12,21 @@ class WebSocketService {
 
     _channel.stream.listen((message) {
       print('Gelen WebSocket mesajı: $message');
-      try {
-        final data = jsonDecode(message);
-        if (data is Map<String, dynamic>) {
-          onData(data);
+
+      if (message.trim().startsWith('{') && message.trim().endsWith('}')) {
+        try {
+          final decoded = jsonDecode(message);
+          if (decoded is Map) {
+            final safeMap =
+                decoded.map((key, value) => MapEntry(key.toString(), value));
+            onData(safeMap);
+          }
+        } catch (e) {
+          print('Invalid Json message catched: $message');
         }
-      } catch (e) {
-        print('Invalid Json message catched: $message');
+      } else {
+        print('Metinsel mesaj atlandı: $message');
       }
-    }, onError: (error) {
-      print('WebSocket hatası: $error');
-    }, onDone: () {
-      print('WebSocket bağlantısı kapandı');
     });
   }
 

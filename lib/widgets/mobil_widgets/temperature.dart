@@ -10,7 +10,10 @@ class TemperatureWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final s = S.of(context);
 
-    return BlocBuilder<SensorBloc, SensorState>(
+    return BlocConsumer<SensorBloc, SensorState>(
+      listener: (context, state) {
+        // Şu an için dinleyiciye gerek yok.
+      },
       builder: (context, state) {
         final temp = state.temperature ?? 0.0;
 
@@ -96,7 +99,7 @@ class TemperatureWidget extends StatelessWidget {
     if (temp >= 30.0) {
       return s.high_temperature_warning;
     } else if (temp <= 15.0) {
-      return s.low_temprature_warning;
+      return s.low_temperature_warning;
     } else {
       return s.optimal_temperature_message;
     }

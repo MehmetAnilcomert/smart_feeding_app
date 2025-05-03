@@ -10,9 +10,13 @@ class SensorBloc extends Bloc<SensorEvent, SensorState> {
     on<ConnectWebSocket>((event, emit) {
       webSocketService.connect((data) {
         if (data['type'] == 'sensor_data') {
+          final temp = (data['temperature'] as num).toDouble();
+          final hum = (data['humidity'] as num).toDouble();
+
+          print('Sensor verisi alındı: $temp');
           add(SensorDataReceived(
-            temperature: data['temperature'],
-            humidity: data['humidity'],
+            temperature: temp,
+            humidity: hum,
           ));
         }
       });

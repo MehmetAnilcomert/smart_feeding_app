@@ -53,6 +53,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "last_feed_time": MessageLookupByLibrary.simpleMessage("Son Besleme Saati"),
     "light_mode": MessageLookupByLibrary.simpleMessage("Aydınlık Mod"),
     "logout": MessageLookupByLibrary.simpleMessage("Çıkış Yap"),
+    "low_temperature_warning": MessageLookupByLibrary.simpleMessage(
+      "Düşük sıcaklık! Kümesi ısıtmalısın.",
+    ),
     "manual_feeding_initiated": MessageLookupByLibrary.simpleMessage(
       "Manuel besleme başlatıldı!",
     ),
