@@ -16,8 +16,11 @@ import 'package:smart_feeding_app/pages/mobile_screen.dart';
 import 'package:smart_feeding_app/pages/web_screen.dart';
 import 'package:smart_feeding_app/services/websocket_service.dart';
 import 'package:smart_feeding_app/widgets/responsive_layout.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
   final languageManager = LanguageManager();
   runApp(MyApp(languageManager: languageManager));
 }
@@ -32,7 +35,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<FeederBloc>(
-            create: (context) => FeederBloc(baseUrl: "http://10.0.2.2:3000")),
+            create: (context) => FeederBloc(httpUrl: dotenv.env['HTTP_URL']!)),
         BlocProvider<ThemeBloc>(
           create: (_) => ThemeBloc(),
         ),
@@ -44,7 +47,7 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider<SensorBloc>(
           create: (_) => SensorBloc(
-            WebSocketService(url: 'ws://10.0.2.2:3000'),
+            WebSocketService(webSocketUrl: dotenv.env['WEBSOCKET_URL']!),
           )..add(ConnectWebSocket()),
         ),
         BlocProvider<LogExpandCubit>(create: (_) => LogExpandCubit()),

@@ -19,8 +19,8 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
       FlutterLocalNotificationsPlugin();
   final FeederApiService _api;
 
-  FeederBloc({required String baseUrl})
-      : _api = FeederApiService(baseUrl: baseUrl),
+  FeederBloc({required String httpUrl})
+      : _api = FeederApiService(baseUrl: httpUrl),
         super(FeederDataState.initial()) {
     on<LoadSettingsEvent>(_onLoadSettings);
     on<SaveSettingsEvent>(_onSaveSettings);

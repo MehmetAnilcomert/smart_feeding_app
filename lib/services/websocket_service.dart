@@ -2,20 +2,28 @@ import 'dart:convert';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 class WebSocketService {
-  final String url;
+  final String webSocketUrl;
   late WebSocketChannel _channel;
 
-  WebSocketService({required this.url});
+  WebSocketService({required this.webSocketUrl});
 
   void connect(void Function(Map<String, dynamic>) onData) {
-    _channel = WebSocketChannel.connect(Uri.parse(url));
+    _channel = WebSocketChannel.connect(Uri.parse(webSocketUrl));
+
     _channel.stream.listen((message) {
-      final data = jsonDecode(message);
-      onData(data);
+      print('Gelen WebSocket mesajı: $message');
+      try {
+        final data = jsonDecode(message);
+        if (data is Map<String, dynamic>) {
+          onData(data);
+        }
+      } catch (e) {
+        print('Invalid Json message catched: $message');
+      }
     }, onError: (error) {
-      print('WebSocket error: $error');
+      print('WebSocket hatası: $error');
     }, onDone: () {
-      print('WebSocket connection closed');
+      print('WebSocket bağlantısı kapandı');
     });
   }
 
