@@ -27,6 +27,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "connection_lost_message": MessageLookupByLibrary.simpleMessage(
       "Besleyici cihazla bağlantı kesildi. Yeniden bağlanmaya çalışılıyor...",
     ),
+    "current_humidity": MessageLookupByLibrary.simpleMessage("Mevcut Nem"),
     "current_temperature": MessageLookupByLibrary.simpleMessage(
       "Mevcut Sıcaklık",
     ),
@@ -45,6 +46,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "grams_message": MessageLookupByLibrary.simpleMessage("gram"),
     "help": MessageLookupByLibrary.simpleMessage("Yardım"),
     "help_note": MessageLookupByLibrary.simpleMessage("Yardım Notu: ..."),
+    "high_humidity_warning": MessageLookupByLibrary.simpleMessage(
+      "Nem oranı oldukça yüksek!",
+    ),
     "high_temperature_warning": MessageLookupByLibrary.simpleMessage(
       "Yüksek Sıcaklık! Kümesi soğutmalısın.",
     ),
@@ -53,6 +57,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "last_feed_time": MessageLookupByLibrary.simpleMessage("Son Besleme Saati"),
     "light_mode": MessageLookupByLibrary.simpleMessage("Aydınlık Mod"),
     "logout": MessageLookupByLibrary.simpleMessage("Çıkış Yap"),
+    "low_humidity_warning": MessageLookupByLibrary.simpleMessage(
+      "Nem oranı oldukça düşük!",
+    ),
     "low_temperature_warning": MessageLookupByLibrary.simpleMessage(
       "Düşük sıcaklık! Kümesi ısıtmalısın.",
     ),
@@ -66,6 +73,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Cihaza bağlanılamadı. Lütfen cihazınızı kontrol edin.",
     ),
     "ok": MessageLookupByLibrary.simpleMessage("Tamam"),
+    "optimal_humidity_message": MessageLookupByLibrary.simpleMessage(
+      "Nem oranı ideal miktarda.",
+    ),
     "retry": MessageLookupByLibrary.simpleMessage("Tekrar Dene"),
     "set_feed_amount": MessageLookupByLibrary.simpleMessage("Yem Miktarı"),
     "set_feeding_frequency": MessageLookupByLibrary.simpleMessage(

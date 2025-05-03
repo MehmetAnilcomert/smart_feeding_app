@@ -27,6 +27,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "connection_lost_message": MessageLookupByLibrary.simpleMessage(
       "Connection to the feeder device has been lost. Trying to reconnect...",
     ),
+    "current_humidity": MessageLookupByLibrary.simpleMessage(
+      "Current Humidity",
+    ),
     "current_temperature": MessageLookupByLibrary.simpleMessage(
       "Current Temperature",
     ),
@@ -43,6 +46,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "grams_message": MessageLookupByLibrary.simpleMessage("grams"),
     "help": MessageLookupByLibrary.simpleMessage("Help"),
     "help_note": MessageLookupByLibrary.simpleMessage("Help Note: ..."),
+    "high_humidity_warning": MessageLookupByLibrary.simpleMessage(
+      "Humidity is too high!",
+    ),
     "high_temperature_warning": MessageLookupByLibrary.simpleMessage(
       "High temperature! Consider cooling the coop.",
     ),
@@ -51,6 +57,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "last_feed_time": MessageLookupByLibrary.simpleMessage("Last Feed Hour"),
     "light_mode": MessageLookupByLibrary.simpleMessage("Light Mode"),
     "logout": MessageLookupByLibrary.simpleMessage("Logout"),
+    "low_humidity_warning": MessageLookupByLibrary.simpleMessage(
+      "Humidity is too low!",
+    ),
     "low_temperature_warning": MessageLookupByLibrary.simpleMessage(
       "Low temperature! Consider heating the coop.",
     ),
@@ -64,6 +73,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Could not connect to the device. Please check your device.",
     ),
     "ok": MessageLookupByLibrary.simpleMessage("OK"),
+    "optimal_humidity_message": MessageLookupByLibrary.simpleMessage(
+      "Humidity is optimal.",
+    ),
     "optimal_temperature_message": MessageLookupByLibrary.simpleMessage(
       "Optimal temperature for your chickens.",
     ),

@@ -43,5 +43,9 @@
     "feeding_interval_minutes":"dakika",
     "last_feed_time":"Son Besleme Saati",
     "notConnected": "Cihaza bağlanılamadı. Lütfen cihazınızı kontrol edin.",
-    "error": "Hata"
+    "error": "Hata",
+    "current_humidity": "Mevcut Nem",
+    "low_humidity_warning": "Nem oranı oldukça düşük!",
+    "high_humidity_warning": "Nem oranı oldukça yüksek!",
+    "optimal_humidity_message": "Nem oranı ideal miktarda."
 }

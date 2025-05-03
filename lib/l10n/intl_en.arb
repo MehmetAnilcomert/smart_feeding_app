@@ -43,7 +43,11 @@
     "feeding_interval_minutes":"minutes",
     "last_feed_time":"Last Feed Hour",
     "notConnected": "Could not connect to the device. Please check your device.",
-    "error" : "Error"
+    "error" : "Error",
+    "current_humidity": "Current Humidity",
+    "low_humidity_warning": "Humidity is too low!",
+    "high_humidity_warning": "Humidity is too high!",
+    "optimal_humidity_message": "Humidity is optimal."
 }
   
   

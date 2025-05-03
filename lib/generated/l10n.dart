@@ -399,6 +399,46 @@ class S {
   String get error {
     return Intl.message('Error', name: 'error', desc: '', args: []);
   }
+
+  /// `Current Humidity`
+  String get current_humidity {
+    return Intl.message(
+      'Current Humidity',
+      name: 'current_humidity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Humidity is too low!`
+  String get low_humidity_warning {
+    return Intl.message(
+      'Humidity is too low!',
+      name: 'low_humidity_warning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Humidity is too high!`
+  String get high_humidity_warning {
+    return Intl.message(
+      'Humidity is too high!',
+      name: 'high_humidity_warning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Humidity is optimal.`
+  String get optimal_humidity_message {
+    return Intl.message(
+      'Humidity is optimal.',
+      name: 'optimal_humidity_message',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

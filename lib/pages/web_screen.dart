@@ -6,9 +6,9 @@ import 'package:smart_feeding_app/bloc/connectivity_bloc/connectivity_state.dart
 import 'package:smart_feeding_app/bloc/log_expand.dart';
 import 'package:smart_feeding_app/generated/l10n.dart';
 import 'package:smart_feeding_app/widgets/feed_setting.dart';
-import 'package:smart_feeding_app/widgets/mobil_widgets/temperature.dart';
 import 'package:smart_feeding_app/widgets/connectivity_dialog.dart';
 import 'package:smart_feeding_app/widgets/drawer/drawer.dart';
+import 'package:smart_feeding_app/widgets/sensor_widgets/temperature_card.dart';
 import 'package:smart_feeding_app/widgets/web_widgets/collapsible_log_header_delegate.dart';
 import 'package:smart_feeding_app/widgets/web_widgets/log_content_widget.dart';
 
@@ -71,7 +71,7 @@ class WebHomeScreen extends StatelessWidget {
                           height: availHeight,
                           child: Row(
                             children: [
-                              Expanded(child: TemperatureWidget()),
+                              Expanded(child: TemperatureCard()),
                               SizedBox(width: AppTheme.spacingMedium),
                               Expanded(
                                   flex: isWide ? 1 : 2,
