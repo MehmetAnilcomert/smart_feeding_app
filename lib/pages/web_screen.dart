@@ -9,8 +9,8 @@ import 'package:smart_feeding_app/widgets/feed_setting.dart';
 import 'package:smart_feeding_app/widgets/connectivity_dialog.dart';
 import 'package:smart_feeding_app/widgets/drawer/drawer.dart';
 import 'package:smart_feeding_app/widgets/sensor_widgets/temperature_card.dart';
-import 'package:smart_feeding_app/widgets/web_widgets/collapsible_log_header_delegate.dart';
-import 'package:smart_feeding_app/widgets/web_widgets/log_content_widget.dart';
+import 'package:smart_feeding_app/widgets/sensor_widgets/humidity_card.dart';
+import 'package:smart_feeding_app/widgets/mobil_widgets/log_view.dart';
 
 class WebHomeScreen extends StatelessWidget {
   @override
@@ -58,51 +58,51 @@ class WebHomeScreen extends StatelessWidget {
             child: Container(
               color: isDarkMode ? Color(0xFF303030) : null,
               padding: EdgeInsets.all(padding),
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  final availHeight = constraints.maxHeight;
-                  final isWide = constraints.maxWidth > 600;
-                  return CustomScrollView(
-                    physics: AlwaysScrollableScrollPhysics(),
-                    slivers: [
-                      // 1. satır: sıcaklık + besleme ayarları
-                      SliverToBoxAdapter(
-                        child: SizedBox(
-                          height: availHeight,
-                          child: Row(
+              // Use SingleChildScrollView to make the content scrollable
+              child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    // First row: Temperature and Humidity Cards
+                    // Use AspectRatio to ensure consistent sizing
+                    AspectRatio(
+                      aspectRatio: 2.5, // Adjust this value as needed
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Expanded(child: TemperatureCard()),
+                          SizedBox(width: AppTheme.spacingMedium),
+                          Expanded(child: HumidityCard()),
+                        ],
+                      ),
+                    ),
+
+                    SizedBox(height: AppTheme.spacingLarge),
+
+                    // Second row: Feed Settings and Log Widget
+                    // Check screen width to determine layout
+                    MediaQuery.of(context).size.width > 600
+                        ? // Wide screen: use row layout
+                        Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Expanded(child: TemperatureCard()),
+                              Expanded(child: FeedSettingsWidget()),
                               SizedBox(width: AppTheme.spacingMedium),
-                              Expanded(
-                                  flex: isWide ? 1 : 2,
-                                  child: FeedSettingsWidget()),
+                              Expanded(child: LogViewWidget()),
+                            ],
+                          )
+                        : // Narrow screen: use column layout
+                        Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              FeedSettingsWidget(),
+                              SizedBox(height: AppTheme.spacingMedium),
+                              LogViewWidget(),
                             ],
                           ),
-                        ),
-                      ),
-
-                      // başlık + içeriği Cubit’ten okuyarak göster
-                      SliverPersistentHeader(
-                        pinned: true,
-                        delegate: CollapsibleLogHeaderDelegate(
-                          isExpanded: context.watch<LogExpandCubit>().state,
-                          onToggle: () =>
-                              context.read<LogExpandCubit>().toggle(),
-                        ),
-                      ),
-                      if (context.watch<LogExpandCubit>().state)
-                        SliverToBoxAdapter(
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 4),
-                            child: SizedBox(
-                              height: 400,
-                              child: LogContentWidget(),
-                            ),
-                          ),
-                        ),
-                    ],
-                  );
-                },
+                  ],
+                ),
               ),
             ),
           ),
