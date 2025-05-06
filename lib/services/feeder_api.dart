@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:smart_feeding_app/modals/apiException.dart';
 import 'package:smart_feeding_app/modals/general_response.dart';
 import 'package:smart_feeding_app/modals/status_response.dart';
 
@@ -26,11 +27,11 @@ class FeederApiService {
       'minuteValue': minuteValue.toString(),
       'startHour': _formatTimeOfDay(startHour),
       'endHour': _formatTimeOfDay(endHour),
-      'amount': amount.toInt().toString(),
+      'value': amount.toInt().toString(),
     });
     final res = await _http.get(uri);
     if (res.statusCode != 200) {
-      throw Exception('setInterval failed: ${res.statusCode}');
+      throw ApiException(res.statusCode);
     }
     return ApiResponse.fromJson(json.decode(res.body));
   }
@@ -38,11 +39,11 @@ class FeederApiService {
   /// 2) /feed?amount=
   Future<ApiResponse> triggerManualFeed({required double amount}) async {
     final uri = Uri.parse('$baseUrl/feed').replace(queryParameters: {
-      'amount': amount.toString(),
+      'value': amount.toString(),
     });
     final res = await _http.get(uri);
     if (res.statusCode != 200) {
-      throw Exception('triggerManualFeed failed: ${res.statusCode}');
+      throw ApiException(res.statusCode);
     }
     return ApiResponse.fromJson(json.decode(res.body));
   }
@@ -50,9 +51,9 @@ class FeederApiService {
   /// 3) /status
   Future<StatusResponse> getStatus() async {
     final uri = Uri.parse('${baseUrl}/status');
-
+    print('getStatus: $uri');
     final res = await _http.get(uri);
-
+    print('getStatus: ${res.body}');
     if (res.statusCode != 200) {
       throw Exception('getStatus failed: ${res.statusCode}');
     }

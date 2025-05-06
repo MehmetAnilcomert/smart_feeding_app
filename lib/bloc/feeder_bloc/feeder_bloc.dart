@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:smart_feeding_app/modals/apiException.dart';
 import 'package:smart_feeding_app/services/feeder_api.dart';
 import 'feeder_event.dart';
 import 'feeder_state.dart';
@@ -110,7 +111,6 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
         endHour: s.lastFeedHour,
         amount: s.feedAmount,
       );
-      print(resp);
       final prefs = await SharedPreferences.getInstance();
       await prefs.setInt(_kFreqKey, s.feedingFrequencyHour);
       await prefs.setInt(_kFreqMinKey, s.feedingFrequencyMinute);
@@ -126,7 +126,11 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
         await prefs.setString(_kLastTimeKey, lastStr);
       }
     } catch (err) {
-      add(FeedErrorEvent(2));
+      if (err is ApiException && err.statusCode == 503) {
+        add(FeedErrorEvent(1)); // ESP32 is not reachable
+      } else {
+        add(FeedErrorEvent(2));
+      }
     } finally {
       emit(s.copyWith(isSaving: false));
     }
@@ -138,7 +142,11 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
     try {
       final resp = await _api.triggerManualFeed(amount: s.feedAmount);
     } catch (err) {
-      add(FeedErrorEvent(1));
+      if (err is ApiException && err.statusCode == 503) {
+        add(FeedErrorEvent(1)); // ESP32 is not reachable
+      } else {
+        add(FeedErrorEvent(2));
+      }
     }
   }
 
@@ -149,7 +157,6 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
     final s = state as FeederDataState;
     try {
       final status = await _api.getStatus();
-      print(status.toString());
       emit(s.copyWith(
         temperature: status.temperature ?? s.temperature,
         humidity: status.humidity ?? s.humidity,
