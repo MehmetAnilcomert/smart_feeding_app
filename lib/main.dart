@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,12 +19,46 @@ import 'package:smart_feeding_app/pages/web_screen.dart';
 import 'package:smart_feeding_app/services/websocket_service.dart';
 import 'package:smart_feeding_app/widgets/responsive_layout.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  FirebaseMessaging.instance.getToken().then((token) {
+    print("Firebase Messaging Token: $token");
+  });
+  // Handle background messages when the app is in the background
+  FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
+    print("onMessageOpenedApp: ${message.data}");
+    Navigator.pushNamed(navigatorKey.currentState!.context, '/', arguments: {
+      'message': jsonEncode(message.data),
+    });
+  });
+  // Handle background messages when the app is terminated
+  FirebaseMessaging.instance.getInitialMessage().then((RemoteMessage? message) {
+    if (message != null) {
+      print("getInitialMessage: ${message.data}");
+      Navigator.pushNamed(navigatorKey.currentState!.context, '/', arguments: {
+        'message': jsonEncode(message.data),
+      });
+    }
+  });
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await dotenv.load(fileName: ".env");
   final languageManager = LanguageManager();
   runApp(MyApp(languageManager: languageManager));
+}
+
+// This is for handling a process when app is terminated and user should not be notified but app should be updated
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // Handle background messages here
+  print("Handling a background message: ${message.messageId}");
 }
 
 class MyApp extends StatelessWidget {
@@ -72,6 +108,7 @@ class MyApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
           ],
           supportedLocales: S.delegate.supportedLocales,
+          navigatorKey: navigatorKey,
           home: ResponsiveLayout(
             mobileScreenLayout: MobileHomeScreen(),
             webScreenLayout: WebHomeScreen(),

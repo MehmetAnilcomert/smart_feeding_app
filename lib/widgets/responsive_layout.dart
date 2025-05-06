@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:smart_feeding_app/bloc/argCubit.dart';
 
 class ResponsiveLayout extends StatelessWidget {
   final Widget mobileScreenLayout;
@@ -14,14 +16,19 @@ class ResponsiveLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        if (constraints.maxWidth > breakpoint) {
-          return webScreenLayout;
-        } else {
-          return mobileScreenLayout;
-        }
-      },
+    final args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+
+    return BlocProvider(
+      create: (_) => ArgCubit(
+          args), // Pass the push notification arguments to the ArgCubit
+      child: LayoutBuilder(
+        builder: (_, constraints) {
+          return constraints.maxWidth > breakpoint
+              ? webScreenLayout
+              : mobileScreenLayout;
+        },
+      ),
     );
   }
 }
