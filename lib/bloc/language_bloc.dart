@@ -9,12 +9,23 @@ class LanguageCubit extends Cubit<AppLanguage> {
 
   LanguageCubit(this.languageManager) : super(AppLanguage.tr);
 
-  void changeLanguage(AppLanguage language) {
+  Future<void> loadSavedLanguage() async {
+    await languageManager.loadLanguagePreference();
+    final languageCode = languageManager.locale.languageCode;
+
+    if (languageCode == 'en') {
+      emit(AppLanguage.en);
+    } else {
+      emit(AppLanguage.tr);
+    }
+  }
+
+  Future<void> changeLanguage(AppLanguage language) async {
     if (language == AppLanguage.tr) {
-      languageManager.setLanguage(Locale('tr'));
+      await languageManager.setLanguage(Locale('tr'));
       emit(AppLanguage.tr);
     } else {
-      languageManager.setLanguage(Locale('en'));
+      await languageManager.setLanguage(Locale('en'));
       emit(AppLanguage.en);
     }
   }

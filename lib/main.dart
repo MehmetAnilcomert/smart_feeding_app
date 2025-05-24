@@ -36,7 +36,10 @@ Future<void> main() async {
   // Load environment variables
   await dotenv.load(fileName: ".env");
 
+  // Initialize LanguageManager and load saved language preference
   final languageManager = LanguageManager();
+  await languageManager.loadLanguagePreference();
+
   runApp(MyApp(
     languageManager: languageManager,
     notificationService: notificationService,
@@ -62,7 +65,11 @@ class MyApp extends StatelessWidget {
           create: (_) => ThemeBloc(),
         ),
         BlocProvider<LanguageCubit>(
-          create: (_) => LanguageCubit(languageManager),
+          create: (_) {
+            final languageCubit = LanguageCubit(languageManager);
+            languageCubit.loadSavedLanguage();
+            return languageCubit;
+          },
         ),
         BlocProvider<ConnectivityBloc>(
           create: (context) => ConnectivityBloc()..add(ConnectivityObserve()),

@@ -39,9 +39,9 @@ class LanguageDropdown extends StatelessWidget {
           ),
         );
       }).toList(),
-      onChanged: (value) {
+      onChanged: (value) async {
         if (value != null) {
-          languageCubit.changeLanguage(value);
+          await languageCubit.changeLanguage(value);
         }
       },
     );
