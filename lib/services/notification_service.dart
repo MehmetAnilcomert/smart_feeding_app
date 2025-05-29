@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:smart_feeding_app/services/feeder_api.dart';
 import 'package:smart_feeding_app/services/firebase_messaging_handler.dart';
 
 class NotificationService {
@@ -17,10 +19,9 @@ class NotificationService {
 
   // Define notification channel for Android
   static const AndroidNotificationChannel channel = AndroidNotificationChannel(
-    'high_importance_channel', // id
-    'High Importance Notifications', // title
-    description:
-        'This channel is used for important notifications.', // description
+    'high_importance_channel',
+    'High Importance Notifications',
+    description: 'This channel is used for important notifications.',
     importance: Importance.high,
   );
 
@@ -43,7 +44,10 @@ class NotificationService {
 
     // Get the FCM token and print it for testing
     _firebaseMessaging.getToken().then((token) {
-      print("Firebase Messaging Token: $token");
+      if (token != null) {
+        final apiService = FeederApiService(baseUrl: dotenv.env['HTTP_URL']!);
+        apiService.sendTokenToBackend(token);
+      }
     });
   }
 
@@ -98,11 +102,13 @@ class NotificationService {
 
   // Handle notification tap
   void _handleNotificationResponse(NotificationResponse response) {
-    print("Notification tapped: ${response.payload}");
     if (response.payload != null) {
-      navigatorKey.currentState?.pushNamed('/', arguments: {
-        'message': response.payload,
-      });
+      navigatorKey.currentState?.pushReplacementNamed(
+        '/',
+        arguments: {
+          'message': response.payload,
+        },
+      );
     }
   }
 
@@ -110,22 +116,17 @@ class NotificationService {
   void _setupForegroundNotificationHandler() {
     // Handle foreground messages (when app is open)
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      print("Got a message in the foreground!");
-      print("Message data: ${message.data}");
-
       _showLocalNotification(message);
     });
 
     // Handle when a notification is clicked in the background
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      print("onMessageOpenedApp: ${message.data}");
       _handleMessageOpened(message);
     });
 
     // Handle when app is opened from a terminated state
     _firebaseMessaging.getInitialMessage().then((RemoteMessage? message) {
       if (message != null) {
-        print("getInitialMessage: ${message.data}");
         _handleMessageOpened(message);
       }
     });
@@ -157,8 +158,11 @@ class NotificationService {
 
   // Handle when message is opened
   void _handleMessageOpened(RemoteMessage message) {
-    navigatorKey.currentState?.pushNamed('/', arguments: {
-      'message': jsonEncode(message.data),
-    });
+    navigatorKey.currentState?.pushReplacementNamed(
+      '/',
+      arguments: {
+        'message': jsonEncode(message.data),
+      },
+    );
   }
 }

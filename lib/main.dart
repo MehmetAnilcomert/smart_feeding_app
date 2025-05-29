@@ -5,6 +5,7 @@ import 'package:smart_feeding_app/app_theme.dart';
 import 'package:smart_feeding_app/bloc/connectivity_bloc/connectivity_bloc.dart';
 import 'package:smart_feeding_app/bloc/connectivity_bloc/connectivity_event.dart';
 import 'package:smart_feeding_app/bloc/feeder_bloc/feeder_bloc.dart';
+import 'package:smart_feeding_app/bloc/feeder_bloc/feeder_event.dart';
 import 'package:smart_feeding_app/bloc/language_bloc.dart';
 import 'package:smart_feeding_app/bloc/log_expand.dart';
 import 'package:smart_feeding_app/bloc/sensor_bloc/sensor_bloc.dart';
@@ -46,7 +47,7 @@ Future<void> main() async {
   ));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   final LanguageManager languageManager;
   final NotificationService notificationService;
 
@@ -56,17 +57,42 @@ class MyApp extends StatelessWidget {
   });
 
   @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  late FeederBloc _feederBloc;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _feederBloc = FeederBloc(httpUrl: dotenv.env['HTTP_URL']!);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _feederBloc.add(LoadSettingsEvent());
+    });
+  }
+
+  @override
+  void dispose() {
+    _feederBloc.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<FeederBloc>(
-            create: (context) => FeederBloc(httpUrl: dotenv.env['HTTP_URL']!)),
+        BlocProvider<FeederBloc>.value(
+          value: _feederBloc,
+        ),
         BlocProvider<ThemeBloc>(
           create: (_) => ThemeBloc(),
         ),
         BlocProvider<LanguageCubit>(
           create: (_) {
-            final languageCubit = LanguageCubit(languageManager);
+            final languageCubit = LanguageCubit(widget.languageManager);
             languageCubit.loadSavedLanguage();
             return languageCubit;
           },
@@ -101,7 +127,7 @@ class MyApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
           ],
           supportedLocales: S.delegate.supportedLocales,
-          navigatorKey: notificationService.navigatorKey,
+          navigatorKey: widget.notificationService.navigatorKey,
           home: ResponsiveLayout(
             mobileScreenLayout: MobileHomeScreen(),
             webScreenLayout: WebHomeScreen(),

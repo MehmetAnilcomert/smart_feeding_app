@@ -104,13 +104,7 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
     emit(s.copyWith(isSaving: true));
 
     try {
-      final resp = await _api.setInterval(
-        hourValue: s.feedingFrequencyHour,
-        minuteValue: s.feedingFrequencyMinute,
-        startHour: s.firstFeedHour,
-        endHour: s.lastFeedHour,
-        amount: s.feedAmount,
-      );
+      // Önce SharedPreferences'a kaydet
       final prefs = await SharedPreferences.getInstance();
       await prefs.setInt(_kFreqKey, s.feedingFrequencyHour);
       await prefs.setInt(_kFreqMinKey, s.feedingFrequencyMinute);
@@ -125,11 +119,30 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
             '${s.lastFeedHour!.hour.toString().padLeft(2, '0')}:${s.lastFeedHour!.minute.toString().padLeft(2, '0')}';
         await prefs.setString(_kLastTimeKey, lastStr);
       }
+
+      // API çağrısını timeout ile yap
+      await _api
+          .setInterval(
+        hourValue: s.feedingFrequencyHour,
+        minuteValue: s.feedingFrequencyMinute,
+        startHour: s.firstFeedHour,
+        endHour: s.lastFeedHour,
+        amount: s.feedAmount,
+      )
+          .timeout(
+        Duration(seconds: 30), // 30 saniye timeout
+        onTimeout: () {
+          throw TimeoutException(
+              'API request timed out', Duration(seconds: 30));
+        },
+      );
+    } on TimeoutException catch (e) {
+      add(FeedErrorEvent(1)); // Timeout error
     } catch (err) {
       if (err is ApiException && err.statusCode == 503) {
         add(FeedErrorEvent(1)); // ESP32 is not reachable
       } else {
-        add(FeedErrorEvent(2));
+        add(FeedErrorEvent(2)); // General error
       }
     } finally {
       emit(s.copyWith(isSaving: false));
@@ -140,12 +153,20 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
       ManualFeedEvent e, Emitter<FeederState> emit) async {
     final s = state as FeederDataState;
     try {
-      final resp = await _api.triggerManualFeed(amount: s.feedAmount);
+      await _api.triggerManualFeed(amount: s.feedAmount).timeout(
+        Duration(seconds: 15), // Manuel besleme için 15 saniye timeout
+        onTimeout: () {
+          throw TimeoutException(
+              'Manual feed request timed out', Duration(seconds: 15));
+        },
+      );
+    } on TimeoutException {
+      add(FeedErrorEvent(1)); // Timeout hatası
     } catch (err) {
       if (err is ApiException && err.statusCode == 503) {
         add(FeedErrorEvent(1)); // ESP32 is not reachable
       } else {
-        add(FeedErrorEvent(2));
+        add(FeedErrorEvent(2)); // Genel hata
       }
     }
   }
@@ -156,13 +177,27 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
   ) async {
     final s = state as FeederDataState;
     try {
-      final status = await _api.getStatus();
+      final status = await _api.getStatus().timeout(
+        Duration(seconds: 10), // Status için 10 saniye timeout
+        onTimeout: () {
+          throw TimeoutException(
+              'Status request timed out', Duration(seconds: 10));
+        },
+      );
+
       emit(s.copyWith(
         temperature: status.temperature ?? s.temperature,
         humidity: status.humidity ?? s.humidity,
         esp32Connected: status.esp32Connected,
         serverTime: status.serverTime,
       ));
-    } catch (_) {}
+    } on TimeoutException catch (e) {
+      // Status timeout'u için sessizce geç, kullanıcıya hata gösterme
+      // Çünkü status sürekli çağrılıyor olabilir
+      emit(s.copyWith(esp32Connected: false));
+    } catch (_) {
+      // Diğer status hataları için de sessizce geç
+      emit(s.copyWith(esp32Connected: false));
+    }
   }
 }

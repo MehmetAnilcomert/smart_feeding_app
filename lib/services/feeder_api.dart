@@ -51,13 +51,27 @@ class FeederApiService {
   /// 3) /status
   Future<StatusResponse> getStatus() async {
     final uri = Uri.parse('${baseUrl}/status');
-    print('getStatus: $uri');
+
     final res = await _http.get(uri);
-    print('getStatus: ${res.body}');
+
     if (res.statusCode != 200) {
       throw Exception('getStatus failed: ${res.statusCode}');
     }
     return StatusResponse.fromJson(json.decode(res.body));
+  }
+
+  /// 4) /send-token
+  Future<void> sendTokenToBackend(String token) async {
+    final uri = Uri.parse('$baseUrl/send-token');
+    final res = await _http.post(
+      uri,
+      headers: {'Content-Type': 'application/json'},
+      body: json.encode({'token': token}),
+    );
+
+    if (res.statusCode != 200) {
+      throw ApiException(res.statusCode);
+    }
   }
 
   void dispose() {

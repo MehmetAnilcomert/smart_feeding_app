@@ -50,7 +50,13 @@ class WebHomeScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: AppTheme.spacingSmall),
-                Text(s.app_title),
+                Expanded(
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: Alignment.centerLeft,
+                    child: Text(s.app_title),
+                  ),
+                ),
               ],
             ),
           ),
