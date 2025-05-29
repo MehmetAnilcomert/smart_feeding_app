@@ -33,19 +33,29 @@
     "language": "Dil",
     "en": "EN",
     "tr": "TR",
-    "high_temperature_warning":"Yüksek Sıcaklık! Kümesi soğutmalısın.",
-    "low_temperature_warning":"Düşük sıcaklık! Kümesi ısıtmalısın.",
-    "optimal_temprature_message":"Tavuklarınız için ideal sıcaklık.",
-    "times_per_day_message":"defa/gün",
-    "grams_message":"gram",
-    "help_note":"Yardım Notu: ...",
-    "ok":"Tamam",
-    "feeding_interval_minutes":"dakika",
-    "last_feed_time":"Son Besleme Saati",
+    "high_temperature_warning": "Yüksek Sıcaklık! Kümesi soğutmalısın.",
+    "low_temperature_warning": "Düşük sıcaklık! Kümesi ısıtmalısın.",
+    "optimal_temprature_message": "Tavuklarınız için ideal sıcaklık.",
+    "times_per_day_message": "defa/gün",
+    "grams_message": "gram",
+    "help_note": "Yardım Notu: ...",
+    "ok": "Tamam",
+    "feeding_interval_minutes": "dakika",
+    "last_feed_time": "Son Besleme Saati",
     "notConnected": "Cihaza bağlanılamadı. Lütfen cihazınızı kontrol edin.",
     "error": "Hata",
     "current_humidity": "Mevcut Nem",
     "low_humidity_warning": "Nem oranı oldukça düşük!",
     "high_humidity_warning": "Nem oranı oldukça yüksek!",
-    "optimal_humidity_message": "Nem oranı ideal miktarda."
+    "optimal_humidity_message": "Nem oranı ideal miktarda.",
+    "last_feed_time_help": "Son besleme saati, ilk besleme saatinden ({firstTime}) sonra olmalıdır",
+    "@last_feed_time_help": {
+        "placeholders": {
+            "firstTime": {
+                "type": "String"
+            }
+        }
+    },
+    "last_feed_time_error": "Son besleme saati, ilk besleme saatinden sonra olmalıdır!",
+    "time_range_error": "Seçilen saat geçerli aralıkta değil!"
 }

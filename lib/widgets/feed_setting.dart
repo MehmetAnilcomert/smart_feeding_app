@@ -78,6 +78,8 @@ class FeedSettingsWidget extends StatelessWidget {
                 TimePickerInput(
                   label: S.of(context).last_feed_time,
                   time: s.lastFeedHour,
+                  minTime: s.firstFeedHour,
+                  isLastFeedTime: true,
                   onTimeSelected: (t) => context
                       .read<FeederBloc>()
                       .add(LastFeedTimeChangedEvent(t)),

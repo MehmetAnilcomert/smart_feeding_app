@@ -20,6 +20,9 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
+  static String m0(firstTime) =>
+      "Last feed time must be after first feed time (${firstTime})";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "app_title": MessageLookupByLibrary.simpleMessage("Smart Chicken Feeder"),
@@ -55,6 +58,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "home": MessageLookupByLibrary.simpleMessage("Home"),
     "language": MessageLookupByLibrary.simpleMessage("Language"),
     "last_feed_time": MessageLookupByLibrary.simpleMessage("Last Feed Hour"),
+    "last_feed_time_error": MessageLookupByLibrary.simpleMessage(
+      "Last feed time must be after first feed time!",
+    ),
+    "last_feed_time_help": m0,
     "light_mode": MessageLookupByLibrary.simpleMessage("Light Mode"),
     "logout": MessageLookupByLibrary.simpleMessage("Logout"),
     "low_humidity_warning": MessageLookupByLibrary.simpleMessage(
@@ -97,6 +104,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "temperature_optimal": MessageLookupByLibrary.simpleMessage(
       "Optimal temperature for your chickens.",
+    ),
+    "time_range_error": MessageLookupByLibrary.simpleMessage(
+      "Selected time is not in valid range!",
     ),
     "times_per_day": MessageLookupByLibrary.simpleMessage("times/day"),
     "times_per_day_message": MessageLookupByLibrary.simpleMessage("hours"),

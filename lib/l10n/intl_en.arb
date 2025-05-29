@@ -33,21 +33,29 @@
     "language": "Language",
     "en": "EN",
     "tr": "TR",
-    "high_temperature_warning":"High temperature! Consider cooling the coop.",
-    "low_temperature_warning":"Low temperature! Consider heating the coop.",
-    "optimal_temperature_message":"Optimal temperature for your chickens.",
-    "times_per_day_message":"hours",
-    "grams_message":"grams",
-    "help_note":"Help Note: ...",
-    "ok":"OK",
-    "feeding_interval_minutes":"minutes",
-    "last_feed_time":"Last Feed Hour",
+    "high_temperature_warning": "High temperature! Consider cooling the coop.",
+    "low_temperature_warning": "Low temperature! Consider heating the coop.",
+    "optimal_temperature_message": "Optimal temperature for your chickens.",
+    "times_per_day_message": "hours",
+    "grams_message": "grams",
+    "help_note": "Help Note: ...",
+    "ok": "OK",
+    "feeding_interval_minutes": "minutes",
+    "last_feed_time": "Last Feed Hour",
     "notConnected": "Could not connect to the device. Please check your device.",
-    "error" : "Error",
+    "error": "Error",
     "current_humidity": "Current Humidity",
     "low_humidity_warning": "Humidity is too low!",
     "high_humidity_warning": "Humidity is too high!",
-    "optimal_humidity_message": "Humidity is optimal."
+    "optimal_humidity_message": "Humidity is optimal.",
+    "last_feed_time_help": "Last feed time must be after first feed time ({firstTime})",
+    "@last_feed_time_help": {
+        "placeholders": {
+            "firstTime": {
+                "type": "String"
+            }
+        }
+    },
+    "last_feed_time_error": "Last feed time must be after first feed time!",
+    "time_range_error": "Selected time is not in valid range!"
 }
-  
-  

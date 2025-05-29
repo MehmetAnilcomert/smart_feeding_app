@@ -64,6 +64,15 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
     });
   }
 
+  bool _isTimeValid(TimeOfDay firstTime, TimeOfDay? lastTime) {
+    if (lastTime == null) return true;
+
+    int firstInMinutes = firstTime.hour * 60 + firstTime.minute;
+    int lastInMinutes = lastTime.hour * 60 + lastTime.minute;
+
+    return lastInMinutes > firstInMinutes;
+  }
+
   Future<void> _onLoadSettings(
       LoadSettingsEvent e, Emitter<FeederState> emit) async {
     final prefs = await SharedPreferences.getInstance();
@@ -101,10 +110,15 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
   Future<void> _onSaveSettings(
       SaveSettingsEvent e, Emitter<FeederState> emit) async {
     var s = state as FeederDataState;
+
+    if (!_isTimeValid(s.firstFeedHour, s.lastFeedHour)) {
+      add(FeedErrorEvent(4));
+      return;
+    }
+
     emit(s.copyWith(isSaving: true));
 
     try {
-      // Önce SharedPreferences'a kaydet
       final prefs = await SharedPreferences.getInstance();
       await prefs.setInt(_kFreqKey, s.feedingFrequencyHour);
       await prefs.setInt(_kFreqMinKey, s.feedingFrequencyMinute);
@@ -120,7 +134,6 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
         await prefs.setString(_kLastTimeKey, lastStr);
       }
 
-      // API çağrısını timeout ile yap
       await _api
           .setInterval(
         hourValue: s.feedingFrequencyHour,
@@ -130,7 +143,7 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
         amount: s.feedAmount,
       )
           .timeout(
-        Duration(seconds: 30), // 30 saniye timeout
+        Duration(seconds: 30),
         onTimeout: () {
           throw TimeoutException(
               'API request timed out', Duration(seconds: 30));
@@ -178,7 +191,7 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
     final s = state as FeederDataState;
     try {
       final status = await _api.getStatus().timeout(
-        Duration(seconds: 10), // Status için 10 saniye timeout
+        Duration(seconds: 10),
         onTimeout: () {
           throw TimeoutException(
               'Status request timed out', Duration(seconds: 10));
@@ -192,11 +205,8 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
         serverTime: status.serverTime,
       ));
     } on TimeoutException catch (e) {
-      // Status timeout'u için sessizce geç, kullanıcıya hata gösterme
-      // Çünkü status sürekli çağrılıyor olabilir
       emit(s.copyWith(esp32Connected: false));
     } catch (_) {
-      // Diğer status hataları için de sessizce geç
       emit(s.copyWith(esp32Connected: false));
     }
   }

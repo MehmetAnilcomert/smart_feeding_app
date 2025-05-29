@@ -20,6 +20,9 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'tr';
 
+  static String m0(firstTime) =>
+      "Son besleme saati, ilk besleme saatinden (${firstTime}) sonra olmalıdır";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "app_title": MessageLookupByLibrary.simpleMessage("Akıllı Tavuk Besleyici"),
@@ -55,6 +58,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "home": MessageLookupByLibrary.simpleMessage("Ana Sayfa"),
     "language": MessageLookupByLibrary.simpleMessage("Dil"),
     "last_feed_time": MessageLookupByLibrary.simpleMessage("Son Besleme Saati"),
+    "last_feed_time_error": MessageLookupByLibrary.simpleMessage(
+      "Son besleme saati, ilk besleme saatinden sonra olmalıdır!",
+    ),
+    "last_feed_time_help": m0,
     "light_mode": MessageLookupByLibrary.simpleMessage("Aydınlık Mod"),
     "logout": MessageLookupByLibrary.simpleMessage("Çıkış Yap"),
     "low_humidity_warning": MessageLookupByLibrary.simpleMessage(
@@ -94,6 +101,9 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "temperature_optimal": MessageLookupByLibrary.simpleMessage(
       "Tavuklarınız için optimal sıcaklık.",
+    ),
+    "time_range_error": MessageLookupByLibrary.simpleMessage(
+      "Seçilen saat geçerli aralıkta değil!",
     ),
     "times_per_day": MessageLookupByLibrary.simpleMessage("saat"),
     "times_per_day_message": MessageLookupByLibrary.simpleMessage("defa/gün"),

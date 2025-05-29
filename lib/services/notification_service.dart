@@ -63,9 +63,6 @@ class NotificationService {
       provisional: false,
       sound: true,
     );
-
-    print(
-        'User notification permission status: ${settings.authorizationStatus}');
   }
 
   // Set up Android notification channel

@@ -439,6 +439,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Last feed time must be after first feed time ({firstTime})`
+  String last_feed_time_help(String firstTime) {
+    return Intl.message(
+      'Last feed time must be after first feed time ($firstTime)',
+      name: 'last_feed_time_help',
+      desc: '',
+      args: [firstTime],
+    );
+  }
+
+  /// `Last feed time must be after first feed time!`
+  String get last_feed_time_error {
+    return Intl.message(
+      'Last feed time must be after first feed time!',
+      name: 'last_feed_time_error',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Selected time is not in valid range!`
+  String get time_range_error {
+    return Intl.message(
+      'Selected time is not in valid range!',
+      name: 'time_range_error',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
