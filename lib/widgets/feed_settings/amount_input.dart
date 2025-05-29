@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:smart_feeding_app/app_theme.dart';
 import 'compact_input_row.dart';
 import 'package:smart_feeding_app/generated/l10n.dart';
 

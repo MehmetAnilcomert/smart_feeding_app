@@ -48,10 +48,19 @@ class TimePickerLogic with TimeValidationMixin {
 
   /// Mevcut durumda validasyon hatası var mı?
   bool hasValidationError(TimeOfDay currentTime) {
-    if (isLastFeedTime && minTime != null) {
-      return !isTimeAfter(currentTime, minTime!);
+    // Sadece last feed time için ve minTime varsa kontrol et
+    if (!isLastFeedTime || minTime == null) {
+      return false;
     }
-    return false;
+
+    // Eğer currentTime null ise (hiç ayarlanmamışsa) hata yok
+    // Bu durumu kontrol etmek için currentTime'ı kontrol et
+    if (currentTime == null) {
+      return false;
+    }
+
+    // Son besleme saati, ilk besleme saatinden sonra olmalı
+    return !isTimeAfter(currentTime, minTime!);
   }
 
   /// Zaman seçici dialog'unu açar ve sonucu döndürür

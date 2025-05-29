@@ -88,12 +88,48 @@ class TimePickerInput extends StatelessWidget {
       return SizedBox.shrink();
     }
 
+    final logic = TimePickerLogic(
+      minTime: minTime,
+      maxTime: maxTime,
+      isLastFeedTime: isLastFeedTime,
+    );
+
+    if (!logic.hasValidationError(time)) {
+      return SizedBox.shrink();
+    }
+
     return Column(
       children: [
-        SizedBox(height: 4),
-        Text(
-          TimePickerMessages.getHelpText(context, minTime!),
-          style: TimePickerStyles.helpTextStyle(context),
+        SizedBox(height: 10),
+        Container(
+          padding: EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color:
+                Theme.of(context).colorScheme.errorContainer.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(4),
+            border: Border.all(
+              color: Theme.of(context).colorScheme.error.withOpacity(0.3),
+              width: 1,
+            ),
+          ),
+          child: Row(
+            children: [
+              Icon(
+                Icons.info_outline,
+                size: 16,
+                color: Theme.of(context).colorScheme.error,
+              ),
+              SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  TimePickerMessages.getHelpText(context, minTime!),
+                  style: TimePickerStyles.helpTextStyle(context).copyWith(
+                    color: Theme.of(context).colorScheme.error,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );

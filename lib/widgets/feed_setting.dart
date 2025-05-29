@@ -77,7 +77,8 @@ class FeedSettingsWidget extends StatelessWidget {
                 SizedBox(height: AppTheme.spacing),
                 TimePickerInput(
                   label: S.of(context).last_feed_time,
-                  time: s.lastFeedHour,
+                  time: s.lastFeedHour ??
+                      _getDefaultLastFeedTime(s.firstFeedHour),
                   minTime: s.firstFeedHour,
                   isLastFeedTime: true,
                   onTimeSelected: (t) => context
@@ -91,6 +92,16 @@ class FeedSettingsWidget extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  TimeOfDay _getDefaultLastFeedTime(TimeOfDay firstFeedTime) {
+    final firstInMinutes = firstFeedTime.hour * 60 + firstFeedTime.minute;
+    final defaultLastInMinutes = firstInMinutes + 120;
+
+    return TimeOfDay(
+      hour: (defaultLastInMinutes ~/ 60) % 24,
+      minute: defaultLastInMinutes % 60,
     );
   }
 }
