@@ -57,5 +57,12 @@
         }
     },
     "last_feed_time_error": "Last feed time must be after first feed time!",
-    "time_range_error": "Selected time is not in valid range!"
+    "time_range_error": "Selected time is not in valid range!",
+    "connection_error_title": "Connection Error",
+    "timeout_error_title": "Timeout Error",
+    "validation_error_title": "Validation Error",
+    "device_not_reachable_message": "ESP32 device is not reachable. Please check your connection.",
+    "timeout_error_message": "Request timed out. Please try again.",
+    "invalid_time_range_message": "Last feed time must be after first feed time.",
+    "general_error_message": "An error occurred. Please try again."
 }

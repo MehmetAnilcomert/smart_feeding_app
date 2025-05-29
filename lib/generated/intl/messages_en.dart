@@ -26,6 +26,9 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "app_title": MessageLookupByLibrary.simpleMessage("Smart Chicken Feeder"),
+    "connection_error_title": MessageLookupByLibrary.simpleMessage(
+      "Connection Error",
+    ),
     "connection_lost": MessageLookupByLibrary.simpleMessage("Connection Lost"),
     "connection_lost_message": MessageLookupByLibrary.simpleMessage(
       "Connection to the feeder device has been lost. Trying to reconnect...",
@@ -37,6 +40,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Current Temperature",
     ),
     "dark_mode": MessageLookupByLibrary.simpleMessage("Dark Mode"),
+    "device_not_reachable_message": MessageLookupByLibrary.simpleMessage(
+      "ESP32 device is not reachable. Please check your connection.",
+    ),
     "en": MessageLookupByLibrary.simpleMessage("EN"),
     "error": MessageLookupByLibrary.simpleMessage("Error"),
     "feed": MessageLookupByLibrary.simpleMessage("Feed"),
@@ -45,6 +51,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "feeding_interval_minutes": MessageLookupByLibrary.simpleMessage("minutes"),
     "feeding_logs": MessageLookupByLibrary.simpleMessage("Feeding Logs"),
     "first_feed_time": MessageLookupByLibrary.simpleMessage("First Feed Time"),
+    "general_error_message": MessageLookupByLibrary.simpleMessage(
+      "An error occurred. Please try again.",
+    ),
     "grams": MessageLookupByLibrary.simpleMessage("grams"),
     "grams_message": MessageLookupByLibrary.simpleMessage("grams"),
     "help": MessageLookupByLibrary.simpleMessage("Help"),
@@ -56,6 +65,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "High temperature! Consider cooling the coop.",
     ),
     "home": MessageLookupByLibrary.simpleMessage("Home"),
+    "invalid_time_range_message": MessageLookupByLibrary.simpleMessage(
+      "Last feed time must be after first feed time.",
+    ),
     "language": MessageLookupByLibrary.simpleMessage("Language"),
     "last_feed_time": MessageLookupByLibrary.simpleMessage("Last Feed Hour"),
     "last_feed_time_error": MessageLookupByLibrary.simpleMessage(
@@ -108,11 +120,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "time_range_error": MessageLookupByLibrary.simpleMessage(
       "Selected time is not in valid range!",
     ),
+    "timeout_error_message": MessageLookupByLibrary.simpleMessage(
+      "Request timed out. Please try again.",
+    ),
+    "timeout_error_title": MessageLookupByLibrary.simpleMessage(
+      "Timeout Error",
+    ),
     "times_per_day": MessageLookupByLibrary.simpleMessage("times/day"),
     "times_per_day_message": MessageLookupByLibrary.simpleMessage("hours"),
     "tr": MessageLookupByLibrary.simpleMessage("TR"),
     "update_settings": MessageLookupByLibrary.simpleMessage("Update Settings"),
     "user": MessageLookupByLibrary.simpleMessage("User"),
     "user_email": MessageLookupByLibrary.simpleMessage("user@example.com"),
+    "validation_error_title": MessageLookupByLibrary.simpleMessage(
+      "Validation Error",
+    ),
   };
 }

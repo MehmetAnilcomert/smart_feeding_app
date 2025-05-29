@@ -469,6 +469,76 @@ class S {
       args: [],
     );
   }
+
+  /// `Connection Error`
+  String get connection_error_title {
+    return Intl.message(
+      'Connection Error',
+      name: 'connection_error_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Timeout Error`
+  String get timeout_error_title {
+    return Intl.message(
+      'Timeout Error',
+      name: 'timeout_error_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Validation Error`
+  String get validation_error_title {
+    return Intl.message(
+      'Validation Error',
+      name: 'validation_error_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ESP32 device is not reachable. Please check your connection.`
+  String get device_not_reachable_message {
+    return Intl.message(
+      'ESP32 device is not reachable. Please check your connection.',
+      name: 'device_not_reachable_message',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Request timed out. Please try again.`
+  String get timeout_error_message {
+    return Intl.message(
+      'Request timed out. Please try again.',
+      name: 'timeout_error_message',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last feed time must be after first feed time.`
+  String get invalid_time_range_message {
+    return Intl.message(
+      'Last feed time must be after first feed time.',
+      name: 'invalid_time_range_message',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `An error occurred. Please try again.`
+  String get general_error_message {
+    return Intl.message(
+      'An error occurred. Please try again.',
+      name: 'general_error_message',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

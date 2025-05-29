@@ -57,5 +57,12 @@
         }
     },
     "last_feed_time_error": "Son besleme saati, ilk besleme saatinden sonra olmalıdır!",
-    "time_range_error": "Seçilen saat geçerli aralıkta değil!"
+    "time_range_error": "Seçilen saat geçerli aralıkta değil!",
+    "connection_error_title": "Bağlantı Hatası",
+    "timeout_error_title": "Zaman Aşımı Hatası",
+    "validation_error_title": "Doğrulama Hatası",
+    "device_not_reachable_message": "ESP32 cihazına ulaşılamıyor. Lütfen bağlantınızı kontrol edin.",
+    "timeout_error_message": "İstek zaman aşımına uğradı. Lütfen tekrar deneyin.",
+    "invalid_time_range_message": "Son besleme saati, ilk besleme saatinden sonra olmalıdır.",
+    "general_error_message": "Bir hata oluştu. Lütfen tekrar deneyin."
 }

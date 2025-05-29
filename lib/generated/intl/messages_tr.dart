@@ -26,6 +26,9 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "app_title": MessageLookupByLibrary.simpleMessage("Akıllı Tavuk Besleyici"),
+    "connection_error_title": MessageLookupByLibrary.simpleMessage(
+      "Bağlantı Hatası",
+    ),
     "connection_lost": MessageLookupByLibrary.simpleMessage("Bağlantı Kesildi"),
     "connection_lost_message": MessageLookupByLibrary.simpleMessage(
       "Besleyici cihazla bağlantı kesildi. Yeniden bağlanmaya çalışılıyor...",
@@ -35,6 +38,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Mevcut Sıcaklık",
     ),
     "dark_mode": MessageLookupByLibrary.simpleMessage("Karanlık Mod"),
+    "device_not_reachable_message": MessageLookupByLibrary.simpleMessage(
+      "ESP32 cihazına ulaşılamıyor. Lütfen bağlantınızı kontrol edin.",
+    ),
     "en": MessageLookupByLibrary.simpleMessage("EN"),
     "error": MessageLookupByLibrary.simpleMessage("Hata"),
     "feed": MessageLookupByLibrary.simpleMessage("Besleme"),
@@ -44,6 +50,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "feeding_logs": MessageLookupByLibrary.simpleMessage("Besleme Kayıtları"),
     "first_feed_time": MessageLookupByLibrary.simpleMessage(
       "İlk Besleme Zamanı",
+    ),
+    "general_error_message": MessageLookupByLibrary.simpleMessage(
+      "Bir hata oluştu. Lütfen tekrar deneyin.",
     ),
     "grams": MessageLookupByLibrary.simpleMessage("gram"),
     "grams_message": MessageLookupByLibrary.simpleMessage("gram"),
@@ -56,6 +65,9 @@ class MessageLookup extends MessageLookupByLibrary {
       "Yüksek Sıcaklık! Kümesi soğutmalısın.",
     ),
     "home": MessageLookupByLibrary.simpleMessage("Ana Sayfa"),
+    "invalid_time_range_message": MessageLookupByLibrary.simpleMessage(
+      "Son besleme saati, ilk besleme saatinden sonra olmalıdır.",
+    ),
     "language": MessageLookupByLibrary.simpleMessage("Dil"),
     "last_feed_time": MessageLookupByLibrary.simpleMessage("Son Besleme Saati"),
     "last_feed_time_error": MessageLookupByLibrary.simpleMessage(
@@ -105,6 +117,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "time_range_error": MessageLookupByLibrary.simpleMessage(
       "Seçilen saat geçerli aralıkta değil!",
     ),
+    "timeout_error_message": MessageLookupByLibrary.simpleMessage(
+      "İstek zaman aşımına uğradı. Lütfen tekrar deneyin.",
+    ),
+    "timeout_error_title": MessageLookupByLibrary.simpleMessage(
+      "Zaman Aşımı Hatası",
+    ),
     "times_per_day": MessageLookupByLibrary.simpleMessage("saat"),
     "times_per_day_message": MessageLookupByLibrary.simpleMessage("defa/gün"),
     "tr": MessageLookupByLibrary.simpleMessage("TR"),
@@ -113,5 +131,8 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "user": MessageLookupByLibrary.simpleMessage("Kullanıcı"),
     "user_email": MessageLookupByLibrary.simpleMessage("kullanici@ornek.com"),
+    "validation_error_title": MessageLookupByLibrary.simpleMessage(
+      "Doğrulama Hatası",
+    ),
   };
 }

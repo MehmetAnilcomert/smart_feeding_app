@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:smart_feeding_app/modals/apiException.dart';
 import 'package:smart_feeding_app/services/feeder_api.dart';
 import 'feeder_event.dart';
@@ -16,8 +15,6 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
   static const _kTimeKey = 'firstFeedTime';
   static const _kLastTimeKey = 'lastFeedTime';
 
-  final FlutterLocalNotificationsPlugin _notif =
-      FlutterLocalNotificationsPlugin();
   final FeederApiService _api;
 
   FeederBloc({required String httpUrl})
@@ -128,11 +125,9 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
           '${s.firstFeedHour.hour.toString().padLeft(2, '0')}:${s.firstFeedHour.minute.toString().padLeft(2, '0')}';
       await prefs.setString(_kTimeKey, firstStr);
 
-      if (s.lastFeedHour != null) {
-        final lastStr =
-            '${s.lastFeedHour!.hour.toString().padLeft(2, '0')}:${s.lastFeedHour!.minute.toString().padLeft(2, '0')}';
-        await prefs.setString(_kLastTimeKey, lastStr);
-      }
+      final lastStr =
+          '${s.lastFeedHour.hour.toString().padLeft(2, '0')}:${s.lastFeedHour.minute.toString().padLeft(2, '0')}';
+      await prefs.setString(_kLastTimeKey, lastStr);
 
       await _api
           .setInterval(
@@ -149,7 +144,7 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
               'API request timed out', Duration(seconds: 30));
         },
       );
-    } on TimeoutException catch (e) {
+    } on TimeoutException {
       add(FeedErrorEvent(1)); // Timeout error
     } catch (err) {
       if (err is ApiException && err.statusCode == 503) {
@@ -204,7 +199,7 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
         esp32Connected: status.esp32Connected,
         serverTime: status.serverTime,
       ));
-    } on TimeoutException catch (e) {
+    } on TimeoutException {
       emit(s.copyWith(esp32Connected: false));
     } catch (_) {
       emit(s.copyWith(esp32Connected: false));
