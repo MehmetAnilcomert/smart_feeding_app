@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:smart_feeding_app/bloc/argCubit.dart';
+import 'package:smart_feeding_app/bloc/arg_cubit.dart';
 
 class ResponsiveLayout extends StatelessWidget {
   final Widget mobileScreenLayout;
