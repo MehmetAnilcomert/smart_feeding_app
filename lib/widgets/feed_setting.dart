@@ -9,7 +9,7 @@ import 'package:smart_feeding_app/widgets/feed_settings/action_buttons.dart';
 import 'package:smart_feeding_app/widgets/feed_settings/amount_input.dart';
 import 'package:smart_feeding_app/widgets/feed_settings/feed_error_dialog.dart';
 import 'package:smart_feeding_app/widgets/feed_settings/frequency_input.dart';
-import 'package:smart_feeding_app/widgets/feed_settings/time_picker.dart';
+import 'package:smart_feeding_app/widgets/feed_settings/time_picker/time_picker.dart';
 
 class FeedSettingsWidget extends StatelessWidget {
   @override

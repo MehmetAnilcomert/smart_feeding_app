@@ -1,9 +1,9 @@
 // lib/widgets/feed_settings/time_picker_input.dart
 import 'package:flutter/material.dart';
 import 'package:smart_feeding_app/app_theme.dart';
-import 'package:smart_feeding_app/widgets/feed_settings/time_picker_logic.dart';
-import 'package:smart_feeding_app/widgets/feed_settings/time_picker_messages.dart';
-import 'package:smart_feeding_app/widgets/feed_settings/time_picker_styles.dart';
+import 'package:smart_feeding_app/widgets/feed_settings/time_picker/time_picker_logic.dart';
+import 'package:smart_feeding_app/widgets/feed_settings/time_picker/time_picker_messages.dart';
+import 'package:smart_feeding_app/widgets/feed_settings/time_picker/time_picker_styles.dart';
 
 class TimePickerInput extends StatelessWidget {
   final String? label;

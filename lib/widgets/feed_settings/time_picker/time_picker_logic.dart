@@ -1,7 +1,7 @@
 // lib/widgets/feed_settings/time_picker_logic.dart
 import 'package:flutter/material.dart';
 import 'package:smart_feeding_app/mixin/time_validation_mixin.dart';
-import 'package:smart_feeding_app/widgets/feed_settings/time_picker_messages.dart';
+import 'package:smart_feeding_app/widgets/feed_settings/time_picker/time_picker_messages.dart';
 
 class TimePickerLogic with TimeValidationMixin {
   final TimeOfDay? minTime;
