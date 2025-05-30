@@ -4,7 +4,6 @@ import 'package:smart_feeding_app/enums/error_type.dart';
 import 'package:smart_feeding_app/generated/l10n.dart';
 
 class ErrorDialogFactory {
-  /// Hata türüne göre dialog oluşturur
   static Widget createErrorDialog(
     BuildContext context,
     FeedErrorType errorType,

@@ -59,11 +59,9 @@ class AppTheme {
     colorScheme: ColorScheme.light(
       primary: primaryBrown,
       secondary: accentAmber,
-      background: backgroundLight,
-      surface: cardLight,
+      surface: backgroundLight,
       onPrimary: textLight,
       onSecondary: textDark,
-      onBackground: textDark,
       onSurface: textDark,
     ),
     scaffoldBackgroundColor: backgroundLight,

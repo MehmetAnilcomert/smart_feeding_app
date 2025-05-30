@@ -1,5 +1,6 @@
 // lib/bloc/feeder_bloc/feeder_bloc.dart
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -60,7 +61,6 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
       // Emit state with error code
       emit(s.copyWith(errorCode: event.messageCode, isSaving: false));
 
-      // Clear error after 3 seconds
       _errorClearTimer = Timer(Duration(seconds: 3), () {
         if (state is FeederDataState &&
             (state as FeederDataState).errorCode == event.messageCode) {
@@ -167,12 +167,14 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
 
       emit(s.copyWith(isSaving: false));
     } on TimeoutException {
-      add(FeedErrorEvent(1)); // Timeout error
+      add(FeedErrorEvent(1));
+    } on SocketException {
+      add(FeedErrorEvent(1));
     } catch (err) {
       if (err is ApiException && err.statusCode == 503) {
-        add(FeedErrorEvent(1)); // ESP32 is not reachable
+        add(FeedErrorEvent(1));
       } else {
-        add(FeedErrorEvent(2)); // General error
+        add(FeedErrorEvent(2));
       }
     }
   }
@@ -189,12 +191,15 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
         },
       );
     } on TimeoutException {
-      add(FeedErrorEvent(1)); // Timeout hatası
+      add(FeedErrorEvent(1));
+    } on SocketException {
+      add(FeedErrorEvent(1));
     } catch (err) {
-      if (err is ApiException && err.statusCode == 503) {
-        add(FeedErrorEvent(1)); // ESP32 is not reachable
+      print('Error saving settings: $err');
+      if (err is ApiException) {
+        add(FeedErrorEvent(1));
       } else {
-        add(FeedErrorEvent(2)); // General error
+        add(FeedErrorEvent(2));
       }
     }
   }
