@@ -16,12 +16,12 @@ class FeedSettingsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<FeederBloc, FeederState>(
       listener: (context, state) {
-        if (state is FeedErrorState) {
-          FeedErrorDialog.show(context, state.messageCode);
+        if (state is FeederDataState && state.hasError) {
+          FeedErrorDialog.show(context, state.errorCode!);
         }
       },
       builder: (context, state) {
-        final s = state is FeederDataState ? state : FeederDataState.initial();
+        final s = state as FeederDataState;
 
         return Card(
           elevation: AppTheme.cardElevation,

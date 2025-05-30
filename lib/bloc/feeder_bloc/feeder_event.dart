@@ -1,3 +1,4 @@
+// lib/bloc/feeder_bloc/feeder_event.dart
 import 'package:flutter/material.dart';
 
 abstract class FeederEvent {}
@@ -48,3 +49,5 @@ class FeedErrorEvent extends FeederEvent {
   final int messageCode;
   FeedErrorEvent(this.messageCode);
 }
+
+class ClearErrorEvent extends FeederEvent {}

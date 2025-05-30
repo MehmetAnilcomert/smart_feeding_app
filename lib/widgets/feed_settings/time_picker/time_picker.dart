@@ -140,9 +140,7 @@ class TimePickerInput extends StatelessWidget {
     final picked = await logic.showTimePickerDialog(context, time);
 
     if (picked != null && picked != time) {
-      if (logic.validateSelectedTime(context, picked)) {
-        onTimeSelected(picked);
-      }
+      onTimeSelected(picked);
     }
   }
 }

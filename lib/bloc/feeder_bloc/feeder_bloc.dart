@@ -16,6 +16,7 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
   static const _kLastTimeKey = 'lastFeedTime';
 
   final FeederApiService _api;
+  Timer? _errorClearTimer;
 
   FeederBloc({required String httpUrl})
       : _api = FeederApiService(baseUrl: httpUrl),
@@ -27,38 +28,57 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
 
     on<FeedingFrequencyChangedEvent>((event, emit) {
       final s = state as FeederDataState;
-      emit(s.copyWith(feedingFrequencyHour: event.frequency));
+      emit(s.copyWith(feedingFrequencyHour: event.frequency, clearError: true));
     });
 
     on<FeedAmountChangedEvent>((event, emit) {
       final s = state as FeederDataState;
-      emit(s.copyWith(feedAmount: event.amount));
+      emit(s.copyWith(feedAmount: event.amount, clearError: true));
     });
 
     on<FirstFeedTimeChangedEvent>((event, emit) {
       final s = state as FeederDataState;
-      emit(s.copyWith(firstFeedHour: event.time));
+      emit(s.copyWith(firstFeedHour: event.time, clearError: true));
     });
 
     on<LastFeedTimeChangedEvent>((event, emit) {
       final s = state as FeederDataState;
-      emit(s.copyWith(lastFeedHour: event.lastFeedTime));
+      emit(s.copyWith(lastFeedHour: event.lastFeedTime, clearError: true));
     });
 
     on<FeedingFrequencyMinuteChangedEvent>((event, emit) {
       final s = state as FeederDataState;
-      emit(s.copyWith(feedingFrequencyMinute: event.minute));
+      emit(s.copyWith(feedingFrequencyMinute: event.minute, clearError: true));
     });
 
-    on<FeedErrorEvent>((event, emit) async {
-      final currentState = state;
-      emit(FeedErrorState(event.messageCode));
+    on<FeedErrorEvent>((event, emit) {
+      final s = state as FeederDataState;
 
-      await Future.delayed(Duration(seconds: 3));
-      if (currentState is FeederDataState) {
-        emit(currentState);
-      }
+      // Cancel any existing timer
+      _errorClearTimer?.cancel();
+
+      // Emit state with error code
+      emit(s.copyWith(errorCode: event.messageCode, isSaving: false));
+
+      // Clear error after 3 seconds
+      _errorClearTimer = Timer(Duration(seconds: 3), () {
+        if (state is FeederDataState &&
+            (state as FeederDataState).errorCode == event.messageCode) {
+          add(ClearErrorEvent());
+        }
+      });
     });
+
+    on<ClearErrorEvent>((event, emit) {
+      final s = state as FeederDataState;
+      emit(s.copyWith(clearError: true));
+    });
+  }
+
+  @override
+  Future<void> close() {
+    _errorClearTimer?.cancel();
+    return super.close();
   }
 
   bool _isTimeValid(TimeOfDay firstTime, TimeOfDay? lastTime) {
@@ -113,7 +133,7 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
       return;
     }
 
-    emit(s.copyWith(isSaving: true));
+    emit(s.copyWith(isSaving: true, clearError: true));
 
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -126,7 +146,7 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
       await prefs.setString(_kTimeKey, firstStr);
 
       final lastStr =
-          '${s.lastFeedHour.hour.toString().padLeft(2, '0')}:${s.lastFeedHour.minute.toString().padLeft(2, '0')}';
+          '${s.lastFeedHour?.hour.toString().padLeft(2, '0') ?? '00'}:${s.lastFeedHour?.minute.toString().padLeft(2, '0') ?? '00'}';
       await prefs.setString(_kLastTimeKey, lastStr);
 
       await _api
@@ -134,7 +154,7 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
         hourValue: s.feedingFrequencyHour,
         minuteValue: s.feedingFrequencyMinute,
         startHour: s.firstFeedHour,
-        endHour: s.lastFeedHour,
+        endHour: s.lastFeedHour!,
         amount: s.feedAmount,
       )
           .timeout(
@@ -144,6 +164,8 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
               'API request timed out', Duration(seconds: 30));
         },
       );
+
+      emit(s.copyWith(isSaving: false));
     } on TimeoutException {
       add(FeedErrorEvent(1)); // Timeout error
     } catch (err) {
@@ -152,8 +174,6 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
       } else {
         add(FeedErrorEvent(2)); // General error
       }
-    } finally {
-      emit(s.copyWith(isSaving: false));
     }
   }
 
@@ -162,7 +182,7 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
     final s = state as FeederDataState;
     try {
       await _api.triggerManualFeed(amount: s.feedAmount).timeout(
-        Duration(seconds: 15), // Manuel besleme için 15 saniye timeout
+        Duration(seconds: 15),
         onTimeout: () {
           throw TimeoutException(
               'Manual feed request timed out', Duration(seconds: 15));
@@ -174,7 +194,7 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
       if (err is ApiException && err.statusCode == 503) {
         add(FeedErrorEvent(1)); // ESP32 is not reachable
       } else {
-        add(FeedErrorEvent(2)); // Genel hata
+        add(FeedErrorEvent(2)); // General error
       }
     }
   }

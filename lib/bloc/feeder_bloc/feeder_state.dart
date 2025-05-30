@@ -1,3 +1,4 @@
+// lib/bloc/feeder_bloc/feeder_state.dart
 import 'package:flutter/material.dart';
 
 abstract class FeederState {
@@ -11,11 +12,12 @@ class FeederDataState extends FeederState {
   final int feedingFrequencyMinute;
   final double feedAmount;
   final TimeOfDay firstFeedHour;
-  final TimeOfDay lastFeedHour;
+  final TimeOfDay? lastFeedHour;
   final bool isSaving;
   final double humidity;
   final bool esp32Connected;
   final DateTime? serverTime;
+  final int? errorCode; // Add error code here
 
   const FeederDataState({
     required this.logs,
@@ -24,11 +26,12 @@ class FeederDataState extends FeederState {
     required this.feedingFrequencyMinute,
     required this.feedAmount,
     required this.firstFeedHour,
-    required this.lastFeedHour,
+    this.lastFeedHour,
     this.isSaving = false,
     required this.humidity,
     this.esp32Connected = false,
     this.serverTime,
+    this.errorCode,
   });
 
   factory FeederDataState.initial() => FeederDataState(
@@ -38,11 +41,12 @@ class FeederDataState extends FeederState {
         feedingFrequencyMinute: 0,
         feedAmount: 100.0,
         firstFeedHour: TimeOfDay(hour: 7, minute: 0),
-        lastFeedHour: TimeOfDay(hour: 7, minute: 0),
+        lastFeedHour: TimeOfDay(hour: 19, minute: 0),
         isSaving: false,
         humidity: 0.0,
         esp32Connected: false,
         serverTime: null,
+        errorCode: null,
       );
 
   FeederDataState copyWith({
@@ -57,6 +61,8 @@ class FeederDataState extends FeederState {
     double? humidity,
     bool? esp32Connected,
     DateTime? serverTime,
+    int? errorCode,
+    bool clearError = false,
   }) {
     return FeederDataState(
       logs: logs ?? this.logs,
@@ -71,11 +77,9 @@ class FeederDataState extends FeederState {
       humidity: humidity ?? this.humidity,
       esp32Connected: esp32Connected ?? this.esp32Connected,
       serverTime: serverTime ?? this.serverTime,
+      errorCode: clearError ? null : (errorCode ?? this.errorCode),
     );
   }
-}
 
-class FeedErrorState extends FeederState {
-  final int messageCode;
-  const FeedErrorState(this.messageCode);
+  bool get hasError => errorCode != null;
 }

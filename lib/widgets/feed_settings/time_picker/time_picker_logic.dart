@@ -1,4 +1,3 @@
-// lib/widgets/feed_settings/time_picker_logic.dart
 import 'package:flutter/material.dart';
 import 'package:smart_feeding_app/mixin/time_validation_mixin.dart';
 import 'package:smart_feeding_app/widgets/feed_settings/time_picker/time_picker_messages.dart';
@@ -28,27 +27,26 @@ class TimePickerLogic with TimeValidationMixin {
   }
 
   bool validateSelectedTime(BuildContext context, TimeOfDay selectedTime) {
+    bool isValid = true;
+
     if (minTime != null && !isTimeAfter(selectedTime, minTime!)) {
-      TimePickerMessages.showValidationError(context,
-          isLastFeedTime: isLastFeedTime);
-      return false;
+      isValid = false;
     }
 
     if (maxTime != null && !isTimeBefore(selectedTime, maxTime!)) {
+      isValid = false;
+    }
+
+    if (!isValid) {
       TimePickerMessages.showValidationError(context,
           isLastFeedTime: isLastFeedTime);
-      return false;
     }
 
-    return true;
+    return isValid;
   }
 
-  bool hasValidationError(TimeOfDay currentTime) {
-    if (!isLastFeedTime || minTime == null) {
-      return false;
-    }
-
-    if (currentTime == null) {
+  bool hasValidationError(TimeOfDay? currentTime) {
+    if (!isLastFeedTime || minTime == null || currentTime == null) {
       return false;
     }
 
@@ -59,9 +57,25 @@ class TimePickerLogic with TimeValidationMixin {
       BuildContext context, TimeOfDay currentTime) async {
     final initialTime = calculateInitialTime(currentTime);
 
-    return await showTimePicker(
+    final picked = await showTimePicker(
       context: context,
       initialTime: initialTime,
     );
+
+    if (picked != null) {
+      if (minTime != null && !isTimeAfter(picked, minTime!)) {
+        TimePickerMessages.showValidationError(context,
+            isLastFeedTime: isLastFeedTime);
+        return null;
+      }
+
+      if (maxTime != null && !isTimeBefore(picked, maxTime!)) {
+        TimePickerMessages.showValidationError(context,
+            isLastFeedTime: isLastFeedTime);
+        return null;
+      }
+    }
+
+    return picked;
   }
 }
