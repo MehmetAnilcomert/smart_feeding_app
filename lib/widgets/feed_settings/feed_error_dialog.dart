@@ -15,7 +15,6 @@ class FeedErrorDialog {
     );
   }
 
-  /// Özel hata türü ile dialog gösterme (isteğe bağlı)
   static void showWithType(BuildContext context, FeedErrorType errorType) {
     showDialog(
       context: context,

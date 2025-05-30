@@ -16,9 +16,9 @@ class AmountInput extends StatelessWidget {
     return CompactInputRow(
       value: amount.toInt(),
       suffix: S.of(context).grams_message,
-      onIncrease: () => onChanged((amount + 10).clamp(10, 500)),
-      onDecrease: () => onChanged((amount - 10).clamp(10, 500)),
-      onSubmitted: (v) => onChanged(v.clamp(10, 500).toDouble()),
+      onIncrease: () => onChanged(amount + 10),
+      onDecrease: () => onChanged((amount - 10).clamp(1, double.infinity)),
+      onSubmitted: (v) => onChanged(v.toDouble().clamp(1.0, double.infinity)),
     );
   }
 }
