@@ -49,7 +49,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "feeding_interval_minutes": MessageLookupByLibrary.simpleMessage("dakika"),
     "feeding_logs": MessageLookupByLibrary.simpleMessage("Besleme Kayıtları"),
     "first_feed_time": MessageLookupByLibrary.simpleMessage(
-      "İlk Besleme Zamanı",
+      "İlk Besleme Saati",
     ),
     "general_error_message": MessageLookupByLibrary.simpleMessage(
       "Bir hata oluştu. Lütfen tekrar deneyin.",

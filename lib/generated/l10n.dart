@@ -150,10 +150,10 @@ class S {
     );
   }
 
-  /// `First Feed Time`
+  /// `First Feed Hour`
   String get first_feed_time {
     return Intl.message(
-      'First Feed Time',
+      'First Feed Hour',
       name: 'first_feed_time',
       desc: '',
       args: [],

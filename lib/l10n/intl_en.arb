@@ -11,7 +11,7 @@
     "feed_settings": "Feed Settings",
     "set_feeding_frequency": "Feeding Frequency",
     "set_feed_amount": "Feed Amount",
-    "first_feed_time": "First Feed Time",
+    "first_feed_time": "First Feed Hour",
     "update_settings": "Update Settings",
     "feed_now": "Feed Now",
     "feeding_logs": "Feeding Logs",

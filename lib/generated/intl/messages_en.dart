@@ -50,7 +50,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "feed_settings": MessageLookupByLibrary.simpleMessage("Feed Settings"),
     "feeding_interval_minutes": MessageLookupByLibrary.simpleMessage("minutes"),
     "feeding_logs": MessageLookupByLibrary.simpleMessage("Feeding Logs"),
-    "first_feed_time": MessageLookupByLibrary.simpleMessage("First Feed Time"),
+    "first_feed_time": MessageLookupByLibrary.simpleMessage("First Feed Hour"),
     "general_error_message": MessageLookupByLibrary.simpleMessage(
       "An error occurred. Please try again.",
     ),
