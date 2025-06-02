@@ -22,17 +22,34 @@ class FeederApiService {
     required TimeOfDay endHour,
     required double amount,
   }) async {
-    final uri = Uri.parse('$baseUrl/set-interval').replace(queryParameters: {
+    final uri = Uri.parse('$baseUrl/set-interval');
+    final body = {
       'hourValue': hourValue.toString(),
       'minuteValue': minuteValue.toString(),
       'startHour': _formatTimeOfDay(startHour),
       'endHour': _formatTimeOfDay(endHour),
-      'value': amount.toInt().toString(),
-    });
-    final res = await _http.get(uri);
+      'amount': amount.toInt().toString(),
+    };
+
+    print('Setting interval with params: $hourValue, $minuteValue, '
+        '${_formatTimeOfDay(startHour)}, ${_formatTimeOfDay(endHour)}, $amount');
+    print('API URL: $uri');
+    print('Request Body: $body');
+
+    final res = await _http.post(
+      uri,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: json.encode(body),
+    );
+
+    print('API Response: ${res.body}');
+
     if (res.statusCode != 200) {
       throw ApiException(res.statusCode);
     }
+
     return ApiResponse.fromJson(json.decode(res.body));
   }
 
@@ -42,6 +59,7 @@ class FeederApiService {
       'value': amount.toString(),
     });
     final res = await _http.get(uri);
+    print('Sending manual feed request with amount: ${res.body}');
     if (res.statusCode != 200) {
       throw ApiException(res.statusCode);
     }

@@ -17,7 +17,7 @@ class FeederDataState extends FeederState {
   final double humidity;
   final bool esp32Connected;
   final DateTime? serverTime;
-  final int? errorCode; // Add error code here
+  final int? errorCode;
 
   const FeederDataState({
     required this.logs,
@@ -37,9 +37,9 @@ class FeederDataState extends FeederState {
   factory FeederDataState.initial() => FeederDataState(
         logs: [],
         temperature: 0.0,
-        feedingFrequencyHour: 1,
+        feedingFrequencyHour: 0,
         feedingFrequencyMinute: 0,
-        feedAmount: 100.0,
+        feedAmount: 10.0,
         firstFeedHour: TimeOfDay(hour: 7, minute: 0),
         lastFeedHour: TimeOfDay(hour: 19, minute: 0),
         isSaving: false,

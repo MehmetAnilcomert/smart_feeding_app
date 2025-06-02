@@ -19,7 +19,7 @@ class FrequencyInput extends StatelessWidget {
       suffix: suffix,
       onIncrease: () => onChanged((frequency + 1).clamp(1, 10)),
       onDecrease: () => onChanged((frequency - 1).clamp(1, 10)),
-      onSubmitted: (v) => onChanged(v.clamp(1, 10)),
+      onSubmitted: (v) => onChanged(v.clamp(0, 10)),
     );
   }
 }

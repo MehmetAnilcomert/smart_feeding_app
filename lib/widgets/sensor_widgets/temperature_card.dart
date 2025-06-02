@@ -39,7 +39,7 @@ class TemperatureCard extends StatelessWidget {
                   ? s.high_temperature_warning
                   : isCold
                       ? s.low_temperature_warning
-                      : s.optimal_temperature_message)
+                      : s.temperature_optimal)
               : s.connection_lost_message,
         );
       },
