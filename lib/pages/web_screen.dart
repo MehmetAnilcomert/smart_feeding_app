@@ -73,7 +73,8 @@ class WebHomeScreen extends StatelessWidget {
                   feederBloc.add(LoadCommandLogsEvent());
                 });
 
-                final isWideScreen = constraints.maxWidth > 1200;
+                final isWideScreen =
+                    constraints.maxWidth > 1000; // Reduced threshold
 
                 return Container(
                   color: isDarkMode ? Color(0xFF303030) : null,
@@ -81,60 +82,72 @@ class WebHomeScreen extends StatelessWidget {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Main content area
+                      // Main content area (narrower)
                       Expanded(
-                        flex: 2,
+                        flex: isWideScreen ? 3 : 1, // Adjusted flex ratio
                         child: SingleChildScrollView(
                           physics: BouncingScrollPhysics(),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              // Temperature and Humidity Cards
+                              // Compact sensor cards
                               AspectRatio(
-                                aspectRatio: 2.5,
+                                aspectRatio:
+                                    3.2, // Wider aspect ratio (less tall)
                                 child: Row(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
                                   children: [
-                                    Expanded(child: TemperatureCard()),
-                                    SizedBox(width: AppTheme.spacingMedium),
-                                    Expanded(child: HumidityCard()),
+                                    Expanded(
+                                      child: TemperatureCard(),
+                                    ),
+                                    SizedBox(width: AppTheme.spacingSmall),
+                                    Expanded(
+                                      child: HumidityCard(),
+                                    ),
                                   ],
                                 ),
                               ),
-                              SizedBox(height: AppTheme.spacingLarge),
+                              SizedBox(
+                                  height: AppTheme
+                                      .spacingMedium), // Reduced spacing
                               // Feed Settings
                               FeedSettingsWidget(),
                             ],
                           ),
                         ),
                       ),
-                      // Logs area (shown only on wide screens)
                       if (isWideScreen) ...[
-                        SizedBox(width: AppTheme.spacingLarge),
+                        SizedBox(
+                            width: AppTheme.spacingMedium), // Reduced spacing
                         Expanded(
+                          flex: 2,
                           child: Card(
+                            margin: EdgeInsets.zero,
                             child: Padding(
                               padding: EdgeInsets.all(AppTheme.spacing),
-                              child: SingleChildScrollView(
-                                physics: BouncingScrollPhysics(),
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.stretch,
-                                  children: [
-                                    Text(
-                                      s.logs_tab,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .headlineSmall,
-                                      textAlign: TextAlign.center,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Text(
+                                    s.logs_tab,
+                                    style:
+                                        Theme.of(context).textTheme.titleLarge,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  SizedBox(height: AppTheme.spacingSmall),
+                                  Expanded(
+                                    child: SingleChildScrollView(
+                                      physics: BouncingScrollPhysics(),
+                                      child: Column(
+                                        children: [
+                                          CommandLogView(),
+                                          SizedBox(
+                                              height: AppTheme.spacingSmall),
+                                          SystemLogView(),
+                                        ],
+                                      ),
                                     ),
-                                    SizedBox(height: AppTheme.spacingMedium),
-                                    CommandLogView(),
-                                    SizedBox(height: AppTheme.spacingMedium),
-                                    SystemLogView(),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
