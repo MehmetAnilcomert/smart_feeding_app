@@ -1,5 +1,6 @@
 // lib/bloc/feeder_bloc/feeder_state.dart
 import 'package:flutter/material.dart';
+import 'package:smart_feeding_app/modals/command_log.dart';
 
 abstract class FeederState {
   const FeederState();
@@ -7,6 +8,7 @@ abstract class FeederState {
 
 class FeederDataState extends FeederState {
   final List<String> logs;
+  final List<CommandLog> commandLogs;
   final double temperature;
   final int feedingFrequencyHour;
   final int feedingFrequencyMinute;
@@ -21,6 +23,7 @@ class FeederDataState extends FeederState {
 
   const FeederDataState({
     required this.logs,
+    this.commandLogs = const [],
     required this.temperature,
     required this.feedingFrequencyHour,
     required this.feedingFrequencyMinute,
@@ -36,6 +39,7 @@ class FeederDataState extends FeederState {
 
   factory FeederDataState.initial() => FeederDataState(
         logs: [],
+        commandLogs: [],
         temperature: 0.0,
         feedingFrequencyHour: 0,
         feedingFrequencyMinute: 0,
@@ -51,6 +55,7 @@ class FeederDataState extends FeederState {
 
   FeederDataState copyWith({
     List<String>? logs,
+    List<CommandLog>? commandLogs,
     double? temperature,
     int? feedingFrequencyHour,
     int? feedingFrequencyMinute,
@@ -66,6 +71,7 @@ class FeederDataState extends FeederState {
   }) {
     return FeederDataState(
       logs: logs ?? this.logs,
+      commandLogs: commandLogs ?? this.commandLogs,
       temperature: temperature ?? this.temperature,
       feedingFrequencyHour: feedingFrequencyHour ?? this.feedingFrequencyHour,
       feedingFrequencyMinute:

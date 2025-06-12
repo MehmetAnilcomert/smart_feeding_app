@@ -5,6 +5,8 @@ import 'package:smart_feeding_app/modals/apiException.dart';
 import 'package:smart_feeding_app/modals/general_response.dart';
 import 'package:smart_feeding_app/modals/status_response.dart';
 
+import 'package:smart_feeding_app/modals/command_log.dart';
+
 class FeederApiService {
   final String baseUrl;
   final http.Client _http;
@@ -100,5 +102,18 @@ class FeederApiService {
     final hour = time.hour.toString().padLeft(2, '0');
     final minute = time.minute.toString().padLeft(2, '0');
     return '$hour:$minute';
+  }
+
+  /// Fetch command logs from /commands endpoint
+  Future<List<CommandLog>> getCommands() async {
+    final uri = Uri.parse('$baseUrl/commands');
+    final res = await _http.get(uri);
+
+    if (res.statusCode != 200) {
+      throw ApiException(res.statusCode);
+    }
+
+    final List<dynamic> jsonList = json.decode(res.body);
+    return jsonList.map((json) => CommandLog.fromJson(json)).toList();
   }
 }

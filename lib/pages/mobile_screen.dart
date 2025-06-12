@@ -5,7 +5,7 @@ import 'package:smart_feeding_app/bloc/connectivity_bloc/connectivity_bloc.dart'
 import 'package:smart_feeding_app/bloc/connectivity_bloc/connectivity_state.dart';
 import 'package:smart_feeding_app/generated/l10n.dart';
 import 'package:smart_feeding_app/widgets/feed_setting.dart';
-import 'package:smart_feeding_app/widgets/mobil_widgets/log_view.dart';
+import 'package:smart_feeding_app/widgets/mobil_widgets/command_log_view.dart';
 import 'package:smart_feeding_app/widgets/connectivity_dialog.dart';
 import 'package:smart_feeding_app/widgets/drawer/drawer.dart';
 import 'package:smart_feeding_app/widgets/sensor_widgets/humidity_card.dart';
@@ -82,7 +82,7 @@ class MobileHomeScreen extends StatelessWidget {
                 SizedBox(height: AppTheme.spacingLarge),
                 FeedSettingsWidget(),
                 SizedBox(height: AppTheme.spacingLarge),
-                LogViewWidget(),
+                CommandLogView(),
               ],
             ),
           ),
