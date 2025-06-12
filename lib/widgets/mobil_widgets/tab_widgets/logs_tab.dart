@@ -10,12 +10,12 @@ class LogsTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       physics: BouncingScrollPhysics(),
-      padding: EdgeInsets.all(AppTheme.spacing),
+      padding: EdgeInsets.all(AppTheme.spacing / 2),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           CommandLogView(),
-          SizedBox(height: AppTheme.spacingLarge),
+          SizedBox(height: AppTheme.spacingLarge / 10),
           SystemLogView(),
         ],
       ),
