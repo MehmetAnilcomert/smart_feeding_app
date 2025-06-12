@@ -64,5 +64,21 @@
     "device_not_reachable_message": "ESP32 cihazına ulaşılamıyor. Lütfen bağlantınızı kontrol edin.",
     "timeout_error_message": "İstek zaman aşımına uğradı. Lütfen tekrar deneyin.",
     "invalid_time_range_message": "Son besleme saati, ilk besleme saatinden sonra olmalıdır.",
-    "general_error_message": "Bir hata oluştu. Lütfen tekrar deneyin."
+    "general_error_message": "Bir hata oluştu. Lütfen tekrar deneyin.",
+    "command_history": "Komut Geçmişi",
+    "system_logs": "Sistem Günlükleri",
+    "refresh_logs": "Yenile",
+    "error_loading_command_logs": "Komut geçmişi yüklenirken hata oluştu.\nLütfen bağlantınızı kontrol edin ve tekrar deneyin.",
+    "error_loading_system_logs": "Sistem günlükleri yüklenirken hata oluştu.\nLütfen bağlantınızı kontrol edin ve tekrar deneyin.",
+    "no_command_logs_available": "Komut geçmişi bulunamadı",
+    "no_system_logs_available": "Sistem günlükleri bulunamadı",
+    "pull_to_refresh_logs": "Yenilemek için aşağı çekin",
+    "log_id": "No: {id}",
+    "@log_id": {
+        "placeholders": {
+            "id": {
+                "type": "String"
+            }
+        }
+    }
 }

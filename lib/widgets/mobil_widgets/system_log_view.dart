@@ -4,7 +4,7 @@ import 'package:smart_feeding_app/app_theme.dart';
 import 'package:smart_feeding_app/bloc/feeder_bloc/feeder_bloc.dart';
 import 'package:smart_feeding_app/bloc/feeder_bloc/feeder_event.dart';
 import 'package:smart_feeding_app/bloc/feeder_bloc/feeder_state.dart';
-import 'package:smart_feeding_app/bloc/log_expand.dart';
+import 'package:smart_feeding_app/generated/l10n.dart';
 import 'package:intl/intl.dart';
 
 class SystemLogView extends StatefulWidget {
@@ -30,6 +30,7 @@ class _SystemLogViewState extends State<SystemLogView> {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
     final theme = Theme.of(context);
 
     return BlocBuilder<FeederBloc, FeederState>(
@@ -44,143 +45,140 @@ class _SystemLogViewState extends State<SystemLogView> {
           elevation: AppTheme.cardElevation,
           child: Column(
             children: [
-              InkWell(
-                onTap: () => context.read<LogExpandCubit>().toggle(),
-                child: Padding(
-                  padding: EdgeInsets.all(AppTheme.spacing),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(Icons.event_note,
-                              color: theme.colorScheme.primary),
-                          SizedBox(width: AppTheme.spacingSmall),
-                          Text(
-                            'System Logs',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
+              Padding(
+                padding: EdgeInsets.all(AppTheme.spacing),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(Icons.event_note,
+                            color: theme.colorScheme.primary),
+                        SizedBox(width: AppTheme.spacingSmall),
+                        Text(
+                          s.system_logs,
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
                           ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          _isRefreshing
-                              ? SizedBox(
-                                  width: 48,
-                                  height: 48,
-                                  child: Padding(
-                                    padding: EdgeInsets.all(12),
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2,
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                        theme.colorScheme.primary,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              : IconButton(
-                                  icon: Icon(Icons.refresh,
-                                      color: theme.colorScheme.primary),
-                                  onPressed: () {
-                                    setState(() {
-                                      _isRefreshing = true;
-                                    });
-                                    context
-                                        .read<FeederBloc>()
-                                        .add(LoadSystemLogsEvent());
-                                    Future.delayed(Duration(seconds: 1), () {
-                                      if (mounted) {
-                                        setState(() {
-                                          _isRefreshing = false;
-                                        });
-                                      }
-                                    });
-                                  },
-                                  tooltip: 'Refresh logs',
+                        ),
+                      ],
+                    ),
+                    IconButton(
+                      icon: _isRefreshing
+                          ? SizedBox(
+                              width: 24,
+                              height: 24,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  theme.colorScheme.primary,
                                 ),
-                          BlocBuilder<LogExpandCubit, bool>(
-                            builder: (context, isExpanded) {
-                              return Icon(
-                                isExpanded
-                                    ? Icons.expand_less
-                                    : Icons.expand_more,
-                                color: theme.colorScheme.primary,
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                              ),
+                            )
+                          : Icon(Icons.refresh,
+                              color: theme.colorScheme.primary),
+                      onPressed: () {
+                        setState(() {
+                          _isRefreshing = true;
+                        });
+                        context.read<FeederBloc>().add(LoadSystemLogsEvent());
+                        Future.delayed(Duration(seconds: 1), () {
+                          if (mounted) {
+                            setState(() {
+                              _isRefreshing = false;
+                            });
+                          }
+                        });
+                      },
+                      tooltip: s.refresh_logs,
+                    ),
+                  ],
                 ),
               ),
-              BlocBuilder<LogExpandCubit, bool>(
-                builder: (context, isExpanded) {
-                  return AnimatedCrossFade(
-                    firstChild: SizedBox.shrink(),
-                    secondChild: Container(
-                      constraints: BoxConstraints(maxHeight: 300),
-                      child: RefreshIndicator(
-                        onRefresh: () async {
-                          context.read<FeederBloc>().add(LoadSystemLogsEvent());
-                        },
-                        child: dataState.hasError
-                            ? Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Text(
-                                      'Error loading system logs',
-                                      style: TextStyle(color: Colors.red),
-                                    ),
-                                    const SizedBox(height: 16),
-                                    ElevatedButton(
-                                      onPressed: () => context
-                                          .read<FeederBloc>()
-                                          .add(LoadSystemLogsEvent()),
-                                      child: const Text('Retry'),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : ListView.separated(
-                                physics: const BouncingScrollPhysics(
-                                  parent: AlwaysScrollableScrollPhysics(),
-                                ),
-                                itemCount: dataState.systemLogs.length,
-                                separatorBuilder: (_, __) => Divider(height: 1),
-                                itemBuilder: (context, index) {
-                                  final log = dataState.systemLogs[index];
-                                  return ListTile(
-                                    leading: Text(
-                                      log.logTypeIcon,
-                                      style: TextStyle(fontSize: 24),
-                                    ),
-                                    title: Text(
-                                      log.message,
-                                      style:
-                                          theme.textTheme.bodyLarge?.copyWith(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    subtitle: Text(
-                                      _formatDateTime(log.createdAt),
-                                      style: theme.textTheme.bodySmall,
-                                    ),
-                                  );
-                                },
+              Container(
+                constraints: BoxConstraints(
+                  minHeight: 200,
+                  maxHeight: MediaQuery.of(context).size.height * 0.4,
+                ),
+                child: RefreshIndicator(
+                  onRefresh: () async {
+                    context.read<FeederBloc>().add(LoadSystemLogsEvent());
+                  },
+                  child: dataState.hasError
+                      ? Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                s.general_error_message,
+                                style:
+                                    TextStyle(color: theme.colorScheme.error),
+                                textAlign: TextAlign.center,
                               ),
-                      ),
-                    ),
-                    crossFadeState: isExpanded
-                        ? CrossFadeState.showSecond
-                        : CrossFadeState.showFirst,
-                    duration: AppTheme.animationDuration,
-                  );
-                },
+                              const SizedBox(height: 16),
+                              ElevatedButton.icon(
+                                onPressed: () => context
+                                    .read<FeederBloc>()
+                                    .add(LoadSystemLogsEvent()),
+                                icon: Icon(Icons.refresh),
+                                label: Text(s.retry),
+                              ),
+                            ],
+                          ),
+                        )
+                      : dataState.systemLogs.isEmpty
+                          ? Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.note_alt_outlined,
+                                    size: 48,
+                                    color: theme.colorScheme.secondary,
+                                  ),
+                                  const SizedBox(height: 16),
+                                  Text(
+                                    s.no_logs_available,
+                                    style: theme.textTheme.titleMedium,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    s.pull_to_refresh_logs,
+                                    style: theme.textTheme.bodySmall,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ],
+                              ),
+                            )
+                          : ListView.separated(
+                              physics: const BouncingScrollPhysics(
+                                parent: AlwaysScrollableScrollPhysics(),
+                              ),
+                              itemCount: dataState.systemLogs.length,
+                              separatorBuilder: (_, __) => Divider(height: 1),
+                              itemBuilder: (context, index) {
+                                final log = dataState.systemLogs[index];
+                                return ListTile(
+                                  leading: Text(
+                                    log.logTypeIcon,
+                                    style: TextStyle(fontSize: 24),
+                                  ),
+                                  title: Text(
+                                    log.message,
+                                    style: theme.textTheme.bodyLarge?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  subtitle: Text(
+                                    _formatDateTime(log.createdAt),
+                                    style: theme.textTheme.bodySmall,
+                                  ),
+                                );
+                              },
+                            ),
+                ),
               ),
             ],
           ),

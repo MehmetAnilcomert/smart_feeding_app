@@ -23,9 +23,12 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m0(firstTime) =>
       "Last feed time must be after first feed time (${firstTime})";
 
+  static String m1(id) => "ID: ${id}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "app_title": MessageLookupByLibrary.simpleMessage("Smart Chicken Feeder"),
+    "command_history": MessageLookupByLibrary.simpleMessage("Command History"),
     "connection_error_title": MessageLookupByLibrary.simpleMessage(
       "Connection Error",
     ),
@@ -45,6 +48,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "en": MessageLookupByLibrary.simpleMessage("EN"),
     "error": MessageLookupByLibrary.simpleMessage("Error"),
+    "error_loading_command_logs": MessageLookupByLibrary.simpleMessage(
+      "Error loading command logs.\nPlease check your connection and try again.",
+    ),
+    "error_loading_system_logs": MessageLookupByLibrary.simpleMessage(
+      "Error loading system logs.\nPlease check your connection and try again.",
+    ),
     "feed": MessageLookupByLibrary.simpleMessage("Feed"),
     "feed_now": MessageLookupByLibrary.simpleMessage("Feed Now"),
     "feed_settings": MessageLookupByLibrary.simpleMessage("Feed Settings"),
@@ -75,6 +84,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "last_feed_time_help": m0,
     "light_mode": MessageLookupByLibrary.simpleMessage("Light Mode"),
+    "log_id": m1,
     "logout": MessageLookupByLibrary.simpleMessage("Logout"),
     "low_humidity_warning": MessageLookupByLibrary.simpleMessage(
       "Humidity is too low!",
@@ -85,8 +95,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "manual_feeding_initiated": MessageLookupByLibrary.simpleMessage(
       "Manual feeding initiated!",
     ),
+    "no_command_logs_available": MessageLookupByLibrary.simpleMessage(
+      "No command history available",
+    ),
     "no_logs_available": MessageLookupByLibrary.simpleMessage(
       "No logs available",
+    ),
+    "no_system_logs_available": MessageLookupByLibrary.simpleMessage(
+      "No system logs available",
     ),
     "notConnected": MessageLookupByLibrary.simpleMessage(
       "Could not connect to the device. Please check your device.",
@@ -98,6 +114,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "optimal_temperature_message": MessageLookupByLibrary.simpleMessage(
       "Optimal temperature for your chickens.",
     ),
+    "pull_to_refresh_logs": MessageLookupByLibrary.simpleMessage(
+      "Pull down to refresh",
+    ),
+    "refresh_logs": MessageLookupByLibrary.simpleMessage("Refresh logs"),
     "retry": MessageLookupByLibrary.simpleMessage("Retry"),
     "set_feed_amount": MessageLookupByLibrary.simpleMessage("Feed Amount"),
     "set_feeding_frequency": MessageLookupByLibrary.simpleMessage(
@@ -108,6 +128,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Feed settings updated successfully!",
     ),
     "stats": MessageLookupByLibrary.simpleMessage("Statistics"),
+    "system_logs": MessageLookupByLibrary.simpleMessage("System Logs"),
     "temperature_high": MessageLookupByLibrary.simpleMessage(
       "High temperature! Consider cooling the coop.",
     ),

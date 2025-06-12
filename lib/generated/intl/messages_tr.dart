@@ -23,9 +23,12 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m0(firstTime) =>
       "Son besleme saati, ilk besleme saatinden (${firstTime}) sonra olmalıdır";
 
+  static String m1(id) => "No: ${id}";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "app_title": MessageLookupByLibrary.simpleMessage("Akıllı Tavuk Besleyici"),
+    "command_history": MessageLookupByLibrary.simpleMessage("Komut Geçmişi"),
     "connection_error_title": MessageLookupByLibrary.simpleMessage(
       "Bağlantı Hatası",
     ),
@@ -43,6 +46,12 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "en": MessageLookupByLibrary.simpleMessage("EN"),
     "error": MessageLookupByLibrary.simpleMessage("Hata"),
+    "error_loading_command_logs": MessageLookupByLibrary.simpleMessage(
+      "Komut geçmişi yüklenirken hata oluştu.\nLütfen bağlantınızı kontrol edin ve tekrar deneyin.",
+    ),
+    "error_loading_system_logs": MessageLookupByLibrary.simpleMessage(
+      "Sistem günlükleri yüklenirken hata oluştu.\nLütfen bağlantınızı kontrol edin ve tekrar deneyin.",
+    ),
     "feed": MessageLookupByLibrary.simpleMessage("Besleme"),
     "feed_now": MessageLookupByLibrary.simpleMessage("Şimdi Besle"),
     "feed_settings": MessageLookupByLibrary.simpleMessage("Besleme Ayarları"),
@@ -75,6 +84,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "last_feed_time_help": m0,
     "light_mode": MessageLookupByLibrary.simpleMessage("Aydınlık Mod"),
+    "log_id": m1,
     "logout": MessageLookupByLibrary.simpleMessage("Çıkış Yap"),
     "low_humidity_warning": MessageLookupByLibrary.simpleMessage(
       "Nem oranı oldukça düşük!",
@@ -85,8 +95,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "manual_feeding_initiated": MessageLookupByLibrary.simpleMessage(
       "Manuel besleme başlatıldı!",
     ),
+    "no_command_logs_available": MessageLookupByLibrary.simpleMessage(
+      "Komut geçmişi bulunamadı",
+    ),
     "no_logs_available": MessageLookupByLibrary.simpleMessage(
       "Kayıt bulunamadı",
+    ),
+    "no_system_logs_available": MessageLookupByLibrary.simpleMessage(
+      "Sistem günlükleri bulunamadı",
     ),
     "notConnected": MessageLookupByLibrary.simpleMessage(
       "Cihaza bağlanılamadı. Lütfen cihazınızı kontrol edin.",
@@ -95,6 +111,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "optimal_humidity_message": MessageLookupByLibrary.simpleMessage(
       "Nem oranı ideal miktarda.",
     ),
+    "pull_to_refresh_logs": MessageLookupByLibrary.simpleMessage(
+      "Yenilemek için aşağı çekin",
+    ),
+    "refresh_logs": MessageLookupByLibrary.simpleMessage("Yenile"),
     "retry": MessageLookupByLibrary.simpleMessage("Tekrar Dene"),
     "set_feed_amount": MessageLookupByLibrary.simpleMessage("Yem Miktarı"),
     "set_feeding_frequency": MessageLookupByLibrary.simpleMessage(
@@ -105,6 +125,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Besleme ayarları başarıyla güncellendi!",
     ),
     "stats": MessageLookupByLibrary.simpleMessage("İstatistikler"),
+    "system_logs": MessageLookupByLibrary.simpleMessage("Sistem Günlükleri"),
     "temperature_high": MessageLookupByLibrary.simpleMessage(
       "Yüksek sıcaklık! Kümesi soğutmayı düşünün.",
     ),

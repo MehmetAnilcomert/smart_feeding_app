@@ -305,6 +305,86 @@ class S {
     return Intl.message('TR', name: 'tr', desc: '', args: []);
   }
 
+  /// `Command History`
+  String get command_history {
+    return Intl.message(
+      'Command History',
+      name: 'command_history',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `System Logs`
+  String get system_logs {
+    return Intl.message('System Logs', name: 'system_logs', desc: '', args: []);
+  }
+
+  /// `Refresh logs`
+  String get refresh_logs {
+    return Intl.message(
+      'Refresh logs',
+      name: 'refresh_logs',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error loading command logs.\nPlease check your connection and try again.`
+  String get error_loading_command_logs {
+    return Intl.message(
+      'Error loading command logs.\nPlease check your connection and try again.',
+      name: 'error_loading_command_logs',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error loading system logs.\nPlease check your connection and try again.`
+  String get error_loading_system_logs {
+    return Intl.message(
+      'Error loading system logs.\nPlease check your connection and try again.',
+      name: 'error_loading_system_logs',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No command history available`
+  String get no_command_logs_available {
+    return Intl.message(
+      'No command history available',
+      name: 'no_command_logs_available',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No system logs available`
+  String get no_system_logs_available {
+    return Intl.message(
+      'No system logs available',
+      name: 'no_system_logs_available',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pull down to refresh`
+  String get pull_to_refresh_logs {
+    return Intl.message(
+      'Pull down to refresh',
+      name: 'pull_to_refresh_logs',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ID: {id}`
+  String log_id(String id) {
+    return Intl.message('ID: $id', name: 'log_id', desc: '', args: [id]);
+  }
+
   /// `High temperature! Consider cooling the coop.`
   String get high_temperature_warning {
     return Intl.message(

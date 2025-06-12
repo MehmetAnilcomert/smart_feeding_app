@@ -33,6 +33,22 @@
     "language": "Language",
     "en": "EN",
     "tr": "TR",
+    "command_history": "Command History",
+    "system_logs": "System Logs",
+    "refresh_logs": "Refresh logs",
+    "error_loading_command_logs": "Error loading command logs.\nPlease check your connection and try again.",
+    "error_loading_system_logs": "Error loading system logs.\nPlease check your connection and try again.",
+    "no_command_logs_available": "No command history available",
+    "no_system_logs_available": "No system logs available",
+    "pull_to_refresh_logs": "Pull down to refresh",
+    "log_id": "ID: {id}",
+    "@log_id": {
+        "placeholders": {
+            "id": {
+                "type": "String"
+            }
+        }
+    },
     "high_temperature_warning": "High temperature! Consider cooling the coop.",
     "low_temperature_warning": "Low temperature! Consider heating the coop.",
     "optimal_temperature_message": "Optimal temperature for your chickens.",
