@@ -629,6 +629,26 @@ class S {
   String get logs_tab {
     return Intl.message('Logs', name: 'logs_tab', desc: '', args: []);
   }
+
+  /// `Feed amount: {amount}`
+  String feed_amount(String amount) {
+    return Intl.message(
+      'Feed amount: $amount',
+      name: 'feed_amount',
+      desc: '',
+      args: [amount],
+    );
+  }
+
+  /// `Every {minutes} min between {start}–{end}`
+  String feed_interval(String minutes, String start, String end) {
+    return Intl.message(
+      'Every $minutes min between $start–$end',
+      name: 'feed_interval',
+      desc: '',
+      args: [minutes, start, end],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

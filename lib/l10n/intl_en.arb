@@ -82,5 +82,27 @@
     "invalid_time_range_message": "Last feed time must be after first feed time.",
     "general_error_message": "An error occurred. Please try again.",
     "dashboard_tab": "Dashboard",
-    "logs_tab": "Logs"
+    "logs_tab": "Logs",
+    "feed_amount": "Feed amount: {amount}",
+    "@feed_amount": {
+        "placeholders": {
+            "amount": {
+                "type": "String"
+            }
+        }
+    },
+    "feed_interval": "Every {minutes} min between {start}–{end}",
+    "@feed_interval": {
+        "placeholders": {
+            "minutes": {
+                "type": "String"
+            },
+            "start": {
+                "type": "String"
+            },
+            "end": {
+                "type": "String"
+            }
+        }
+    }
 }

@@ -82,5 +82,27 @@
         }
     },
     "dashboard_tab": "Yönetim Paneli",
-    "logs_tab": "Kayıtlar"
+    "logs_tab": "Kayıtlar",
+    "feed_amount": "Beslenen Miktar: {amount}",
+    "@feed_amount": {
+        "placeholders": {
+            "amount": {
+                "type": "String"
+            }
+        }
+    },
+    "feed_interval": "{start}–{end} saatleri arasında {minutes} dakikada aralıklarla",
+    "@feed_interval": {
+        "placeholders": {
+            "minutes": {
+                "type": "String"
+            },
+            "start": {
+                "type": "String"
+            },
+            "end": {
+                "type": "String"
+            }
+        }
+    }
 }

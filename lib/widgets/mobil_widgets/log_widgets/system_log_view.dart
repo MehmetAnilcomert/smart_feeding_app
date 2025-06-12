@@ -7,9 +7,9 @@ import 'package:smart_feeding_app/widgets/mobil_widgets/log_widgets/log_view.dar
 class SystemLogView extends StatelessWidget {
   const SystemLogView({Key? key}) : super(key: key);
 
-  String _formatDateTime(String dateTimeStr) {
-    final dateTime = DateTime.parse(dateTimeStr);
-    return DateFormat('MMM d, HH:mm').format(dateTime);
+  String _formatDate(BuildContext context, DateTime date) {
+    final locale = Localizations.localeOf(context).toString();
+    return DateFormat('MMM d, HH:mm', locale).format(date);
   }
 
   @override
@@ -21,27 +21,36 @@ class SystemLogView extends StatelessWidget {
       logType: LogType.system,
       title: s.system_logs,
       icon: Icons.event_note,
-      noLogsMessage: (context) => s.no_logs_available,
-      pullToRefreshMessage: (context) => s.pull_to_refresh_logs,
-      refreshTooltip: (context) => s.refresh_logs,
-      errorMessage: (context) => s.general_error_message,
-      retryLabel: (context) => s.retry,
-      itemBuilder: (log, context) => ListTile(
-        leading: Text(
-          log.logTypeIcon,
-          style: TextStyle(fontSize: 24),
-        ),
-        title: Text(
-          log.message,
-          style: theme.textTheme.bodyLarge?.copyWith(
-            fontWeight: FontWeight.bold,
+      noLogsMessage: (_) => s.no_logs_available,
+      pullToRefreshMessage: (_) => s.pull_to_refresh_logs,
+      refreshTooltip: (_) => s.refresh_logs,
+      errorMessage: (_) => s.general_error_message,
+      retryLabel: (_) => s.refresh_logs,
+      itemBuilder: (log, context) {
+        return Card(
+          margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          elevation: 2,
+          child: ListTile(
+            leading: CircleAvatar(
+              backgroundColor: log.color,
+              child: Icon(log.iconData, color: Colors.white),
+            ),
+            title: Text(
+              log.message,
+              style: theme.textTheme.bodyLarge
+                  ?.copyWith(fontWeight: FontWeight.bold),
+            ),
+            subtitle: Text(
+              _formatDate(context, log.createdAt),
+              style: theme.textTheme.bodySmall,
+            ),
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
           ),
-        ),
-        subtitle: Text(
-          _formatDateTime(log.createdAt),
-          style: theme.textTheme.bodySmall,
-        ),
-      ),
+        );
+      },
     );
   }
 }

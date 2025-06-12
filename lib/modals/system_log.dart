@@ -1,37 +1,50 @@
+import 'package:flutter/material.dart';
+
 class SystemLog {
   final int id;
-  final String type;
-  final String message;
-  final String createdAt;
+  final DateTime createdAt;
   final int deviceId;
+
+  final String rawType;
+  final String message;
 
   SystemLog({
     required this.id,
-    required this.type,
-    required this.message,
     required this.createdAt,
     required this.deviceId,
+    required this.rawType,
+    required this.message,
   });
 
   factory SystemLog.fromJson(Map<String, dynamic> json) {
     return SystemLog(
-      id: json['id'],
-      type: json['type'],
-      message: json['message'],
-      createdAt: json['created_at'],
-      deviceId: json['device_id'],
+      id: json['id'] as int,
+      createdAt: DateTime.parse(json['created_at'] as String),
+      deviceId: json['device_id'] as int,
+      rawType: json['type'] as String,
+      message: json['message'] as String,
     );
   }
 
-  // Helper method to get icon based on type
-  String get logTypeIcon {
-    switch (type) {
+  IconData get iconData {
+    switch (rawType) {
       case 'temperature':
-        return '🌡️';
+        return Icons.thermostat;
       case 'interval':
-        return '⏱️';
+        return Icons.timer;
       default:
-        return 'ℹ️';
+        return Icons.info;
+    }
+  }
+
+  Color get color {
+    switch (rawType) {
+      case 'temperature':
+        return Colors.orange;
+      case 'interval':
+        return Colors.blue;
+      default:
+        return Colors.grey;
     }
   }
 }

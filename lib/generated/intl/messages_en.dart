@@ -20,10 +20,15 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(firstTime) =>
+  static String m0(amount) => "Feed amount: ${amount}";
+
+  static String m1(minutes, start, end) =>
+      "Every ${minutes} min between ${start}–${end}";
+
+  static String m2(firstTime) =>
       "Last feed time must be after first feed time (${firstTime})";
 
-  static String m1(id) => "ID: ${id}";
+  static String m3(id) => "ID: ${id}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -56,6 +61,8 @@ class MessageLookup extends MessageLookupByLibrary {
       "Error loading system logs.\nPlease check your connection and try again.",
     ),
     "feed": MessageLookupByLibrary.simpleMessage("Feed"),
+    "feed_amount": m0,
+    "feed_interval": m1,
     "feed_now": MessageLookupByLibrary.simpleMessage("Feed Now"),
     "feed_settings": MessageLookupByLibrary.simpleMessage("Feed Settings"),
     "feeding_interval_minutes": MessageLookupByLibrary.simpleMessage("minutes"),
@@ -83,9 +90,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "last_feed_time_error": MessageLookupByLibrary.simpleMessage(
       "Last feed time must be after first feed time!",
     ),
-    "last_feed_time_help": m0,
+    "last_feed_time_help": m2,
     "light_mode": MessageLookupByLibrary.simpleMessage("Light Mode"),
-    "log_id": m1,
+    "log_id": m3,
     "logout": MessageLookupByLibrary.simpleMessage("Logout"),
     "logs_tab": MessageLookupByLibrary.simpleMessage("Logs"),
     "low_humidity_warning": MessageLookupByLibrary.simpleMessage(

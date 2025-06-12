@@ -20,10 +20,15 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'tr';
 
-  static String m0(firstTime) =>
+  static String m0(amount) => "Beslenen Miktar: ${amount}";
+
+  static String m1(minutes, start, end) =>
+      "${start}–${end} saatleri arasında ${minutes} dakikada bir";
+
+  static String m2(firstTime) =>
       "Son besleme saati, ilk besleme saatinden (${firstTime}) sonra olmalıdır";
 
-  static String m1(id) => "No: ${id}";
+  static String m3(id) => "No: ${id}";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -54,6 +59,8 @@ class MessageLookup extends MessageLookupByLibrary {
       "Sistem günlükleri yüklenirken hata oluştu.\nLütfen bağlantınızı kontrol edin ve tekrar deneyin.",
     ),
     "feed": MessageLookupByLibrary.simpleMessage("Besleme"),
+    "feed_amount": m0,
+    "feed_interval": m1,
     "feed_now": MessageLookupByLibrary.simpleMessage("Şimdi Besle"),
     "feed_settings": MessageLookupByLibrary.simpleMessage("Besleme Ayarları"),
     "feeding_interval_minutes": MessageLookupByLibrary.simpleMessage("dakika"),
@@ -83,9 +90,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "last_feed_time_error": MessageLookupByLibrary.simpleMessage(
       "Son besleme saati, ilk besleme saatinden sonra olmalıdır!",
     ),
-    "last_feed_time_help": m0,
+    "last_feed_time_help": m2,
     "light_mode": MessageLookupByLibrary.simpleMessage("Aydınlık Mod"),
-    "log_id": m1,
+    "log_id": m3,
     "logout": MessageLookupByLibrary.simpleMessage("Çıkış Yap"),
     "logs_tab": MessageLookupByLibrary.simpleMessage("Kayıtlar"),
     "low_humidity_warning": MessageLookupByLibrary.simpleMessage(
