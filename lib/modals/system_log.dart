@@ -8,34 +8,36 @@ class SystemLog {
   final String rawType;
   final String message;
 
-  // Parsed fields
-  final double? temperature;
-  final double? humidity;
+  // Parsed fields as strings including unit
+  final String? temperatureStr;
+  final String? humidityStr;
   final int? intervalHours;
   final int? intervalMinutes;
   final int? feedAmount;
   final String? startTime;
   final String? endTime;
 
-  SystemLog._(
-      {required this.id,
-      required this.createdAt,
-      required this.deviceId,
-      required this.rawType,
-      required this.message,
-      this.temperature,
-      this.humidity,
-      this.intervalHours,
-      this.intervalMinutes,
-      this.feedAmount,
-      this.startTime,
-      this.endTime});
+  SystemLog._({
+    required this.id,
+    required this.createdAt,
+    required this.deviceId,
+    required this.rawType,
+    required this.message,
+    this.temperatureStr,
+    this.humidityStr,
+    this.intervalHours,
+    this.intervalMinutes,
+    this.feedAmount,
+    this.startTime,
+    this.endTime,
+  });
 
   factory SystemLog.fromJson(Map<String, dynamic> json) {
     final type = json['type'] as String;
     final msg = json['message'] as String;
-    double? temp;
-    double? hum;
+
+    String? tempStr;
+    String? humStr;
     int? hrs;
     int? mins;
     int? amount;
@@ -44,15 +46,19 @@ class SystemLog {
 
     if (type == 'temperature') {
       final regex = RegExp(
-          r"Temperature logged: (?<temp>[\d.]+)°C, Humidity logged: (?<hum>[\d.]+)%");
+        r"(Temperature|Sıcaklık).*?: (?<temp>[\d.]+).*?C,.*?(Humidity|Nem).*?: (?<hum>[\d.]+)%",
+        caseSensitive: false,
+      );
       final match = regex.firstMatch(msg);
       if (match != null) {
-        temp = double.parse(match.namedGroup('temp')!);
-        hum = double.parse(match.namedGroup('hum')!);
+        print('Temperature match: ${match.namedGroup('temp')}');
+        tempStr = "${match.namedGroup('temp')}\u00B0C"; // Unicode °C
+        humStr = "${match.namedGroup('hum')}%";
       }
     } else if (type == 'interval') {
       final regex = RegExp(
-          r"Feed interval set: (?<h>\d+)h (?<m>\d+)m, amount: (?<a>\d+)g, between (?<s>[\d:]+)-(?<e>[\d:]+)");
+        r"Feed interval set: (?<h>\d+)h (?<m>\d+)m, amount: (?<a>\d+)g, between (?<s>[\d:]+)-(?<e>[\d:]+)",
+      );
       final match = regex.firstMatch(msg);
       if (match != null) {
         hrs = int.parse(match.namedGroup('h')!);
@@ -69,8 +75,8 @@ class SystemLog {
       deviceId: json['device_id'] as int,
       rawType: type,
       message: msg,
-      temperature: temp,
-      humidity: hum,
+      temperatureStr: tempStr,
+      humidityStr: humStr,
       intervalHours: hrs,
       intervalMinutes: mins,
       feedAmount: amount,
@@ -105,10 +111,10 @@ class SystemLog {
     final s = S.of(context);
     switch (rawType) {
       case 'temperature':
-        if (temperature != null && humidity != null) {
+        if (temperatureStr != null && humidityStr != null) {
           return s.temperature_log(
-            temperature!.toStringAsFixed(1),
-            humidity!.toStringAsFixed(1),
+            temperatureStr!,
+            humidityStr!,
           );
         }
         break;

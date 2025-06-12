@@ -650,10 +650,10 @@ class S {
     );
   }
 
-  /// `Temperature logged: {temp}°C, Humidity: {hum}%`
+  /// `Sensor data logged: {temp}, Humidity: {hum}%`
   String temperature_log(Object temp, Object hum) {
     return Intl.message(
-      'Temperature logged: $temp°C, Humidity: $hum%',
+      'Sensor data logged: $temp, Humidity: $hum%',
       name: 'temperature_log',
       desc: 'Shows temperature and humidity readings',
       args: [temp, hum],

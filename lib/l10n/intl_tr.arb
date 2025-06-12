@@ -105,7 +105,7 @@
             }
         }
     },
-    "temperature_log": "Sıcaklık kaydedildi: {temp}°C, Nem: {hum}%",
+    "temperature_log": "Sensör verisi kaydedildi: {temp}, Nem: {hum}",
     "@temperature_log": {
         "description": "Sıcaklık ve nem bilgisini gösterir",
         "placeholders": {

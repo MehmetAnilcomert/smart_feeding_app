@@ -105,7 +105,7 @@
             }
         }
     },
-    "temperature_log": "Temperature logged: {temp}°C, Humidity: {hum}%",
+    "temperature_log": "Sensor data logged: {temp}, Humidity: {hum}%",
     "@temperature_log": {
         "description": "Shows temperature and humidity readings",
         "placeholders": {

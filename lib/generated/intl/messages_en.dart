@@ -34,7 +34,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m4(id) => "ID: ${id}";
 
   static String m5(temp, hum) =>
-      "Temperature logged: ${temp}°C, Humidity: ${hum}%";
+      "Sensor data logged: ${temp}, Humidity: ${hum}%";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
