@@ -11,7 +11,7 @@ class ArgCubit extends Cubit<Map<String, dynamic>?> {
           emit({'message': decodedMessage});
         }
       } catch (e) {
-        print('Error parsing message: $e');
+        throw Exception('Failed to parse message: $e');
       }
     }
   }
@@ -19,7 +19,6 @@ class ArgCubit extends Cubit<Map<String, dynamic>?> {
   void processNotificationData() {
     if (state != null && state!.containsKey('message')) {
       // Handle notification data
-      print('Processing notification data: ${state!['message']}');
 
       // You can add your logic here to handle the notification data
       // For example, navigate to a specific screen based on the notification

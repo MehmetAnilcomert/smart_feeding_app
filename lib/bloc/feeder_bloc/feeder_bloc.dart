@@ -197,7 +197,6 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
     } on SocketException {
       add(FeedErrorEvent(1));
     } catch (err) {
-      print('Error saving settings: $err');
       if (err is ApiException) {
         add(FeedErrorEvent(1));
       } else {
@@ -257,7 +256,6 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
         isLoadingSystemLogs: false,
       ));
     } catch (err) {
-      print('Error loading system logs: $err');
       // Get current state again for error case
       final currentState = state as FeederDataState;
       emit(currentState.copyWith(
@@ -291,7 +289,6 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
         isLoadingCommandLogs: false,
       ));
     } catch (err) {
-      print('Error loading command logs: $err');
       // Get current state again for error case
       final currentState = state as FeederDataState;
       emit(currentState.copyWith(
