@@ -80,5 +80,7 @@
     "device_not_reachable_message": "ESP32 device is not reachable. Please check your connection.",
     "timeout_error_message": "Request timed out. Please try again.",
     "invalid_time_range_message": "Last feed time must be after first feed time.",
-    "general_error_message": "An error occurred. Please try again."
+    "general_error_message": "An error occurred. Please try again.",
+    "dashboard_tab": "Dashboard",
+    "logs_tab": "Logs"
 }

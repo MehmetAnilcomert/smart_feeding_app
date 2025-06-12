@@ -43,6 +43,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Current Temperature",
     ),
     "dark_mode": MessageLookupByLibrary.simpleMessage("Dark Mode"),
+    "dashboard_tab": MessageLookupByLibrary.simpleMessage("Dashboard"),
     "device_not_reachable_message": MessageLookupByLibrary.simpleMessage(
       "ESP32 device is not reachable. Please check your connection.",
     ),
@@ -86,6 +87,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "light_mode": MessageLookupByLibrary.simpleMessage("Light Mode"),
     "log_id": m1,
     "logout": MessageLookupByLibrary.simpleMessage("Logout"),
+    "logs_tab": MessageLookupByLibrary.simpleMessage("Logs"),
     "low_humidity_warning": MessageLookupByLibrary.simpleMessage(
       "Humidity is too low!",
     ),

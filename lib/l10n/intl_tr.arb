@@ -80,5 +80,7 @@
                 "type": "String"
             }
         }
-    }
+    },
+    "dashboard_tab": "Yönetim Paneli",
+    "logs_tab": "Kayıtlar"
 }

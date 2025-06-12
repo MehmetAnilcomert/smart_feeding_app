@@ -619,6 +619,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Dashboard`
+  String get dashboard_tab {
+    return Intl.message('Dashboard', name: 'dashboard_tab', desc: '', args: []);
+  }
+
+  /// `Logs`
+  String get logs_tab {
+    return Intl.message('Logs', name: 'logs_tab', desc: '', args: []);
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

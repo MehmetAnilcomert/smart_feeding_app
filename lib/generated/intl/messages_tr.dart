@@ -41,6 +41,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Mevcut Sıcaklık",
     ),
     "dark_mode": MessageLookupByLibrary.simpleMessage("Karanlık Mod"),
+    "dashboard_tab": MessageLookupByLibrary.simpleMessage("Yönetim Paneli"),
     "device_not_reachable_message": MessageLookupByLibrary.simpleMessage(
       "ESP32 cihazına ulaşılamıyor. Lütfen bağlantınızı kontrol edin.",
     ),
@@ -86,6 +87,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "light_mode": MessageLookupByLibrary.simpleMessage("Aydınlık Mod"),
     "log_id": m1,
     "logout": MessageLookupByLibrary.simpleMessage("Çıkış Yap"),
+    "logs_tab": MessageLookupByLibrary.simpleMessage("Kayıtlar"),
     "low_humidity_warning": MessageLookupByLibrary.simpleMessage(
       "Nem oranı oldukça düşük!",
     ),

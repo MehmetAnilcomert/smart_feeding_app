@@ -1,3 +1,4 @@
+// lib/widgets/generic_log_view.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_feeding_app/app_theme.dart';
@@ -35,11 +36,25 @@ class GenericLogView<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
+    // Load logs when widget is first built
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final event = logType == LogType.system
-          ? LoadSystemLogsEvent()
-          : LoadCommandLogsEvent();
-      context.read<FeederBloc>().add(event);
+      final currentState = context.read<FeederBloc>().state;
+      if (currentState is FeederDataState) {
+        // Check if logs are empty and not already loading
+        final logs = logType == LogType.system
+            ? currentState.systemLogs
+            : currentState.commandLogs;
+        final isAlreadyLoading = logType == LogType.system
+            ? currentState.isLoadingSystemLogs
+            : currentState.isLoadingCommandLogs;
+
+        if (logs.isEmpty && !isAlreadyLoading) {
+          final event = logType == LogType.system
+              ? LoadSystemLogsEvent()
+              : LoadCommandLogsEvent();
+          context.read<FeederBloc>().add(event);
+        }
+      }
     });
 
     return BlocBuilder<FeederBloc, FeederState>(
