@@ -4,7 +4,6 @@ import 'package:smart_feeding_app/app_theme.dart';
 import 'package:smart_feeding_app/bloc/feeder_bloc/feeder_bloc.dart';
 import 'package:smart_feeding_app/bloc/feeder_bloc/feeder_event.dart';
 import 'package:smart_feeding_app/bloc/feeder_bloc/feeder_state.dart';
-import 'package:intl/intl.dart';
 
 enum LogType { system, command }
 
@@ -32,16 +31,10 @@ class GenericLogView<T> extends StatelessWidget {
     required this.itemBuilder,
   }) : super(key: key);
 
-  String _formatDateTime(String dateTimeStr) {
-    final dateTime = DateTime.parse(dateTimeStr);
-    return DateFormat('MMM d, HH:mm').format(dateTime);
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
-    // Load logs when widget is first built
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final event = logType == LogType.system
           ? LoadSystemLogsEvent()

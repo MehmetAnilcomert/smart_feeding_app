@@ -251,13 +251,16 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
         },
       );
 
-      emit(s.copyWith(
+      final currentState = state as FeederDataState;
+      emit(currentState.copyWith(
         systemLogs: logs,
         isLoadingSystemLogs: false,
       ));
     } catch (err) {
       print('Error loading system logs: $err');
-      emit(s.copyWith(
+      // Get current state again for error case
+      final currentState = state as FeederDataState;
+      emit(currentState.copyWith(
         isLoadingSystemLogs: false,
         errorCode: 2,
       ));
@@ -282,13 +285,16 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
         },
       );
 
-      emit(s.copyWith(
+      final currentState = state as FeederDataState;
+      emit(currentState.copyWith(
         commandLogs: commands,
         isLoadingCommandLogs: false,
       ));
     } catch (err) {
       print('Error loading command logs: $err');
-      emit(s.copyWith(
+      // Get current state again for error case
+      final currentState = state as FeederDataState;
+      emit(currentState.copyWith(
         isLoadingCommandLogs: false,
         errorCode: 2,
       ));
