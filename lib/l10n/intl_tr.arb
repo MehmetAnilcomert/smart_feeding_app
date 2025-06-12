@@ -104,5 +104,24 @@
                 "type": "String"
             }
         }
+    },
+    "temperature_log": "Sıcaklık kaydedildi: {temp}°C, Nem: {hum}%",
+    "@temperature_log": {
+        "description": "Sıcaklık ve nem bilgisini gösterir",
+        "placeholders": {
+            "temp": {},
+            "hum": {}
+        }
+    },
+    "feed_interval_set": "Besleme aralığı ayarlandı: {h}s {m}d, miktar: {a}g, {s}–{e} arasında",
+    "@feed_interval_set": {
+        "description": "Besleme aralığı ayar bilgilerini gösterir",
+        "placeholders": {
+            "h": {},
+            "m": {},
+            "a": {},
+            "s": {},
+            "e": {}
+        }
     }
 }

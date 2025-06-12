@@ -104,5 +104,24 @@
                 "type": "String"
             }
         }
+    },
+    "temperature_log": "Temperature logged: {temp}°C, Humidity: {hum}%",
+    "@temperature_log": {
+        "description": "Shows temperature and humidity readings",
+        "placeholders": {
+            "temp": {},
+            "hum": {}
+        }
+    },
+    "feed_interval_set": "Feed interval set: {h}h {m}m, amount: {a}g, between {s}–{e}",
+    "@feed_interval_set": {
+        "description": "Shows feed interval settings",
+        "placeholders": {
+            "h": {},
+            "m": {},
+            "a": {},
+            "s": {},
+            "e": {}
+        }
     }
 }

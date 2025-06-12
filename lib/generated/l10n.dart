@@ -649,6 +649,26 @@ class S {
       args: [minutes, start, end],
     );
   }
+
+  /// `Temperature logged: {temp}°C, Humidity: {hum}%`
+  String temperature_log(Object temp, Object hum) {
+    return Intl.message(
+      'Temperature logged: $temp°C, Humidity: $hum%',
+      name: 'temperature_log',
+      desc: 'Shows temperature and humidity readings',
+      args: [temp, hum],
+    );
+  }
+
+  /// `Feed interval set: {h}h {m}m, amount: {a}g, between {s}–{e}`
+  String feed_interval_set(Object h, Object m, Object a, Object s, Object e) {
+    return Intl.message(
+      'Feed interval set: ${h}h ${m}m, amount: ${a}g, between $s–$e',
+      name: 'feed_interval_set',
+      desc: 'Shows feed interval settings',
+      args: [h, m, a, s, e],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

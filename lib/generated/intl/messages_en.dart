@@ -25,10 +25,16 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m1(minutes, start, end) =>
       "Every ${minutes} min between ${start}–${end}";
 
-  static String m2(firstTime) =>
+  static String m2(h, m, a, s, e) =>
+      "Feed interval set: ${h}h ${m}m, amount: ${a}g, between ${s}–${e}";
+
+  static String m3(firstTime) =>
       "Last feed time must be after first feed time (${firstTime})";
 
-  static String m3(id) => "ID: ${id}";
+  static String m4(id) => "ID: ${id}";
+
+  static String m5(temp, hum) =>
+      "Temperature logged: ${temp}°C, Humidity: ${hum}%";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -63,6 +69,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "feed": MessageLookupByLibrary.simpleMessage("Feed"),
     "feed_amount": m0,
     "feed_interval": m1,
+    "feed_interval_set": m2,
     "feed_now": MessageLookupByLibrary.simpleMessage("Feed Now"),
     "feed_settings": MessageLookupByLibrary.simpleMessage("Feed Settings"),
     "feeding_interval_minutes": MessageLookupByLibrary.simpleMessage("minutes"),
@@ -90,9 +97,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "last_feed_time_error": MessageLookupByLibrary.simpleMessage(
       "Last feed time must be after first feed time!",
     ),
-    "last_feed_time_help": m2,
+    "last_feed_time_help": m3,
     "light_mode": MessageLookupByLibrary.simpleMessage("Light Mode"),
-    "log_id": m3,
+    "log_id": m4,
     "logout": MessageLookupByLibrary.simpleMessage("Logout"),
     "logs_tab": MessageLookupByLibrary.simpleMessage("Logs"),
     "low_humidity_warning": MessageLookupByLibrary.simpleMessage(
@@ -141,6 +148,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "temperature_high": MessageLookupByLibrary.simpleMessage(
       "High temperature! Consider cooling the coop.",
     ),
+    "temperature_log": m5,
     "temperature_low": MessageLookupByLibrary.simpleMessage(
       "Low temperature! Consider heating the coop.",
     ),

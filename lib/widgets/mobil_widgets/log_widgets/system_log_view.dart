@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:smart_feeding_app/generated/l10n.dart';
-import 'package:intl/intl.dart';
 import 'package:smart_feeding_app/modals/system_log.dart';
 import 'package:smart_feeding_app/widgets/mobil_widgets/log_widgets/log_view.dart';
+import 'package:intl/intl.dart';
 
 class SystemLogView extends StatelessWidget {
   const SystemLogView({Key? key}) : super(key: key);
@@ -38,7 +38,7 @@ class SystemLogView extends StatelessWidget {
               child: Icon(log.iconData, color: Colors.white),
             ),
             title: Text(
-              log.message,
+              log.localizedMessage(context),
               style: theme.textTheme.bodyLarge
                   ?.copyWith(fontWeight: FontWeight.bold),
             ),
