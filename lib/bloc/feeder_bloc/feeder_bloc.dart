@@ -22,6 +22,7 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
   FeederBloc({required String httpUrl})
       : _api = FeederApiService(baseUrl: httpUrl),
         super(FeederDataState.initial()) {
+    on<LoadSystemLogsEvent>(_onLoadSystemLogs);
     on<LoadCommandLogsEvent>(_onLoadCommandLogs);
     on<LoadSettingsEvent>(_onLoadSettings);
     on<SaveSettingsEvent>(_onSaveSettings);
@@ -229,6 +230,27 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
       emit(s.copyWith(esp32Connected: false));
     } catch (_) {
       emit(s.copyWith(esp32Connected: false));
+    }
+  }
+
+  Future<void> _onLoadSystemLogs(
+    LoadSystemLogsEvent event,
+    Emitter<FeederState> emit,
+  ) async {
+    final s = state as FeederDataState;
+    try {
+      final logs = await _api.getLogs().timeout(
+        Duration(seconds: 10),
+        onTimeout: () {
+          throw TimeoutException(
+              'System logs request timed out', Duration(seconds: 10));
+        },
+      );
+
+      emit(s.copyWith(systemLogs: logs));
+    } catch (err) {
+      print('Error loading system logs: $err');
+      add(FeedErrorEvent(2));
     }
   }
 

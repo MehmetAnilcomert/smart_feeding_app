@@ -6,6 +6,7 @@ import 'package:smart_feeding_app/modals/general_response.dart';
 import 'package:smart_feeding_app/modals/status_response.dart';
 
 import 'package:smart_feeding_app/modals/command_log.dart';
+import 'package:smart_feeding_app/modals/system_log.dart';
 
 class FeederApiService {
   final String baseUrl;
@@ -115,5 +116,18 @@ class FeederApiService {
 
     final List<dynamic> jsonList = json.decode(res.body);
     return jsonList.map((json) => CommandLog.fromJson(json)).toList();
+  }
+
+  /// Fetch system logs from /logs endpoint
+  Future<List<SystemLog>> getLogs() async {
+    final uri = Uri.parse('$baseUrl/logs');
+    final res = await _http.get(uri);
+
+    if (res.statusCode != 200) {
+      throw ApiException(res.statusCode);
+    }
+
+    final List<dynamic> jsonList = json.decode(res.body);
+    return jsonList.map((json) => SystemLog.fromJson(json)).toList();
   }
 }

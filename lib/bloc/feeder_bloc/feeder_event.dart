@@ -44,3 +44,5 @@ class ClearErrorEvent extends FeederEvent {}
 
 // New event for command logs
 class LoadCommandLogsEvent extends FeederEvent {}
+
+class LoadSystemLogsEvent extends FeederEvent {}
