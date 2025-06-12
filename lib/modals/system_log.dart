@@ -51,7 +51,6 @@ class SystemLog {
       );
       final match = regex.firstMatch(msg);
       if (match != null) {
-        print('Temperature match: ${match.namedGroup('temp')}');
         tempStr = "${match.namedGroup('temp')}\u00B0C"; // Unicode °C
         humStr = "${match.namedGroup('hum')}%";
       }

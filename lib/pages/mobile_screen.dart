@@ -78,7 +78,6 @@ class _MobileHomeView extends StatelessWidget {
         body: SafeArea(
           child: BlocBuilder<TabCubit, int>(
             builder: (context, selectedIndex) {
-              // Use IndexedStack to keep both tabs alive
               return IndexedStack(
                 index: selectedIndex,
                 children: [
