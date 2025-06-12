@@ -23,7 +23,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m0(amount) => "Beslenen Miktar: ${amount}";
 
   static String m1(minutes, start, end) =>
-      "${start}–${end} saatleri arasında ${minutes} dakikada bir";
+      "${start}–${end} saatleri arasında ${minutes} dakikada aralıklarla";
 
   static String m2(firstTime) =>
       "Son besleme saati, ilk besleme saatinden (${firstTime}) sonra olmalıdır";
