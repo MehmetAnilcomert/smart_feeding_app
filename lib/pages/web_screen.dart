@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_feeding_app/app_theme.dart';
 import 'package:smart_feeding_app/bloc/connectivity_bloc/connectivity_bloc.dart';
 import 'package:smart_feeding_app/bloc/connectivity_bloc/connectivity_state.dart';
+import 'package:smart_feeding_app/bloc/feeder_bloc/feeder_bloc.dart';
+import 'package:smart_feeding_app/bloc/feeder_bloc/feeder_event.dart';
 import 'package:smart_feeding_app/bloc/log_expand.dart';
 import 'package:smart_feeding_app/generated/l10n.dart';
 import 'package:smart_feeding_app/widgets/feed_setting.dart';
@@ -10,6 +12,8 @@ import 'package:smart_feeding_app/widgets/connectivity_dialog.dart';
 import 'package:smart_feeding_app/widgets/drawer/drawer.dart';
 import 'package:smart_feeding_app/widgets/sensor_widgets/temperature_card.dart';
 import 'package:smart_feeding_app/widgets/sensor_widgets/humidity_card.dart';
+import 'package:smart_feeding_app/widgets/mobil_widgets/log_widgets/command_log_view.dart';
+import 'package:smart_feeding_app/widgets/mobil_widgets/log_widgets/system_log_view.dart';
 
 class WebHomeScreen extends StatelessWidget {
   @override
@@ -60,53 +64,86 @@ class WebHomeScreen extends StatelessWidget {
             ),
           ),
           body: SafeArea(
-            child: Container(
-              color: isDarkMode ? Color(0xFF303030) : null,
-              padding: EdgeInsets.all(padding),
-              // Use SingleChildScrollView to make the content scrollable
-              child: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    // First row: Temperature and Humidity Cards
-                    // Use AspectRatio to ensure consistent sizing
-                    AspectRatio(
-                      aspectRatio: 2.5, // Adjust this value as needed
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Expanded(child: TemperatureCard()),
-                          SizedBox(width: AppTheme.spacingMedium),
-                          Expanded(child: HumidityCard()),
-                        ],
-                      ),
-                    ),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                // Load logs data when app starts
+                WidgetsBinding.instance.addPostFrameCallback((_) {
+                  final feederBloc = context.read<FeederBloc>();
+                  feederBloc.add(LoadSystemLogsEvent());
+                  feederBloc.add(LoadCommandLogsEvent());
+                });
 
-                    SizedBox(height: AppTheme.spacingLarge),
+                final isWideScreen = constraints.maxWidth > 1200;
 
-                    // Second row: Feed Settings and Log Widget
-                    // Check screen width to determine layout
-                    MediaQuery.of(context).size.width > 600
-                        ? // Wide screen: use row layout
-                        Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Expanded(child: FeedSettingsWidget()),
-                              SizedBox(width: AppTheme.spacingMedium),
-                            ],
-                          )
-                        : // Narrow screen: use column layout
-                        Column(
+                return Container(
+                  color: isDarkMode ? Color(0xFF303030) : null,
+                  padding: EdgeInsets.all(padding),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Main content area
+                      Expanded(
+                        flex: 2,
+                        child: SingleChildScrollView(
+                          physics: BouncingScrollPhysics(),
+                          child: Column(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
+                              // Temperature and Humidity Cards
+                              AspectRatio(
+                                aspectRatio: 2.5,
+                                child: Row(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    Expanded(child: TemperatureCard()),
+                                    SizedBox(width: AppTheme.spacingMedium),
+                                    Expanded(child: HumidityCard()),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(height: AppTheme.spacingLarge),
+                              // Feed Settings
                               FeedSettingsWidget(),
-                              SizedBox(height: AppTheme.spacingMedium),
                             ],
                           ),
-                  ],
-                ),
-              ),
+                        ),
+                      ),
+                      // Logs area (shown only on wide screens)
+                      if (isWideScreen) ...[
+                        SizedBox(width: AppTheme.spacingLarge),
+                        Expanded(
+                          child: Card(
+                            child: Padding(
+                              padding: EdgeInsets.all(AppTheme.spacing),
+                              child: SingleChildScrollView(
+                                physics: BouncingScrollPhysics(),
+                                child: Column(
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.stretch,
+                                  children: [
+                                    Text(
+                                      s.logs_tab,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headlineSmall,
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    SizedBox(height: AppTheme.spacingMedium),
+                                    CommandLogView(),
+                                    SizedBox(height: AppTheme.spacingMedium),
+                                    SystemLogView(),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ],
+                  ),
+                );
+              },
             ),
           ),
         ),
