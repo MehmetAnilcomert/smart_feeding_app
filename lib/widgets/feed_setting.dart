@@ -51,6 +51,7 @@ class FeedSettingsWidget extends StatelessWidget {
                   onChanged: (f) => context
                       .read<FeederBloc>()
                       .add(FeedingFrequencyChangedEvent(f)),
+                  isHour: true,
                 ),
                 SizedBox(height: AppTheme.spacing),
                 FrequencyInput(
@@ -59,6 +60,7 @@ class FeedSettingsWidget extends StatelessWidget {
                   onChanged: (f) => context
                       .read<FeederBloc>()
                       .add(FeedingFrequencyMinuteChangedEvent(f)),
+                  isHour: false,
                 ),
                 SizedBox(height: AppTheme.spacing),
                 AmountInput(
