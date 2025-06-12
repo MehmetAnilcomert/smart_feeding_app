@@ -19,7 +19,7 @@
     "connection_lost": "Connection Lost",
     "connection_lost_message": "Connection to the feeder device has been lost. Trying to reconnect...",
     "retry": "Retry",
-    "times_per_day": "times/day",
+    "times_per_day": "hour",
     "grams": "grams",
     "settings_updated": "Feed settings updated successfully!",
     "manual_feeding_initiated": "Manual feeding initiated!",

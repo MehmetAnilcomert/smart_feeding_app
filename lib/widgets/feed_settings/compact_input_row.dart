@@ -20,31 +20,64 @@ class CompactInputRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = TextEditingController(text: value.toString());
+
     return Row(
       children: [
         Expanded(
-          child: TextField(
-            controller: controller,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              suffixText: suffix,
-              contentPadding: EdgeInsets.symmetric(
-                horizontal: AppTheme.spacing,
-                vertical: AppTheme.spacingSmall / 2,
+          child: Stack(
+            alignment: Alignment.centerRight,
+            children: [
+              TextField(
+                controller: controller,
+                keyboardType: TextInputType.number,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                ),
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: AppTheme.spacing,
+                    vertical: AppTheme.spacingSmall / 2,
+                  ),
+                  isDense: true,
+                  border: OutlineInputBorder(
+                    borderRadius:
+                        BorderRadius.circular(AppTheme.borderRadius / 2),
+                  ),
+                  // Daha doğal bir görünüm için hintStyle kullanımı
+                  hintStyle: TextStyle(
+                    color: Theme.of(context).hintColor,
+                  ),
+                ),
+                onSubmitted: (txt) {
+                  final v = int.tryParse(txt);
+                  if (v != null && onSubmitted != null) onSubmitted!(v);
+                },
               ),
-              isDense: true,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(AppTheme.borderRadius / 2),
+              Padding(
+                padding: EdgeInsets.only(right: AppTheme.spacing),
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 0, vertical: 2),
+                  child: Text(
+                    suffix,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: Theme.of(context)
+                          .colorScheme
+                          .onSurface
+                          .withOpacity(0.8),
+                      fontSize: 14,
+                    ),
+                  ),
+                ),
               ),
-            ),
-            textAlign: TextAlign.center,
-            onSubmitted: (txt) {
-              final v = int.tryParse(txt);
-              if (v != null && onSubmitted != null) onSubmitted!(v);
-            },
+            ],
           ),
         ),
+
         SizedBox(width: AppTheme.spacingSmall),
+
+        // Buttons container
         Container(
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.primary,
@@ -58,7 +91,9 @@ class CompactInputRow extends StatelessWidget {
             visualDensity: VisualDensity.compact,
           ),
         ),
+
         SizedBox(width: AppTheme.spacingSmall / 2),
+
         Container(
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.primary,

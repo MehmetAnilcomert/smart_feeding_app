@@ -78,7 +78,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "general_error_message": MessageLookupByLibrary.simpleMessage(
       "An error occurred. Please try again.",
     ),
-    "grams": MessageLookupByLibrary.simpleMessage("grams"),
+    "grams": MessageLookupByLibrary.simpleMessage(" grams"),
     "grams_message": MessageLookupByLibrary.simpleMessage("grams"),
     "help": MessageLookupByLibrary.simpleMessage("Help"),
     "help_note": MessageLookupByLibrary.simpleMessage("Help Note: ..."),
@@ -164,7 +164,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "timeout_error_title": MessageLookupByLibrary.simpleMessage(
       "Timeout Error",
     ),
-    "times_per_day": MessageLookupByLibrary.simpleMessage("times/day"),
+    "times_per_day": MessageLookupByLibrary.simpleMessage("  hour"),
     "times_per_day_message": MessageLookupByLibrary.simpleMessage("hours"),
     "tr": MessageLookupByLibrary.simpleMessage("TR"),
     "update_settings": MessageLookupByLibrary.simpleMessage("Update Settings"),

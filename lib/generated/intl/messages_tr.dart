@@ -78,7 +78,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "general_error_message": MessageLookupByLibrary.simpleMessage(
       "Bir hata oluştu. Lütfen tekrar deneyin.",
     ),
-    "grams": MessageLookupByLibrary.simpleMessage("gram"),
+    "grams": MessageLookupByLibrary.simpleMessage(" gram"),
     "grams_message": MessageLookupByLibrary.simpleMessage("gram"),
     "help": MessageLookupByLibrary.simpleMessage("Yardım"),
     "help_note": MessageLookupByLibrary.simpleMessage("Yardım Notu: ..."),
@@ -161,7 +161,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "timeout_error_title": MessageLookupByLibrary.simpleMessage(
       "Zaman Aşımı Hatası",
     ),
-    "times_per_day": MessageLookupByLibrary.simpleMessage("saat"),
+    "times_per_day": MessageLookupByLibrary.simpleMessage("    saat"),
     "times_per_day_message": MessageLookupByLibrary.simpleMessage("defa/gün"),
     "tr": MessageLookupByLibrary.simpleMessage("TR"),
     "update_settings": MessageLookupByLibrary.simpleMessage(
