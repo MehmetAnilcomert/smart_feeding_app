@@ -2,172 +2,226 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_feeding_app/app_theme.dart';
 import 'package:smart_feeding_app/bloc/feeder_bloc/feeder_bloc.dart';
+import 'package:smart_feeding_app/bloc/feeder_bloc/feeder_event.dart';
 import 'package:smart_feeding_app/bloc/feeder_bloc/feeder_state.dart';
-import 'package:smart_feeding_app/bloc/log_expand.dart';
-import 'package:smart_feeding_app/generated/l10n.dart';
 import 'package:intl/intl.dart';
 
-class LogViewWidget extends StatelessWidget {
+enum LogType { system, command }
+
+class GenericLogView<T> extends StatelessWidget {
+  final LogType logType;
+  final String title;
+  final IconData icon;
+  final String Function(BuildContext) noLogsMessage;
+  final String Function(BuildContext) pullToRefreshMessage;
+  final String Function(BuildContext) refreshTooltip;
+  final String Function(BuildContext) errorMessage;
+  final String Function(BuildContext) retryLabel;
+  final Widget Function(T log, BuildContext context) itemBuilder;
+
+  const GenericLogView({
+    Key? key,
+    required this.logType,
+    required this.title,
+    required this.icon,
+    required this.noLogsMessage,
+    required this.pullToRefreshMessage,
+    required this.refreshTooltip,
+    required this.errorMessage,
+    required this.retryLabel,
+    required this.itemBuilder,
+  }) : super(key: key);
+
+  String _formatDateTime(String dateTimeStr) {
+    final dateTime = DateTime.parse(dateTimeStr);
+    return DateFormat('MMM d, HH:mm').format(dateTime);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final s = S.of(context);
     final theme = Theme.of(context);
 
+    // Load logs when widget is first built
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final event = logType == LogType.system
+          ? LoadSystemLogsEvent()
+          : LoadCommandLogsEvent();
+      context.read<FeederBloc>().add(event);
+    });
+
     return BlocBuilder<FeederBloc, FeederState>(
-      builder: (context, feederState) {
-        // Örnek log listesi
-        final logs = <Map<String, dynamic>>[
-          {
-            'timestamp': DateTime.now().subtract(Duration(minutes: 30)),
-            'event': 'Feeding completed',
-            'details': 'Dispensed 100g of feed',
-            'type': 'success',
-          },
-          {
-            'timestamp': DateTime.now().subtract(Duration(hours: 2)),
-            'event': 'Temperature alert',
-            'details': 'Temperature reached 32°C',
-            'type': 'warning',
-          },
-          {
-            'timestamp': DateTime.now().subtract(Duration(hours: 5)),
-            'event': 'Feeding completed',
-            'details': 'Dispensed 100g of feed',
-            'type': 'success',
-          },
-          {
-            'timestamp': DateTime.now().subtract(Duration(hours: 8)),
-            'event': 'System check',
-            'details': 'All systems operational',
-            'type': 'info',
-          },
-          {
-            'timestamp': DateTime.now().subtract(Duration(hours: 12)),
-            'event': 'Feeding completed',
-            'details': 'Dispensed 100g of feed',
-            'type': 'success',
-          },
-        ];
+      buildWhen: (previous, current) {
+        if (previous is FeederDataState && current is FeederDataState) {
+          if (logType == LogType.system) {
+            return previous.systemLogs != current.systemLogs ||
+                previous.errorCode != current.errorCode ||
+                previous.isLoadingSystemLogs != current.isLoadingSystemLogs;
+          } else {
+            return previous.commandLogs != current.commandLogs ||
+                previous.errorCode != current.errorCode ||
+                previous.isLoadingCommandLogs != current.isLoadingCommandLogs;
+          }
+        }
+        return true;
+      },
+      builder: (context, state) {
+        if (state is! FeederDataState) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        final logs =
+            logType == LogType.system ? state.systemLogs : state.commandLogs;
+        final isLoading = logType == LogType.system
+            ? state.isLoadingSystemLogs
+            : state.isLoadingCommandLogs;
 
         return Card(
           elevation: AppTheme.cardElevation,
           child: Column(
             children: [
-              InkWell(
-                onTap: () => context.read<LogExpandCubit>().toggle(),
-                child: Padding(
-                  padding: EdgeInsets.all(AppTheme.spacing),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(Icons.list_alt,
-                              color: theme.colorScheme.primary),
-                          SizedBox(width: AppTheme.spacingSmall),
-                          Text(
-                            s.feeding_logs,
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
+              Padding(
+                padding: EdgeInsets.all(AppTheme.spacing),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(icon, color: theme.colorScheme.primary),
+                        SizedBox(width: AppTheme.spacingSmall),
+                        Text(
+                          title,
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
                           ),
-                        ],
-                      ),
-                      BlocBuilder<LogExpandCubit, bool>(
-                        builder: (context, isExpanded) {
-                          return Icon(
-                            isExpanded ? Icons.expand_less : Icons.expand_more,
-                            color: theme.colorScheme.primary,
-                          );
-                        },
-                      ),
-                    ],
-                  ),
+                        ),
+                      ],
+                    ),
+                    IconButton(
+                      icon: isLoading
+                          ? SizedBox(
+                              width: 24,
+                              height: 24,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  theme.colorScheme.primary,
+                                ),
+                              ),
+                            )
+                          : Icon(Icons.refresh,
+                              color: theme.colorScheme.primary),
+                      onPressed: isLoading
+                          ? null
+                          : () {
+                              final event = logType == LogType.system
+                                  ? LoadSystemLogsEvent()
+                                  : LoadCommandLogsEvent();
+                              context.read<FeederBloc>().add(event);
+                            },
+                      tooltip: refreshTooltip(context),
+                    ),
+                  ],
                 ),
               ),
-              BlocBuilder<LogExpandCubit, bool>(
-                builder: (context, isExpanded) {
-                  return AnimatedCrossFade(
-                    firstChild: SizedBox.shrink(),
-                    secondChild: _buildLogsList(logs),
-                    crossFadeState: isExpanded
-                        ? CrossFadeState.showSecond
-                        : CrossFadeState.showFirst,
-                    duration: AppTheme.animationDuration,
-                  );
-                },
+              Container(
+                constraints: BoxConstraints(
+                  minHeight: 200,
+                  maxHeight: MediaQuery.of(context).size.height * 0.4,
+                ),
+                child: RefreshIndicator(
+                  onRefresh: () async {
+                    final event = logType == LogType.system
+                        ? LoadSystemLogsEvent()
+                        : LoadCommandLogsEvent();
+                    context.read<FeederBloc>().add(event);
+                    // Wait for the loading to complete
+                    await Future.doWhile(() async {
+                      await Future.delayed(Duration(milliseconds: 100));
+                      final currentState = context.read<FeederBloc>().state;
+                      if (currentState is FeederDataState) {
+                        return logType == LogType.system
+                            ? currentState.isLoadingSystemLogs
+                            : currentState.isLoadingCommandLogs;
+                      }
+                      return false;
+                    });
+                  },
+                  child: state.hasError
+                      ? Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                errorMessage(context),
+                                style:
+                                    TextStyle(color: theme.colorScheme.error),
+                                textAlign: TextAlign.center,
+                              ),
+                              const SizedBox(height: 16),
+                              ElevatedButton.icon(
+                                onPressed: () {
+                                  final event = logType == LogType.system
+                                      ? LoadSystemLogsEvent()
+                                      : LoadCommandLogsEvent();
+                                  context.read<FeederBloc>().add(event);
+                                },
+                                icon: Icon(Icons.refresh),
+                                label: Text(retryLabel(context)),
+                              ),
+                            ],
+                          ),
+                        )
+                      : logs.isEmpty
+                          ? ListView(
+                              physics: const AlwaysScrollableScrollPhysics(),
+                              children: [
+                                Container(
+                                  height: 200,
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.note_alt_outlined,
+                                          size: 48,
+                                          color: theme.colorScheme.secondary,
+                                        ),
+                                        const SizedBox(height: 16),
+                                        Text(
+                                          noLogsMessage(context),
+                                          style: theme.textTheme.titleMedium,
+                                          textAlign: TextAlign.center,
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Text(
+                                          pullToRefreshMessage(context),
+                                          style: theme.textTheme.bodySmall,
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          : ListView.separated(
+                              physics: const BouncingScrollPhysics(
+                                parent: AlwaysScrollableScrollPhysics(),
+                              ),
+                              itemCount: logs.length,
+                              separatorBuilder: (_, __) => Divider(height: 1),
+                              itemBuilder: (context, index) {
+                                return itemBuilder(logs[index] as T, context);
+                              },
+                            ),
+                ),
               ),
             ],
           ),
         );
       },
-    );
-  }
-
-  Widget _buildLogsList(List<Map<String, dynamic>> logs) {
-    return Container(
-      constraints: BoxConstraints(maxHeight: 300),
-      child: logs.isEmpty
-          ? Padding(
-              padding: EdgeInsets.all(AppTheme.spacing),
-              child: Center(child: Text('No logs available')),
-            )
-          : ListView.separated(
-              physics: BouncingScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: logs.length,
-              separatorBuilder: (_, __) => Divider(height: 1),
-              itemBuilder: (context, idx) {
-                final log = logs[idx];
-                final ts = log['timestamp'] as DateTime;
-                final type = log['type'] as String;
-
-                IconData icon;
-                Color color;
-                switch (type) {
-                  case 'success':
-                    icon = Icons.check_circle;
-                    color = AppTheme.accentGreen;
-                    break;
-                  case 'warning':
-                    icon = Icons.warning_amber;
-                    color = AppTheme.accentAmber;
-                    break;
-                  case 'error':
-                    icon = Icons.error;
-                    color = AppTheme.accentRed;
-                    break;
-                  default:
-                    icon = Icons.info;
-                    color = Colors.blue;
-                }
-
-                return ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: color.withOpacity(0.2),
-                    child: Icon(icon, color: color, size: 20),
-                  ),
-                  title: Text(
-                    log['event'] as String,
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 4),
-                      Text(log['details'] as String),
-                      SizedBox(height: 4),
-                      Text(
-                        DateFormat('MMM dd, yyyy - HH:mm').format(ts),
-                        style: TextStyle(fontSize: 12, color: Colors.grey),
-                      ),
-                    ],
-                  ),
-                  isThreeLine: true,
-                );
-              },
-            ),
     );
   }
 }

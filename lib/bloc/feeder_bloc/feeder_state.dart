@@ -1,9 +1,10 @@
 // lib/bloc/feeder_bloc/feeder_state.dart
+import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_feeding_app/modals/command_log.dart';
 import 'package:smart_feeding_app/modals/system_log.dart';
 
-abstract class FeederState {
+abstract class FeederState extends Equatable {
   const FeederState();
 }
 
@@ -22,6 +23,8 @@ class FeederDataState extends FeederState {
   final bool esp32Connected;
   final DateTime? serverTime;
   final int? errorCode;
+  final bool isLoadingSystemLogs;
+  final bool isLoadingCommandLogs;
 
   const FeederDataState({
     required this.logs,
@@ -38,6 +41,8 @@ class FeederDataState extends FeederState {
     this.esp32Connected = false,
     this.serverTime,
     this.errorCode,
+    this.isLoadingSystemLogs = false,
+    this.isLoadingCommandLogs = false,
   });
 
   factory FeederDataState.initial() => FeederDataState(
@@ -55,6 +60,8 @@ class FeederDataState extends FeederState {
         esp32Connected: false,
         serverTime: null,
         errorCode: null,
+        isLoadingSystemLogs: false,
+        isLoadingCommandLogs: false,
       );
 
   FeederDataState copyWith({
@@ -72,6 +79,8 @@ class FeederDataState extends FeederState {
     bool? esp32Connected,
     DateTime? serverTime,
     int? errorCode,
+    bool? isLoadingSystemLogs,
+    bool? isLoadingCommandLogs,
     bool clearError = false,
   }) {
     return FeederDataState(
@@ -90,8 +99,30 @@ class FeederDataState extends FeederState {
       esp32Connected: esp32Connected ?? this.esp32Connected,
       serverTime: serverTime ?? this.serverTime,
       errorCode: clearError ? null : (errorCode ?? this.errorCode),
+      isLoadingSystemLogs: isLoadingSystemLogs ?? this.isLoadingSystemLogs,
+      isLoadingCommandLogs: isLoadingCommandLogs ?? this.isLoadingCommandLogs,
     );
   }
 
   bool get hasError => errorCode != null;
+
+  @override
+  List<Object?> get props => [
+        logs,
+        systemLogs,
+        commandLogs,
+        temperature,
+        feedingFrequencyHour,
+        feedingFrequencyMinute,
+        feedAmount,
+        firstFeedHour,
+        lastFeedHour,
+        isSaving,
+        humidity,
+        esp32Connected,
+        serverTime,
+        errorCode,
+        isLoadingSystemLogs,
+        isLoadingCommandLogs,
+      ];
 }

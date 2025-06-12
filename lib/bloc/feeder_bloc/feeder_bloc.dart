@@ -238,6 +238,10 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
     Emitter<FeederState> emit,
   ) async {
     final s = state as FeederDataState;
+
+    // Set loading state
+    emit(s.copyWith(isLoadingSystemLogs: true, clearError: true));
+
     try {
       final logs = await _api.getLogs().timeout(
         Duration(seconds: 10),
@@ -247,10 +251,16 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
         },
       );
 
-      emit(s.copyWith(systemLogs: logs));
+      emit(s.copyWith(
+        systemLogs: logs,
+        isLoadingSystemLogs: false,
+      ));
     } catch (err) {
       print('Error loading system logs: $err');
-      add(FeedErrorEvent(2));
+      emit(s.copyWith(
+        isLoadingSystemLogs: false,
+        errorCode: 2,
+      ));
     }
   }
 
@@ -259,6 +269,10 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
     Emitter<FeederState> emit,
   ) async {
     final s = state as FeederDataState;
+
+    // Set loading state
+    emit(s.copyWith(isLoadingCommandLogs: true, clearError: true));
+
     try {
       final commands = await _api.getCommands().timeout(
         Duration(seconds: 10),
@@ -268,10 +282,16 @@ class FeederBloc extends Bloc<FeederEvent, FeederState> {
         },
       );
 
-      emit(s.copyWith(commandLogs: commands));
+      emit(s.copyWith(
+        commandLogs: commands,
+        isLoadingCommandLogs: false,
+      ));
     } catch (err) {
       print('Error loading command logs: $err');
-      add(FeedErrorEvent(2));
+      emit(s.copyWith(
+        isLoadingCommandLogs: false,
+        errorCode: 2,
+      ));
     }
   }
 }

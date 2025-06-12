@@ -10,7 +10,6 @@ import 'package:smart_feeding_app/widgets/connectivity_dialog.dart';
 import 'package:smart_feeding_app/widgets/drawer/drawer.dart';
 import 'package:smart_feeding_app/widgets/sensor_widgets/temperature_card.dart';
 import 'package:smart_feeding_app/widgets/sensor_widgets/humidity_card.dart';
-import 'package:smart_feeding_app/widgets/mobil_widgets/log_view.dart';
 
 class WebHomeScreen extends StatelessWidget {
   @override
@@ -95,7 +94,6 @@ class WebHomeScreen extends StatelessWidget {
                             children: [
                               Expanded(child: FeedSettingsWidget()),
                               SizedBox(width: AppTheme.spacingMedium),
-                              Expanded(child: LogViewWidget()),
                             ],
                           )
                         : // Narrow screen: use column layout
@@ -104,7 +102,6 @@ class WebHomeScreen extends StatelessWidget {
                             children: [
                               FeedSettingsWidget(),
                               SizedBox(height: AppTheme.spacingMedium),
-                              LogViewWidget(),
                             ],
                           ),
                   ],
