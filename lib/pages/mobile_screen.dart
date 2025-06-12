@@ -7,11 +7,11 @@ import 'package:smart_feeding_app/bloc/feeder_bloc/feeder_bloc.dart';
 import 'package:smart_feeding_app/bloc/feeder_bloc/feeder_event.dart';
 import 'package:smart_feeding_app/bloc/tab_cubit.dart';
 import 'package:smart_feeding_app/generated/l10n.dart';
-import 'package:smart_feeding_app/widgets/mobil_widgets/custom_navbar.dart';
-import 'package:smart_feeding_app/widgets/mobil_widgets/dashboard_tab.dart';
-import 'package:smart_feeding_app/widgets/mobil_widgets/logs_tab.dart';
+import 'package:smart_feeding_app/widgets/mobil_widgets/tab_widgets/custom_navbar.dart';
+import 'package:smart_feeding_app/widgets/mobil_widgets/tab_widgets/dashboard_tab.dart';
 import 'package:smart_feeding_app/widgets/connectivity_dialog.dart';
 import 'package:smart_feeding_app/widgets/drawer/drawer.dart';
+import 'package:smart_feeding_app/widgets/mobil_widgets/tab_widgets/logs_tab.dart';
 
 class MobileHomeScreen extends StatelessWidget {
   @override

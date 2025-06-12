@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smart_feeding_app/bloc/tab_cubit.dart';
 import 'package:smart_feeding_app/generated/l10n.dart';
-import 'package:smart_feeding_app/widgets/mobil_widgets/nav_item.dart';
+import 'package:smart_feeding_app/widgets/mobil_widgets/tab_widgets/nav_item.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
   @override
