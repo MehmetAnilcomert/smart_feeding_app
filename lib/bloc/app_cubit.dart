@@ -5,8 +5,9 @@ import 'package:smart_feeding_app/bloc/feeder_bloc/feeder_event.dart';
 
 class AppCubit extends Cubit<AppState> {
   late final FeederBloc feederBloc;
+  final String httpUrl;
 
-  AppCubit({required String httpUrl}) : super(AppInitial()) {
+  AppCubit({required this.httpUrl}) : super(AppInitial()) {
     feederBloc = FeederBloc(httpUrl: httpUrl);
     _initialize();
   }
