@@ -32,6 +32,23 @@ class SystemLog {
     this.endTime,
   });
 
+  static String _convertTimeStringToLocal(String timeString) {
+    try {
+      final parts = timeString.split(':');
+      if (parts.length != 2) return timeString;
+
+      final hour = int.parse(parts[0]);
+      final minute = int.parse(parts[1]);
+
+      final serverTime = DateTime(2000, 1, 1, hour, minute);
+      final localTime = serverTime.add(Duration(hours: 3));
+
+      return "${localTime.hour.toString().padLeft(2, '0')}:${localTime.minute.toString().padLeft(2, '0')}";
+    } catch (e) {
+      return timeString;
+    }
+  }
+
   factory SystemLog.fromJson(Map<String, dynamic> json) {
     final type = json['type'] as String;
     final msg = json['message'] as String;
@@ -63,14 +80,17 @@ class SystemLog {
         hrs = int.parse(match.namedGroup('h')!);
         mins = int.parse(match.namedGroup('m')!);
         amount = int.parse(match.namedGroup('a')!);
-        start = match.namedGroup('s');
-        end = match.namedGroup('e');
+
+        // Server saatini local saate çevir
+        start = _convertTimeStringToLocal(match.namedGroup('s')!);
+        end = _convertTimeStringToLocal(match.namedGroup('e')!);
       }
     }
 
     return SystemLog._(
       id: json['id'] as int,
-      createdAt: DateTime.parse(json['created_at'] as String),
+      createdAt:
+          DateTime.parse(json['created_at'] as String).add(Duration(hours: 3)),
       deviceId: json['device_id'] as int,
       rawType: type,
       message: msg,

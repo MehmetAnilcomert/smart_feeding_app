@@ -21,6 +21,14 @@ class CommandLog {
     this.endTime,
   });
 
+  static TimeOfDay _convertTimeOfDayToLocal(TimeOfDay serverTime) {
+    final serverDateTime =
+        DateTime(2000, 1, 1, serverTime.hour, serverTime.minute);
+    final localDateTime = serverDateTime.add(Duration(hours: 3));
+
+    return TimeOfDay(hour: localDateTime.hour, minute: localDateTime.minute);
+  }
+
   factory CommandLog.fromJson(Map<String, dynamic> json) {
     final rawMsg = json['message'] as String;
     int? feed;
@@ -45,11 +53,15 @@ class CommandLog {
             break;
           case 'START':
             final t = kv[1].split(':');
-            start = TimeOfDay(hour: int.parse(t[0]), minute: int.parse(t[1]));
+            final serverTime =
+                TimeOfDay(hour: int.parse(t[0]), minute: int.parse(t[1]));
+            start = _convertTimeOfDayToLocal(serverTime);
             break;
           case 'END':
             final t = kv[1].split(':');
-            end = TimeOfDay(hour: int.parse(t[0]), minute: int.parse(t[1]));
+            final serverTime =
+                TimeOfDay(hour: int.parse(t[0]), minute: int.parse(t[1]));
+            end = _convertTimeOfDayToLocal(serverTime);
             break;
           case 'AMOUNT':
             feed = int.tryParse(kv[1]);
@@ -60,7 +72,8 @@ class CommandLog {
 
     return CommandLog(
       id: json['id'] as int,
-      createdAt: DateTime.parse(json['created_at'] as String),
+      createdAt:
+          DateTime.parse(json['created_at'] as String).add(Duration(hours: 3)),
       deviceId: json['device_id'] as int,
       feedAmount: feed,
       interval: interval,

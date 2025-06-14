@@ -33,7 +33,6 @@ class SensorBloc extends Bloc<SensorEvent, SensorState> {
           double? t = temp != null ? (temp as num).toDouble() : null;
           double? h = hum != null ? (hum as num).toDouble() : null;
 
-          print(" ${connected} Temperature: $t, Humidity: $h");
           add(SensorDataReceived(
             temperature: t,
             humidity: h,
