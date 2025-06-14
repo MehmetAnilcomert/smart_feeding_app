@@ -220,14 +220,14 @@ class S {
     return Intl.message('Retry', name: 'retry', desc: '', args: []);
   }
 
-  /// `  hour`
+  /// `hour`
   String get times_per_day {
-    return Intl.message('  hour', name: 'times_per_day', desc: '', args: []);
+    return Intl.message('hour', name: 'times_per_day', desc: '', args: []);
   }
 
-  /// ` grams`
+  /// `grams`
   String get grams {
-    return Intl.message(' grams', name: 'grams', desc: '', args: []);
+    return Intl.message('grams', name: 'grams', desc: '', args: []);
   }
 
   /// `Feed settings updated successfully!`

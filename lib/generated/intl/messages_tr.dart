@@ -23,7 +23,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m0(amount) => "Beslenen Miktar: ${amount}";
 
   static String m1(minutes, start, end) =>
-      "${start}–${end} saatleri arasında ${minutes} dakikada aralıklarla";
+      "${start}–${end} saatleri arasında ${minutes} dakika aralıklarla";
 
   static String m2(h, m, a, s, e) =>
       "Besleme aralığı ayarlandı: ${h}s ${m}d, miktar: ${a}g, ${s}–${e} arasında";
@@ -78,7 +78,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "general_error_message": MessageLookupByLibrary.simpleMessage(
       "Bir hata oluştu. Lütfen tekrar deneyin.",
     ),
-    "grams": MessageLookupByLibrary.simpleMessage(" gram"),
+    "grams": MessageLookupByLibrary.simpleMessage("gram"),
     "grams_message": MessageLookupByLibrary.simpleMessage("gram"),
     "help": MessageLookupByLibrary.simpleMessage("Yardım"),
     "help_note": MessageLookupByLibrary.simpleMessage("Yardım Notu: ..."),
@@ -161,7 +161,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "timeout_error_title": MessageLookupByLibrary.simpleMessage(
       "Zaman Aşımı Hatası",
     ),
-    "times_per_day": MessageLookupByLibrary.simpleMessage("    saat"),
+    "times_per_day": MessageLookupByLibrary.simpleMessage("saat"),
     "times_per_day_message": MessageLookupByLibrary.simpleMessage("defa/gün"),
     "tr": MessageLookupByLibrary.simpleMessage("TR"),
     "update_settings": MessageLookupByLibrary.simpleMessage(
