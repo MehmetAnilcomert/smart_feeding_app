@@ -12,7 +12,6 @@ class SensorBloc extends Bloc<SensorEvent, SensorState> {
   SensorBloc(this._ws) : super(const SensorState()) {
     on<ConnectWebSocket>(_onConnect);
     on<SensorDataReceived>(_onDataReceived);
-    on<ConnectionLost>(_onConnectionLost);
 
     add(ConnectWebSocket());
   }
@@ -27,11 +26,21 @@ class SensorBloc extends Bloc<SensorEvent, SensorState> {
     try {
       _sub = await _ws.connect(
         onData: (data) {
-          final t = (data['temperature'] as num).toDouble();
-          final h = (data['humidity'] as num).toDouble();
-          add(SensorDataReceived(temperature: t, humidity: h));
+          final temp = data['temperature'];
+          final hum = data['humidity'];
+          final connected = data['connected'] as bool? ?? false;
+
+          double? t = temp != null ? (temp as num).toDouble() : null;
+          double? h = hum != null ? (hum as num).toDouble() : null;
+
+          print(" ${connected} Temperature: $t, Humidity: $h");
+          add(SensorDataReceived(
+            temperature: t,
+            humidity: h,
+            connected: connected,
+          ));
         },
-        onErrorOrDone: () => add(ConnectionLost()),
+        onErrorOrDone: () => add(ConnectWebSocket()),
         handshakeTimeout: const Duration(seconds: 5),
       );
     } catch (_) {}
@@ -41,16 +50,8 @@ class SensorBloc extends Bloc<SensorEvent, SensorState> {
     emit(state.copyWith(
       temperature: event.temperature,
       humidity: event.humidity,
-      connected: true,
+      connected: event.connected,
     ));
-  }
-
-  void _onConnectionLost(ConnectionLost _, Emitter<SensorState> emit) {
-    emit(
-        const SensorState(temperature: null, humidity: null, connected: false));
-    Future.delayed(const Duration(seconds: 1), () {
-      add(ConnectWebSocket());
-    });
   }
 
   @override
