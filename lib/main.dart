@@ -18,6 +18,8 @@ import 'firebase_options.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Load environment variables
+  await dotenv.load(fileName: ".env");
 
   // Initialize Firebase
   await Firebase.initializeApp(
@@ -27,9 +29,6 @@ Future<void> main() async {
   // Initialize notification service
   final notificationService = NotificationService();
   await notificationService.initialize();
-
-  // Load environment variables
-  await dotenv.load(fileName: ".env");
 
   // Initialize LanguageManager and load saved language preference
   final languageManager = LanguageManager();

@@ -2,7 +2,8 @@
 // ignore_for_file: type=lint
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
-    show defaultTargetPlatform, kIsWeb, TargetPlatform;
+  show defaultTargetPlatform, kIsWeb, TargetPlatform;
+import 'package:flutter_dotenv/flutter_dotenv.dart' show dotenv;
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -39,48 +40,57 @@ class DefaultFirebaseOptions {
         );
     }
   }
+  static FirebaseOptions get web {
+    return FirebaseOptions(
+      apiKey: dotenv.env['FIREBASE_API_KEY_WEB'] ?? 'AIzaSyBEp8s4C6dz7j6u-mGC_Btulx3Fi6ZBwVs',
+      appId: dotenv.env['FIREBASE_APP_ID_WEB'] ?? '1:981188695775:web:49f8f14c4011a1b258fb6a',
+      messagingSenderId: dotenv.env['FIREBASE_MESSAGING_SENDER_ID'] ?? '981188695775',
+      projectId: dotenv.env['FIREBASE_PROJECT_ID'] ?? 'smart-feeding-app',
+      authDomain: dotenv.env['FIREBASE_AUTH_DOMAIN'] ?? 'smart-feeding-app.firebaseapp.com',
+      storageBucket: dotenv.env['FIREBASE_STORAGE_BUCKET'] ?? 'smart-feeding-app.firebasestorage.app',
+    );
+  }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBEp8s4C6dz7j6u-mGC_Btulx3Fi6ZBwVs',
-    appId: '1:981188695775:web:49f8f14c4011a1b258fb6a',
-    messagingSenderId: '981188695775',
-    projectId: 'smart-feeding-app',
-    authDomain: 'smart-feeding-app.firebaseapp.com',
-    storageBucket: 'smart-feeding-app.firebasestorage.app',
-  );
+  static FirebaseOptions get android {
+    return FirebaseOptions(
+      apiKey: dotenv.env['FIREBASE_API_KEY_ANDROID'] ?? 'AIzaSyAheIkFvAIuXzDc-cOUEcId_Q9mBC_6UbY',
+      appId: dotenv.env['FIREBASE_APP_ID_ANDROID'] ?? '1:981188695775:android:8248d7159c72d12858fb6a',
+      messagingSenderId: dotenv.env['FIREBASE_MESSAGING_SENDER_ID'] ?? '981188695775',
+      projectId: dotenv.env['FIREBASE_PROJECT_ID'] ?? 'smart-feeding-app',
+      storageBucket: dotenv.env['FIREBASE_STORAGE_BUCKET'] ?? 'smart-feeding-app.firebasestorage.app',
+    );
+  }
 
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAheIkFvAIuXzDc-cOUEcId_Q9mBC_6UbY',
-    appId: '1:981188695775:android:8248d7159c72d12858fb6a',
-    messagingSenderId: '981188695775',
-    projectId: 'smart-feeding-app',
-    storageBucket: 'smart-feeding-app.firebasestorage.app',
-  );
+  static FirebaseOptions get ios {
+    return FirebaseOptions(
+      apiKey: dotenv.env['FIREBASE_API_KEY_IOS'] ?? 'AIzaSyAK4TZZDqrjkIoGxDT_6dazrqAqDR83Qvw',
+      appId: dotenv.env['FIREBASE_APP_ID_IOS'] ?? '1:981188695775:ios:5a9bc36c383712c058fb6a',
+      messagingSenderId: dotenv.env['FIREBASE_MESSAGING_SENDER_ID'] ?? '981188695775',
+      projectId: dotenv.env['FIREBASE_PROJECT_ID'] ?? 'smart-feeding-app',
+      storageBucket: dotenv.env['FIREBASE_STORAGE_BUCKET'] ?? 'smart-feeding-app.firebasestorage.app',
+      iosBundleId: dotenv.env['FIREBASE_IOS_BUNDLE_ID'] ?? 'com.example.smartFeedingApp',
+    );
+  }
 
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAK4TZZDqrjkIoGxDT_6dazrqAqDR83Qvw',
-    appId: '1:981188695775:ios:5a9bc36c383712c058fb6a',
-    messagingSenderId: '981188695775',
-    projectId: 'smart-feeding-app',
-    storageBucket: 'smart-feeding-app.firebasestorage.app',
-    iosBundleId: 'com.example.smartFeedingApp',
-  );
+  static FirebaseOptions get macos {
+    return FirebaseOptions(
+      apiKey: dotenv.env['FIREBASE_API_KEY_MACOS'] ?? 'AIzaSyAK4TZZDqrjkIoGxDT_6dazrqAqDR83Qvw',
+      appId: dotenv.env['FIREBASE_APP_ID_MACOS'] ?? '1:981188695775:ios:5a9bc36c383712c058fb6a',
+      messagingSenderId: dotenv.env['FIREBASE_MESSAGING_SENDER_ID'] ?? '981188695775',
+      projectId: dotenv.env['FIREBASE_PROJECT_ID'] ?? 'smart-feeding-app',
+      storageBucket: dotenv.env['FIREBASE_STORAGE_BUCKET'] ?? 'smart-feeding-app.firebasestorage.app',
+      iosBundleId: dotenv.env['FIREBASE_IOS_BUNDLE_ID'] ?? 'com.example.smartFeedingApp',
+    );
+  }
 
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAK4TZZDqrjkIoGxDT_6dazrqAqDR83Qvw',
-    appId: '1:981188695775:ios:5a9bc36c383712c058fb6a',
-    messagingSenderId: '981188695775',
-    projectId: 'smart-feeding-app',
-    storageBucket: 'smart-feeding-app.firebasestorage.app',
-    iosBundleId: 'com.example.smartFeedingApp',
-  );
-
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyBEp8s4C6dz7j6u-mGC_Btulx3Fi6ZBwVs',
-    appId: '1:981188695775:web:d5497ad878174b2658fb6a',
-    messagingSenderId: '981188695775',
-    projectId: 'smart-feeding-app',
-    authDomain: 'smart-feeding-app.firebaseapp.com',
-    storageBucket: 'smart-feeding-app.firebasestorage.app',
-  );
+  static FirebaseOptions get windows {
+    return FirebaseOptions(
+      apiKey: dotenv.env['FIREBASE_API_KEY_WINDOWS'] ?? 'AIzaSyBEp8s4C6dz7j6u-mGC_Btulx3Fi6ZBwVs',
+      appId: dotenv.env['FIREBASE_APP_ID_WINDOWS'] ?? '1:981188695775:web:d5497ad878174b2658fb6a',
+      messagingSenderId: dotenv.env['FIREBASE_MESSAGING_SENDER_ID'] ?? '981188695775',
+      projectId: dotenv.env['FIREBASE_PROJECT_ID'] ?? 'smart-feeding-app',
+      authDomain: dotenv.env['FIREBASE_AUTH_DOMAIN'] ?? 'smart-feeding-app.firebaseapp.com',
+      storageBucket: dotenv.env['FIREBASE_STORAGE_BUCKET'] ?? 'smart-feeding-app.firebasestorage.app',
+    );
+  }
 }
